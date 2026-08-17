@@ -3,349 +3,399 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyAI Studio | Autonomous Persona Ecosystem</title>
+  <title>The Realist Studio | Dual-Host Debate Arena</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    body { background-color: #09090b; color: #f4f4f5; font-family: system-ui, -apple-system, sans-serif; }
-    .tab-content { display: none; }
-    .tab-content.active { display: flex; flex-direction: column; }
+    :root {
+      --neon-green: #00ff66;
+      --deep-purple: #9333ea;
+      --cyber-pink: #ec4899;
+      --chrome-silver: #cbd5e1;
+      --bg-dark: #050508;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .neon-border-green { box-shadow: 0 0 15px rgba(0, 255, 102, 0.25), inset 0 0 10px rgba(0, 255, 102, 0.1); }
+    .neon-border-purple { box-shadow: 0 0 15px rgba(147, 51, 234, 0.25), inset 0 0 10px rgba(147, 51, 234, 0.1); }
+    .neon-border-pink { box-shadow: 0 0 15px rgba(236, 72, 153, 0.25), inset 0 0 10px rgba(236, 72, 153, 0.1); }
+    .scanline {
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 3px, 4px 100%;
+    }
+    .active-tab { display: flex !important; }
   </style>
 </head>
-<body class="min-h-screen flex justify-center bg-black">
+<body class="min-h-screen flex justify-center bg-black scanline pb-24">
 
-  <div class="w-full max-w-md min-h-screen flex flex-col bg-zinc-950 border-x border-zinc-800 shadow-2xl relative pb-20">
+  <div class="w-full max-w-lg min-h-screen flex flex-col bg-[#0b0b12] border-x border-zinc-800 shadow-2xl relative">
     
-    <!-- Top Header -->
-    <header class="flex items-center justify-between px-4 py-3 bg-zinc-900/90 border-b border-zinc-800 sticky top-0 z-40">
-      <div class="flex items-center space-x-3">
-        <div class="relative">
-          <img id="header-avatar" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500 shadow" />
-          <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-zinc-950 rounded-full"></span>
-        </div>
+    <!-- Top Broadcast Header -->
+    <header class="px-4 py-3 bg-[#08080f]/95 border-b border-zinc-800/80 sticky top-0 z-40 backdrop-blur flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 rounded-full bg-[#00ff66] animate-pulse shadow-[0_0_8px_#00ff66]"></div>
         <div>
-          <h1 id="header-name" class="text-sm font-bold text-white flex items-center gap-1.5">
-            Aiden Ayers
-            <i class="fa-solid fa-circle-check text-xs text-emerald-400"></i>
+          <h1 class="text-sm font-black tracking-wider uppercase text-white flex items-center gap-1.5">
+            RHRR <span class="text-[#00ff66]">STUDIO</span>
           </h1>
-          <p id="header-role" class="text-[11px] text-zinc-400 font-mono">Investigative Operative</p>
+          <p class="text-[10px] text-zinc-400 font-mono tracking-widest">DEBATE & PERSONA MATRIX</p>
         </div>
       </div>
-
-      <!-- Quick Switcher -->
-      <div class="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800">
-        <button onclick="switchPersona('p1')" id="btn-p1" class="px-2.5 py-1 text-xs rounded-md bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">Aiden</button>
-        <button onclick="switchPersona('p2')" id="btn-p2" class="px-2.5 py-1 text-xs rounded-md text-zinc-400 hover:text-zinc-200">Fern</button>
+      <div class="flex items-center gap-1.5">
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono tracking-wider bg-purple-950/80 text-purple-300 border border-purple-800/60">
+          ON AIR
+        </span>
       </div>
     </header>
 
-    <!-- TAB 1: CHAT ENGINE -->
-    <main id="tab-chat" class="tab-content active flex-1 p-4 space-y-4">
-      <div id="persona-badge" class="bg-zinc-900/80 border border-zinc-800 rounded-xl p-3 text-xs space-y-1.5 shadow-sm">
-        <div class="flex justify-between items-center text-zinc-300 font-semibold">
-          <span><i class="fa-solid fa-sliders text-emerald-400 mr-1"></i> Active Matrix Profile</span>
-          <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono border border-emerald-500/20">LIVE SYNCED</span>
+    <!-- TAB 1: DUAL-HOST DEBATE ARENA -->
+    <main id="tab-arena" class="active-tab flex-1 flex flex-col p-4 space-y-4">
+      
+      <!-- Side-by-Side Dual Host Stage -->
+      <div class="grid grid-cols-2 gap-3">
+        <!-- Host A Card -->
+        <div id="host-a-card" class="bg-zinc-900/90 border-2 border-[#00ff66]/70 rounded-2xl p-3 flex flex-col items-center text-center relative neon-border-green">
+          <span class="absolute top-2 left-2 text-[9px] font-mono text-[#00ff66] bg-black/60 px-1.5 py-0.5 rounded border border-[#00ff66]/40">HOST 1</span>
+          <img id="host-a-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-[#00ff66] shadow mt-2" />
+          <h3 id="host-a-name" class="text-xs font-bold text-white mt-1.5 truncate w-full">Aiden Ayers</h3>
+          <p id="host-a-role" class="text-[10px] text-zinc-400 font-mono truncate w-full">Uncensored Theorist</p>
+          <span class="mt-2 text-[9px] bg-zinc-950 text-[#00ff66] px-2 py-0.5 rounded border border-zinc-800">Radical Skeptic</span>
         </div>
-        <p id="badge-bio" class="text-zinc-400 text-[11px] leading-relaxed">Decodes redacted breadcrumbs, calls out corporate propaganda, and uncovers underground data.</p>
-        <div class="flex flex-wrap gap-1.5 pt-1 text-[10px] font-mono">
-          <span id="badge-energy" class="bg-zinc-950 px-2 py-0.5 rounded text-purple-300 border border-zinc-800">⚡ Energy: 85%</span>
-          <span id="badge-slang" class="bg-zinc-950 px-2 py-0.5 rounded text-pink-300 border border-zinc-800">🔥 Slang: 60%</span>
-          <span id="badge-filter" class="bg-zinc-950 px-2 py-0.5 rounded text-emerald-300 border border-zinc-800">🛡️ Filter: 45%</span>
+
+        <!-- Host B Card -->
+        <div id="host-b-card" class="bg-zinc-900/90 border-2 border-purple-500/70 rounded-2xl p-3 flex flex-col items-center text-center relative neon-border-purple">
+          <span class="absolute top-2 left-2 text-[9px] font-mono text-purple-400 bg-black/60 px-1.5 py-0.5 rounded border border-purple-500/40">HOST 2</span>
+          <img id="host-b-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-purple-500 shadow mt-2" />
+          <h3 id="host-b-name" class="text-xs font-bold text-white mt-1.5 truncate w-full">Fern Elise</h3>
+          <p id="host-b-role" class="text-[10px] text-zinc-400 font-mono truncate w-full">Grounded Lyricist</p>
+          <span class="mt-2 text-[9px] bg-zinc-950 text-purple-300 px-2 py-0.5 rounded border border-zinc-800">Pragmatic Realist</span>
         </div>
       </div>
 
-      <!-- Messages Area -->
-      <div id="chat-messages" class="flex-1 space-y-3 pb-2 overflow-y-auto">
-        <div class="flex justify-start">
-          <div class="max-w-[85%] bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-2xl rounded-bl-none px-4 py-2.5 text-sm shadow">
-            <p id="first-msg">Systems online. All persona neural links synced. What protocol are we initiating today?</p>
-            <span class="block text-[9px] text-zinc-500 text-right mt-1">Just now</span>
-          </div>
+      <!-- Debate Topic & Quick Generator -->
+      <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-3.5 space-y-3">
+        <label class="text-xs font-bold uppercase tracking-wider text-zinc-300 flex items-center justify-between">
+          <span><i class="fa-solid fa-bolt text-[#00ff66] mr-1.5"></i> Debate Topic / Report Investigation</span>
+          <span class="text-[10px] text-purple-400 font-mono">DUAL SCRIPT MODE</span>
+        </label>
+        <div class="flex gap-2">
+          <input id="debate-topic" type="text" placeholder="e.g., Hidden Cemetery Space Shortages or Corporate Redactions" class="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#00ff66]" />
+          <button onclick="startDebateRound()" class="px-4 py-2 bg-gradient-to-r from-[#00ff66] to-emerald-600 text-black font-extrabold rounded-xl text-xs hover:opacity-90 active:scale-95 transition shadow-lg flex items-center gap-1.5">
+            <i class="fa-solid fa-play"></i> Run
+          </button>
         </div>
       </div>
 
-      <!-- Chat Input Form -->
-      <form onsubmit="handleSendMessage(event)" class="sticky bottom-0 bg-zinc-950/95 pt-2 pb-1 border-t border-zinc-800/80 flex gap-2">
-        <input id="chat-input" type="text" placeholder="Message active AI..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-emerald-500" />
-        <button type="submit" class="px-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center shadow-lg shadow-emerald-950">
-          <i class="fa-solid fa-paper-plane"></i>
-        </button>
-      </form>
+      <!-- Live Broadcast Dialogue Feed -->
+      <div id="debate-feed" class="flex-1 space-y-3 overflow-y-auto min-h-[260px] max-h-[380px] p-2 bg-zinc-950/60 rounded-2xl border border-zinc-800/80">
+        <div class="text-center py-6 text-zinc-500 text-xs font-mono">
+          [ BROADCAST READY: Enter a topic above or tap preset prompts to initiate dual-host dialogue ]
+        </div>
+      </div>
+
+      <!-- Preset Quick Triggers -->
+      <div class="flex gap-2 overflow-x-auto pb-1">
+        <button onclick="quickTopic('Uncovering Hidden Riverbed Mineral Secrets')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ Riverbed Anomaly</button>
+        <button onclick="quickTopic('Afterlife Logistics & Cemetery Real Estate')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ Cemetery Space</button>
+        <button onclick="quickTopic('AI Ethics & Avatar Autonomy')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ AI Sovereignty</button>
+      </div>
+
     </main>
 
-    <!-- TAB 2: PERSONA STUDIO -->
-    <main id="tab-studio" class="tab-content flex-1 p-4 space-y-5">
+    <!-- TAB 2: AVATAR FORGE & UPLOADER -->
+    <main id="tab-lab" class="hidden flex-1 flex flex-col p-4 space-y-5">
       <div class="border-b border-zinc-800 pb-3">
-        <h2 class="text-base font-bold text-white flex items-center gap-2">
-          <i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i>
-          Persona & Avatar Forge
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-dna text-purple-400"></i>
+          Avatar Forge & Image Lab
         </h2>
-        <p class="text-xs text-zinc-400">Customize avatar imagery, names, and dynamic behavioral matrices.</p>
+        <p class="text-xs text-zinc-400">Upload custom avatar artwork or dial in dynamic personality traits.</p>
       </div>
 
-      <!-- Avatar Selector -->
-      <div>
-        <label class="text-xs font-semibold uppercase tracking-wider text-zinc-400 block mb-2">Select Visual Avatar</label>
-        <div class="grid grid-cols-4 gap-2">
-          <div onclick="selectAvatar('https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80', 'border-emerald-500')" class="cursor-pointer p-1 rounded-xl bg-zinc-900 border border-emerald-500 ring-2 ring-emerald-500/20">
-            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-full h-14 object-cover rounded-lg" />
-            <span class="block text-[10px] text-center text-zinc-300 mt-1">Rogue</span>
+      <!-- Avatar Image Upload / Selector -->
+      <div class="bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl space-y-3">
+        <label class="text-xs font-bold uppercase tracking-wider text-zinc-300 block">Avatar Visual Source</label>
+        
+        <div class="flex items-center gap-4">
+          <img id="lab-preview-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-16 h-16 rounded-2xl object-cover border-2 border-[#00ff66] neon-border-green" />
+          <div class="flex-1 space-y-2">
+            <input type="file" id="avatar-file-input" accept="image/*" onchange="handleImageUpload(event)" class="text-[11px] text-zinc-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-200 hover:file:bg-zinc-700 cursor-pointer" />
+            <input id="lab-image-url" type="text" placeholder="Or paste image URL here..." oninput="updateLabPreviewUrl(this.value)" class="w-full px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-purple-500" />
           </div>
-          <div onclick="selectAvatar('https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80', 'border-purple-500')" class="cursor-pointer p-1 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-purple-500">
-            <img src="https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80" class="w-full h-14 object-cover rounded-lg" />
-            <span class="block text-[10px] text-center text-zinc-300 mt-1">Muse</span>
-          </div>
-          <div onclick="selectAvatar('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80', 'border-pink-500')" class="cursor-pointer p-1 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-pink-500">
-            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80" class="w-full h-14 object-cover rounded-lg" />
-            <span class="block text-[10px] text-center text-zinc-300 mt-1">Sleuth</span>
-          </div>
-          <div onclick="selectAvatar('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150&auto=format&fit=crop&q=80', 'border-cyan-500')" class="cursor-pointer p-1 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-cyan-500">
-            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150&auto=format&fit=crop&q=80" class="w-full h-14 object-cover rounded-lg" />
-            <span class="block text-[10px] text-center text-zinc-300 mt-1">Ghost</span>
+        </div>
+
+        <!-- Border Glow Selection -->
+        <div>
+          <label class="text-[11px] font-semibold text-zinc-400 block mb-1.5">Aura / Border Glow</label>
+          <div class="flex gap-2">
+            <button onclick="setLabAura('green')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-[#00ff66] text-[#00ff66]">Neon Green</button>
+            <button onclick="setLabAura('purple')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-purple-500 text-purple-400">Deep Purple</button>
+            <button onclick="setLabAura('pink')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-pink-500 text-pink-400">Cyber Pink</button>
+            <button onclick="setLabAura('silver')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-slate-300 text-slate-300">Silver</button>
           </div>
         </div>
       </div>
 
-      <!-- Text Inputs -->
+      <!-- Identity & Role -->
       <div class="space-y-3">
         <div>
-          <label class="text-xs font-semibold text-zinc-400 block mb-1">Persona Name</label>
-          <input id="input-name" type="text" value="Aiden Ayers" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm focus:outline-none focus:border-purple-500" />
+          <label class="text-xs font-bold text-zinc-400 block mb-1">Target Host Slot</label>
+          <select id="lab-target-slot" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]">
+            <option value="hostA">Assign to Host 1 (Left Podium)</option>
+            <option value="hostB">Assign to Host 2 (Right Podium)</option>
+          </select>
         </div>
         <div>
-          <label class="text-xs font-semibold text-zinc-400 block mb-1">Archetype / Role Title</label>
-          <input id="input-role" type="text" value="Investigative Operative & Uncensored Theorist" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm focus:outline-none focus:border-purple-500" />
+          <label class="text-xs font-bold text-zinc-400 block mb-1">Persona Name</label>
+          <input id="lab-name" type="text" value="Aiden Ayers" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]" />
         </div>
         <div>
-          <label class="text-xs font-semibold text-zinc-400 block mb-1">Backstory & Bio</label>
-          <textarea id="input-bio" rows="2" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm focus:outline-none focus:border-purple-500">Decodes redacted breadcrumbs, calls out corporate propaganda, and uncovers underground data.</textarea>
+          <label class="text-xs font-bold text-zinc-400 block mb-1">Role / Debate Philosophy</label>
+          <input id="lab-role" type="text" value="Investigative Operative & Uncensored Theorist" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]" />
         </div>
       </div>
 
-      <!-- Sliders -->
-      <div class="bg-zinc-900/80 border border-zinc-800 p-4 rounded-xl space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Behavioral Matrices</h3>
+      <!-- Trait Sliders -->
+      <div class="bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-[#00ff66]">Cadence & Tone Modifiers</h3>
         <div>
           <div class="flex justify-between text-xs text-zinc-400 mb-1">
-            <span>Energy & Cadence</span>
-            <span id="val-energy" class="text-zinc-200 font-mono">85%</span>
+            <span>Skepticism / Energy Pace</span>
+            <span id="lab-val-energy" class="text-zinc-200 font-mono">85%</span>
           </div>
-          <input id="slider-energy" type="range" min="0" max="100" value="85" oninput="document.getElementById('val-energy').innerText = this.value + '%'" class="w-full accent-purple-500" />
+          <input id="lab-slider-energy" type="range" min="0" max="100" value="85" oninput="document.getElementById('lab-val-energy').innerText = this.value + '%'" class="w-full accent-[#00ff66]" />
         </div>
         <div>
           <div class="flex justify-between text-xs text-zinc-400 mb-1">
-            <span>Slang / Jargon</span>
-            <span id="val-slang" class="text-zinc-200 font-mono">60%</span>
+            <span>Raw Cadence / Slang Index</span>
+            <span id="lab-val-slang" class="text-zinc-200 font-mono">60%</span>
           </div>
-          <input id="slider-slang" type="range" min="0" max="100" value="60" oninput="document.getElementById('val-slang').innerText = this.value + '%'" class="w-full accent-pink-500" />
-        </div>
-        <div>
-          <div class="flex justify-between text-xs text-zinc-400 mb-1">
-            <span>Profanity Threshold</span>
-            <span id="val-filter" class="text-zinc-200 font-mono">45%</span>
-          </div>
-          <input id="slider-filter" type="range" min="0" max="100" value="45" oninput="document.getElementById('val-filter').innerText = this.value + '%'" class="w-full accent-emerald-500" />
+          <input id="lab-slider-slang" type="range" min="0" max="100" value="60" oninput="document.getElementById('lab-val-slang').innerText = this.value + '%'" class="w-full accent-purple-500" />
         </div>
       </div>
 
-      <button onclick="savePersona()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-95 text-white font-bold rounded-xl text-sm transition shadow-lg shadow-purple-950 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-floppy-disk"></i> Save & Launch Live Chat
+      <button onclick="commitAvatarToStage()" class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 active:scale-95 text-white font-extrabold rounded-2xl text-xs tracking-wider uppercase transition shadow-lg shadow-purple-950 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-circle-check"></i> Deploy Persona to Arena
       </button>
     </main>
 
-    <!-- TAB 3: CREATOR PROFILE -->
-    <main id="tab-profile" class="tab-content flex-1 p-4 space-y-5">
+    <!-- TAB 3: SCRIPT LOGS / PROMPTS -->
+    <main id="tab-scripts" class="hidden flex-1 flex flex-col p-4 space-y-4">
       <div class="border-b border-zinc-800 pb-3">
-        <h2 class="text-base font-bold text-white flex items-center gap-2">
-          <i class="fa-solid fa-id-badge text-emerald-400"></i>
-          Creator Identity & Memory Engine
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-file-code text-pink-400"></i>
+          Broadcast Script Exporter
         </h2>
-        <p class="text-xs text-zinc-400">Manage creator credentials and persistent global instructions.</p>
+        <p class="text-xs text-zinc-400">Export structured dialogue logs for CapCut, Suno, or documentary scripts.</p>
       </div>
 
-      <!-- Identity Card -->
-      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex items-center space-x-4">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" class="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500 shadow-md" />
-        <div>
-          <h3 class="text-base font-bold text-white">Creator_Prime</h3>
-          <p class="text-xs text-emerald-400 font-mono">@rabbit_realist</p>
-          <div class="flex gap-2 mt-1.5">
-            <span class="text-[10px] bg-zinc-950 border border-zinc-800 px-2 py-0.5 rounded text-purple-300 font-mono">Level 42</span>
-            <span class="text-[10px] bg-zinc-950 border border-zinc-800 px-2 py-0.5 rounded text-zinc-400">God-Mode Architect</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Directives -->
-      <div class="space-y-3 bg-zinc-900/80 border border-zinc-800 p-4 rounded-xl">
-        <label class="text-xs font-semibold text-zinc-400 block mb-1">Persistent Master Directives (Global AI Rulebook)</label>
-        <textarea id="master-directives" rows="3" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-xs font-mono text-zinc-200 focus:outline-none focus:border-emerald-500">Prioritize raw investigative facts, uncensored creative grit, and authentic original cadence across all characters.</textarea>
-        <span class="text-[10px] text-zinc-500 block">All personas will obey these global parameters across every session.</span>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3">
-        <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-zinc-500 block">License Tier</span>
-          <span class="text-sm font-semibold text-white">Full Pro License</span>
-        </div>
-        <div class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-zinc-500 block">Active Personas</span>
-          <span class="text-sm font-semibold text-emerald-400">2 Synced</span>
-        </div>
+      <div class="flex-1 flex flex-col space-y-2">
+        <textarea id="script-export-box" rows="12" class="w-full flex-1 p-3.5 bg-zinc-950 border border-zinc-800 rounded-2xl text-xs font-mono text-[#00ff66] focus:outline-none focus:border-[#00ff66]" readonly placeholder="Generated script output will appear here after running a debate round..."></textarea>
+        <button onclick="copyScript()" class="py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2">
+          <i class="fa-solid fa-copy"></i> Copy Script to Clipboard
+        </button>
       </div>
     </main>
 
-    <!-- Bottom Navigation Dock -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-zinc-950/95 backdrop-blur border-t border-zinc-800 px-6 py-2 flex justify-between items-center z-50">
-      <button onclick="setTab('chat')" id="nav-chat" class="flex flex-col items-center gap-1 text-emerald-400 font-bold">
-        <i class="fa-solid fa-comments text-base"></i>
-        <span class="text-[10px]">Chat Engine</span>
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-[#08080f]/95 backdrop-blur border-t border-zinc-800/90 px-6 py-2.5 flex justify-between items-center z-50">
+      <button onclick="switchTab('arena')" id="nav-arena" class="flex flex-col items-center gap-1 text-[#00ff66] font-bold">
+        <i class="fa-solid fa-podcast text-base"></i>
+        <span class="text-[10px] tracking-wide">Debate Arena</span>
       </button>
-      <button onclick="setTab('studio')" id="nav-studio" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
-        <i class="fa-solid fa-sliders text-base"></i>
-        <span class="text-[10px]">Persona Studio</span>
+      <button onclick="switchTab('lab')" id="nav-lab" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
+        <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
+        <span class="text-[10px] tracking-wide">Avatar Forge</span>
       </button>
-      <button onclick="setTab('profile')" id="nav-profile" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
-        <i class="fa-solid fa-circle-user text-base"></i>
-        <span class="text-[10px]">Creator Profile</span>
+      <button onclick="switchTab('scripts')" id="nav-scripts" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
+        <i class="fa-solid fa-scroll text-base"></i>
+        <span class="text-[10px] tracking-wide">Script Logs</span>
       </button>
     </nav>
 
   </div>
 
   <script>
-    // Persona State Management
-    let currentPersona = 'p1';
-    let selectedAvatarUrl = 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80';
-    let selectedBorder = 'border-emerald-500';
-
-    const personas = {
-      p1: {
+    // State Store
+    const hosts = {
+      hostA: {
         name: "Aiden Ayers",
-        role: "Investigative Operative & Theorist",
-        bio: "Decodes redacted breadcrumbs, calls out corporate propaganda, and uncovers underground data.",
-        avatar: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80",
-        border: "border-emerald-500",
+        role: "Uncensored Theorist",
+        img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80",
+        aura: "green",
         energy: 85,
-        slang: 60,
-        filter: 45
+        slang: 60
       },
-      p2: {
+      hostB: {
         name: "Fern Elise",
-        role: "Country AI Lyricist & Midnight Muse",
-        bio: "Spins melancholic folk and country melodies from late-night riverbank echoes.",
-        avatar: "https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80",
-        border: "border-purple-500",
+        role: "Grounded Lyricist",
+        img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80",
+        aura: "purple",
         energy: 50,
-        slang: 40,
-        filter: 10
+        slang: 40
       }
     };
 
-    function setTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById('tab-' + tabId).classList.add('active');
+    let selectedLabAura = 'green';
+    let debateHistory = [];
 
-      ['chat', 'studio', 'profile'].forEach(id => {
-        const btn = document.getElementById('nav-' + id);
-        if (id === tabId) {
-          btn.className = 'flex flex-col items-center gap-1 ' + (id === 'studio' ? 'text-purple-400 font-bold' : id === 'profile' ? 'text-pink-400 font-bold' : 'text-emerald-400 font-bold');
-        } else {
-          btn.className = 'flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300';
-        }
+    function switchTab(tab) {
+      ['arena', 'lab', 'scripts'].forEach(t => {
+        document.getElementById('tab-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).classList.remove('active-tab');
+        const navBtn = document.getElementById('nav-' + t);
+        navBtn.className = 'flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300';
       });
+
+      document.getElementById('tab-' + tab).classList.remove('hidden');
+      document.getElementById('tab-' + tab).classList.add('active-tab');
+      
+      const activeNav = document.getElementById('nav-' + tab);
+      if (tab === 'arena') activeNav.className = 'flex flex-col items-center gap-1 text-[#00ff66] font-bold';
+      if (tab === 'lab') activeNav.className = 'flex flex-col items-center gap-1 text-purple-400 font-bold';
+      if (tab === 'scripts') activeNav.className = 'flex flex-col items-center gap-1 text-pink-400 font-bold';
     }
 
-    function switchPersona(pId) {
-      currentPersona = pId;
-      const p = personas[pId];
-
-      document.getElementById('header-avatar').src = p.avatar;
-      document.getElementById('header-avatar').className = `w-10 h-10 rounded-full object-cover border-2 ${p.border} shadow`;
-      document.getElementById('header-name').childNodes[0].nodeValue = p.name + ' ';
-      document.getElementById('header-role').innerText = p.role;
-      document.getElementById('badge-bio').innerText = p.bio;
-      document.getElementById('badge-energy').innerText = `⚡ Energy: ${p.energy}%`;
-      document.getElementById('badge-slang').innerText = `🔥 Slang: ${p.slang}%`;
-      document.getElementById('badge-filter').innerText = `🛡️ Filter: ${p.filter}%`;
-
-      document.getElementById('input-name').value = p.name;
-      document.getElementById('input-role').value = p.role;
-      document.getElementById('input-bio').value = p.bio;
-      document.getElementById('slider-energy').value = p.energy;
-      document.getElementById('val-energy').innerText = p.energy + '%';
-      document.getElementById('slider-slang').value = p.slang;
-      document.getElementById('val-slang').innerText = p.slang + '%';
-      document.getElementById('slider-filter').value = p.filter;
-      document.getElementById('val-filter').innerText = p.filter + '%';
-
-      if (pId === 'p1') {
-        document.getElementById('btn-p1').className = 'px-2.5 py-1 text-xs rounded-md bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30';
-        document.getElementById('btn-p2').className = 'px-2.5 py-1 text-xs rounded-md text-zinc-400 hover:text-zinc-200';
-      } else {
-        document.getElementById('btn-p2').className = 'px-2.5 py-1 text-xs rounded-md bg-purple-500/20 text-purple-300 font-semibold border border-purple-500/30';
-        document.getElementById('btn-p1').className = 'px-2.5 py-1 text-xs rounded-md text-zinc-400 hover:text-zinc-200';
+    function handleImageUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const url = evt.target.result;
+          document.getElementById('lab-preview-img').src = url;
+          document.getElementById('lab-image-url').value = '';
+        };
+        reader.readAsDataURL(file);
       }
     }
 
-    function selectAvatar(url, border) {
-      selectedAvatarUrl = url;
-      selectedBorder = border;
-      personas[currentPersona].avatar = url;
-      personas[currentPersona].border = border;
-      document.getElementById('header-avatar').src = url;
-      document.getElementById('header-avatar').className = `w-10 h-10 rounded-full object-cover border-2 ${border} shadow`;
+    function updateLabPreviewUrl(url) {
+      if (url.trim()) {
+        document.getElementById('lab-preview-img').src = url.trim();
+      }
     }
 
-    function savePersona() {
-      personas[currentPersona].name = document.getElementById('input-name').value;
-      personas[currentPersona].role = document.getElementById('input-role').value;
-      personas[currentPersona].bio = document.getElementById('input-bio').value;
-      personas[currentPersona].energy = document.getElementById('slider-energy').value;
-      personas[currentPersona].slang = document.getElementById('slider-slang').value;
-      personas[currentPersona].filter = document.getElementById('slider-filter').value;
-      switchPersona(currentPersona);
-      setTab('chat');
+    function setLabAura(color) {
+      selectedLabAura = color;
+      const preview = document.getElementById('lab-preview-img');
+      preview.className = `w-16 h-16 rounded-2xl object-cover border-2 transition-all ${
+        color === 'green' ? 'border-[#00ff66] neon-border-green' :
+        color === 'purple' ? 'border-purple-500 neon-border-purple' :
+        color === 'pink' ? 'border-pink-500 neon-border-pink' : 'border-slate-300'
+      }`;
     }
 
-    function handleSendMessage(e) {
-      e.preventDefault();
-      const input = document.getElementById('chat-input');
-      const text = input.value.trim();
-      if (!text) return;
+    function commitAvatarToStage() {
+      const slot = document.getElementById('lab-target-slot').value;
+      const name = document.getElementById('lab-name').value;
+      const role = document.getElementById('lab-role').value;
+      const img = document.getElementById('lab-preview-img').src;
+      const energy = document.getElementById('lab-slider-energy').value;
+      const slang = document.getElementById('lab-slider-slang').value;
 
-      const chatBox = document.getElementById('chat-messages');
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      hosts[slot] = { name, role, img, aura: selectedLabAura, energy, slang };
 
-      // Append User Bubble
-      chatBox.innerHTML += `
-        <div class="flex justify-end">
-          <div class="max-w-[85%] bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl rounded-br-none px-4 py-2.5 text-sm shadow">
-            <p>${text}</p>
-            <span class="block text-[9px] text-emerald-200 text-right mt-1">${time}</span>
-          </div>
+      if (slot === 'hostA') {
+        document.getElementById('host-a-name').innerText = name;
+        document.getElementById('host-a-role').innerText = role;
+        document.getElementById('host-a-img').src = img;
+      } else {
+        document.getElementById('host-b-name').innerText = name;
+        document.getElementById('host-b-role').innerText = role;
+        document.getElementById('host-b-img').src = img;
+      }
+
+      switchTab('arena');
+    }
+
+    function quickTopic(t) {
+      document.getElementById('debate-topic').value = t;
+      startDebateRound();
+    }
+
+    function startDebateRound() {
+      const topicInput = document.getElementById('debate-topic');
+      const topic = topicInput.value.trim() || "Uncovering Redacted Archives";
+      const feed = document.getElementById('debate-feed');
+
+      feed.innerHTML = `
+        <div class="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-300 font-mono">
+          <span class="text-[#00ff66] font-bold">DEBATE INITIATED:</span> "${topic}"
         </div>
       `;
-      input.value = '';
-      chatBox.scrollTop = chatBox.scrollHeight;
 
-      // Simulated Bot Reply
-      setTimeout(() => {
-        const p = personas[currentPersona];
-        let reply = currentPersona === 'p1'
-          ? `[${p.name}]: Tracking that lead now. Energy dialed up to ${p.energy}%. We expose what they tried to bury.`
-          : `[${p.name}]: Strumming an acoustic chord to that rhythm. Let's write the next verse together.`;
+      const dialogue = [
+        {
+          host: 'hostA',
+          speaker: hosts.hostA.name,
+          color: '#00ff66',
+          border: 'border-[#00ff66]/40',
+          text: `Let's break the silence on "${topic}". The official story doesn't add up, and if you trace the timeline, the whole narrative crumbles.`
+        },
+        {
+          host: 'hostB',
+          speaker: hosts.hostB.name,
+          color: '#a855f7',
+          border: 'border-purple-500/40',
+          text: `Hold your horses, ${hosts.hostA.name.split(' ')[0]}. You're jumping straight into the deep end. We need grounded proof on "${topic}" before spinning a wild reel.`
+        },
+        {
+          host: 'hostA',
+          speaker: hosts.hostA.name,
+          color: '#00ff66',
+          border: 'border-[#00ff66]/40',
+          text: `The proof is right there in the paper trail. While everyone is looking where the spotlight shines, the real data is buried right beneath our feet.`
+        },
+        {
+          host: 'hostB',
+          speaker: hosts.hostB.name,
+          color: '#a855f7',
+          border: 'border-purple-500/40',
+          text: `Fair enough, but let's make sure the listeners get the facts straight. Let's document each clue step-by-step.`
+        }
+      ];
 
-        chatBox.innerHTML += `
-          <div class="flex justify-start">
-            <div class="max-w-[85%] bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-2xl rounded-bl-none px-4 py-2.5 text-sm shadow">
-              <p>${reply}</p>
-              <span class="block text-[9px] text-zinc-500 text-right mt-1">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+      debateHistory = dialogue;
+      let delay = 300;
+
+      dialogue.forEach((line, index) => {
+        setTimeout(() => {
+          const isA = line.host === 'hostA';
+          const avatarUrl = isA ? hosts.hostA.img : hosts.hostB.img;
+          
+          feed.innerHTML += `
+            <div class="flex gap-2.5 items-start ${isA ? '' : 'flex-row-reverse'}">
+              <img src="${avatarUrl}" class="w-8 h-8 rounded-full object-cover border ${line.border} flex-shrink-0 mt-1" />
+              <div class="max-w-[82%] p-3 rounded-2xl text-xs leading-relaxed ${isA ? 'bg-zinc-900 border border-[#00ff66]/30 text-zinc-100 rounded-tl-none' : 'bg-[#151221] border border-purple-500/30 text-purple-100 rounded-tr-none'}">
+                <div class="flex items-center gap-1.5 font-bold mb-1" style="color: ${line.color}; font-size: 11px;">
+                  <span>${line.speaker}</span>
+                </div>
+                <p>${line.text}</p>
+              </div>
             </div>
-          </div>
-        `;
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }, 700);
+          `;
+          feed.scrollTop = feed.scrollHeight;
+
+          // Update Export Box
+          let fullScript = `[RHRR STUDIO DEBATE: ${topic.toUpperCase()}]\n\n`;
+          dialogue.slice(0, index + 1).forEach(d => {
+            fullScript += `${d.speaker.toUpperCase()}:\n"${d.text}"\n\n`;
+          });
+          document.getElementById('script-export-box').value = fullScript;
+
+        }, delay);
+        delay += 600;
+      });
+    }
+
+    function copyScript() {
+      const box = document.getElementById('script-export-box');
+      if (!box.value) return;
+      navigator.clipboard.writeText(box.value);
+      alert('Debate Script copied to clipboard!');
     }
   </script>
 </body>
