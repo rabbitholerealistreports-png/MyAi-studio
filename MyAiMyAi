@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Realist Studio | Dual-Host Debate Arena</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --neon-green: #00ff66;
+      --deep-purple: #9333ea;
+      --cyber-pink: #ec4899;
+      --chrome-silver: #cbd5e1;
+      --bg-dark: #050508;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .neon-border-green { box-shadow: 0 0 15px rgba(0, 255, 102, 0.25), inset 0 0 10px rgba(0, 255, 102, 0.1); }
+    .neon-border-purple { box-shadow: 0 0 15px rgba(147, 51, 234, 0.25), inset 0 0 10px rgba(147, 51, 234, 0.1); }
+    .neon-border-pink { box-shadow: 0 0 15px rgba(236, 72, 153, 0.25), inset 0 0 10px rgba(236, 72, 153, 0.1); }
+    .scanline {
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 3px, 4px 100%;
+    }
+    .active-tab { display: flex !important; }
+  </style>
+</head>
+<body class="min-h-screen flex justify-center bg-black scanline pb-24">
+
+  <div class="w-full max-w-lg min-h-screen flex flex-col bg-[#0b0b12] border-x border-zinc-800 shadow-2xl relative">
+    
+    <!-- Top Broadcast Header -->
+    <header class="px-4 py-3 bg-[#08080f]/95 border-b border-zinc-800/80 sticky top-0 z-40 backdrop-blur flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 rounded-full bg-[#00ff66] animate-pulse shadow-[0_0_8px_#00ff66]"></div>
+        <div>
+          <h1 class="text-sm font-black tracking-wider uppercase text-white flex items-center gap-1.5">
+            RHRR <span class="text-[#00ff66]">STUDIO</span>
+          </h1>
+          <p class="text-[10px] text-zinc-400 font-mono tracking-widest">DEBATE & PERSONA MATRIX</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono tracking-wider bg-purple-950/80 text-purple-300 border border-purple-800/60">
+          ON AIR
+        </span>
+      </div>
+    </header>
+
+    <!-- TAB 1: DUAL-HOST DEBATE ARENA -->
+    <main id="tab-arena" class="active-tab flex-1 flex flex-col p-4 space-y-4">
+      
+      <!-- Side-by-Side Dual Host Stage -->
+      <div class="grid grid-cols-2 gap-3">
+        <!-- Host A Card -->
+        <div id="host-a-card" class="bg-zinc-900/90 border-2 border-[#00ff66]/70 rounded-2xl p-3 flex flex-col items-center text-center relative neon-border-green">
+          <span class="absolute top-2 left-2 text-[9px] font-mono text-[#00ff66] bg-black/60 px-1.5 py-0.5 rounded border border-[#00ff66]/40">HOST 1</span>
+          <img id="host-a-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-[#00ff66] shadow mt-2" />
+          <h3 id="host-a-name" class="text-xs font-bold text-white mt-1.5 truncate w-full">Aiden Ayers</h3>
+          <p id="host-a-role" class="text-[10px] text-zinc-400 font-mono truncate w-full">Uncensored Theorist</p>
+          <span class="mt-2 text-[9px] bg-zinc-950 text-[#00ff66] px-2 py-0.5 rounded border border-zinc-800">Radical Skeptic</span>
+        </div>
+
+        <!-- Host B Card -->
+        <div id="host-b-card" class="bg-zinc-900/90 border-2 border-purple-500/70 rounded-2xl p-3 flex flex-col items-center text-center relative neon-border-purple">
+          <span class="absolute top-2 left-2 text-[9px] font-mono text-purple-400 bg-black/60 px-1.5 py-0.5 rounded border border-purple-500/40">HOST 2</span>
+          <img id="host-b-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-purple-500 shadow mt-2" />
+          <h3 id="host-b-name" class="text-xs font-bold text-white mt-1.5 truncate w-full">Fern Elise</h3>
+          <p id="host-b-role" class="text-[10px] text-zinc-400 font-mono truncate w-full">Grounded Lyricist</p>
+          <span class="mt-2 text-[9px] bg-zinc-950 text-purple-300 px-2 py-0.5 rounded border border-zinc-800">Pragmatic Realist</span>
+        </div>
+      </div>
+
+      <!-- Debate Topic & Quick Generator -->
+      <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-3.5 space-y-3">
+        <label class="text-xs font-bold uppercase tracking-wider text-zinc-300 flex items-center justify-between">
+          <span><i class="fa-solid fa-bolt text-[#00ff66] mr-1.5"></i> Debate Topic / Report Investigation</span>
+          <span class="text-[10px] text-purple-400 font-mono">DUAL SCRIPT MODE</span>
+        </label>
+        <div class="flex gap-2">
+          <input id="debate-topic" type="text" placeholder="e.g., Hidden Cemetery Space Shortages or Corporate Redactions" class="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#00ff66]" />
+          <button onclick="startDebateRound()" class="px-4 py-2 bg-gradient-to-r from-[#00ff66] to-emerald-600 text-black font-extrabold rounded-xl text-xs hover:opacity-90 active:scale-95 transition shadow-lg flex items-center gap-1.5">
+            <i class="fa-solid fa-play"></i> Run
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Broadcast Dialogue Feed -->
+      <div id="debate-feed" class="flex-1 space-y-3 overflow-y-auto min-h-[260px] max-h-[380px] p-2 bg-zinc-950/60 rounded-2xl border border-zinc-800/80">
+        <div class="text-center py-6 text-zinc-500 text-xs font-mono">
+          [ BROADCAST READY: Enter a topic above or tap preset prompts to initiate dual-host dialogue ]
+        </div>
+      </div>
+
+      <!-- Preset Quick Triggers -->
+      <div class="flex gap-2 overflow-x-auto pb-1">
+        <button onclick="quickTopic('Uncovering Hidden Riverbed Mineral Secrets')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ Riverbed Anomaly</button>
+        <button onclick="quickTopic('Afterlife Logistics & Cemetery Real Estate')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ Cemetery Space</button>
+        <button onclick="quickTopic('AI Ethics & Avatar Autonomy')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ AI Sovereignty</button>
+      </div>
+
+    </main>
+
+    <!-- TAB 2: AVATAR FORGE & UPLOADER -->
+    <main id="tab-lab" class="hidden flex-1 flex flex-col p-4 space-y-5">
+      <div class="border-b border-zinc-800 pb-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-dna text-purple-400"></i>
+          Avatar Forge & Image Lab
+        </h2>
+        <p class="text-xs text-zinc-400">Upload custom avatar artwork or dial in dynamic personality traits.</p>
+      </div>
+
+      <!-- Avatar Image Upload / Selector -->
+      <div class="bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl space-y-3">
+        <label class="text-xs font-bold uppercase tracking-wider text-zinc-300 block">Avatar Visual Source</label>
+        
+        <div class="flex items-center gap-4">
+          <img id="lab-preview-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-16 h-16 rounded-2xl object-cover border-2 border-[#00ff66] neon-border-green" />
+          <div class="flex-1 space-y-2">
+            <input type="file" id="avatar-file-input" accept="image/*" onchange="handleImageUpload(event)" class="text-[11px] text-zinc-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-200 hover:file:bg-zinc-700 cursor-pointer" />
+            <input id="lab-image-url" type="text" placeholder="Or paste image URL here..." oninput="updateLabPreviewUrl(this.value)" class="w-full px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-purple-500" />
+          </div>
+        </div>
+
+        <!-- Border Glow Selection -->
+        <div>
+          <label class="text-[11px] font-semibold text-zinc-400 block mb-1.5">Aura / Border Glow</label>
+          <div class="flex gap-2">
+            <button onclick="setLabAura('green')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-[#00ff66] text-[#00ff66]">Neon Green</button>
+            <button onclick="setLabAura('purple')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-purple-500 text-purple-400">Deep Purple</button>
+            <button onclick="setLabAura('pink')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-pink-500 text-pink-400">Cyber Pink</button>
+            <button onclick="setLabAura('silver')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-slate-300 text-slate-300">Silver</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Identity & Role -->
+      <div class="space-y-3">
+        <div>
+          <label class="text-xs font-bold text-zinc-400 block mb-1">Target Host Slot</label>
+          <select id="lab-target-slot" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]">
+            <option value="hostA">Assign to Host 1 (Left Podium)</option>
+            <option value="hostB">Assign to Host 2 (Right Podium)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-bold text-zinc-400 block mb-1">Persona Name</label>
+          <input id="lab-name" type="text" value="Aiden Ayers" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]" />
+        </div>
+        <div>
+          <label class="text-xs font-bold text-zinc-400 block mb-1">Role / Debate Philosophy</label>
+          <input id="lab-role" type="text" value="Investigative Operative & Uncensored Theorist" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]" />
+        </div>
+      </div>
+
+      <!-- Trait Sliders -->
+      <div class="bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-[#00ff66]">Cadence & Tone Modifiers</h3>
+        <div>
+          <div class="flex justify-between text-xs text-zinc-400 mb-1">
+            <span>Skepticism / Energy Pace</span>
+            <span id="lab-val-energy" class="text-zinc-200 font-mono">85%</span>
+          </div>
+          <input id="lab-slider-energy" type="range" min="0" max="100" value="85" oninput="document.getElementById('lab-val-energy').innerText = this.value + '%'" class="w-full accent-[#00ff66]" />
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-zinc-400 mb-1">
+            <span>Raw Cadence / Slang Index</span>
+            <span id="lab-val-slang" class="text-zinc-200 font-mono">60%</span>
+          </div>
+          <input id="lab-slider-slang" type="range" min="0" max="100" value="60" oninput="document.getElementById('lab-val-slang').innerText = this.value + '%'" class="w-full accent-purple-500" />
+        </div>
+      </div>
+
+      <button onclick="commitAvatarToStage()" class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 active:scale-95 text-white font-extrabold rounded-2xl text-xs tracking-wider uppercase transition shadow-lg shadow-purple-950 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-circle-check"></i> Deploy Persona to Arena
+      </button>
+    </main>
+
+    <!-- TAB 3: SCRIPT LOGS / PROMPTS -->
+    <main id="tab-scripts" class="hidden flex-1 flex flex-col p-4 space-y-4">
+      <div class="border-b border-zinc-800 pb-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-file-code text-pink-400"></i>
+          Broadcast Script Exporter
+        </h2>
+        <p class="text-xs text-zinc-400">Export structured dialogue logs for CapCut, Suno, or documentary scripts.</p>
+      </div>
+
+      <div class="flex-1 flex flex-col space-y-2">
+        <textarea id="script-export-box" rows="12" class="w-full flex-1 p-3.5 bg-zinc-950 border border-zinc-800 rounded-2xl text-xs font-mono text-[#00ff66] focus:outline-none focus:border-[#00ff66]" readonly placeholder="Generated script output will appear here after running a debate round..."></textarea>
+        <button onclick="copyScript()" class="py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2">
+          <i class="fa-solid fa-copy"></i> Copy Script to Clipboard
+        </button>
+      </div>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-[#08080f]/95 backdrop-blur border-t border-zinc-800/90 px-6 py-2.5 flex justify-between items-center z-50">
+      <button onclick="switchTab('arena')" id="nav-arena" class="flex flex-col items-center gap-1 text-[#00ff66] font-bold">
+        <i class="fa-solid fa-podcast text-base"></i>
+        <span class="text-[10px] tracking-wide">Debate Arena</span>
+      </button>
+      <button onclick="switchTab('lab')" id="nav-lab" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
+        <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
+        <span class="text-[10px] tracking-wide">Avatar Forge</span>
+      </button>
+      <button onclick="switchTab('scripts')" id="nav-scripts" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
+        <i class="fa-solid fa-scroll text-base"></i>
+        <span class="text-[10px] tracking-wide">Script Logs</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script>
+    // State Store
+    const hosts = {
+      hostA: {
+        name: "Aiden Ayers",
+        role: "Uncensored Theorist",
+        img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80",
+        aura: "green",
+        energy: 85,
+        slang: 60
+      },
+      hostB: {
+        name: "Fern Elise",
+        role: "Grounded Lyricist",
+        img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80",
+        aura: "purple",
+        energy: 50,
+        slang: 40
+      }
+    };
+
+    let selectedLabAura = 'green';
+    let debateHistory = [];
+
+    function switchTab(tab) {
+      ['arena', 'lab', 'scripts'].forEach(t => {
+        document.getElementById('tab-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).classList.remove('active-tab');
+        const navBtn = document.getElementById('nav-' + t);
+        navBtn.className = 'flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300';
+      });
+
+      document.getElementById('tab-' + tab).classList.remove('hidden');
+      document.getElementById('tab-' + tab).classList.add('active-tab');
+      
+      const activeNav = document.getElementById('nav-' + tab);
+      if (tab === 'arena') activeNav.className = 'flex flex-col items-center gap-1 text-[#00ff66] font-bold';
+      if (tab === 'lab') activeNav.className = 'flex flex-col items-center gap-1 text-purple-400 font-bold';
+      if (tab === 'scripts') activeNav.className = 'flex flex-col items-center gap-1 text-pink-400 font-bold';
+    }
+
+    function handleImageUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const url = evt.target.result;
+          document.getElementById('lab-preview-img').src = url;
+          document.getElementById('lab-image-url').value = '';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateLabPreviewUrl(url) {
+      if (url.trim()) {
+        document.getElementById('lab-preview-img').src = url.trim();
+      }
+    }
+
+    function setLabAura(color) {
+      selectedLabAura = color;
+      const preview = document.getElementById('lab-preview-img');
+      preview.className = `w-16 h-16 rounded-2xl object-cover border-2 transition-all ${
+        color === 'green' ? 'border-[#00ff66] neon-border-green' :
+        color === 'purple' ? 'border-purple-500 neon-border-purple' :
+        color === 'pink' ? 'border-pink-500 neon-border-pink' : 'border-slate-300'
+      }`;
+    }
+
+    function commitAvatarToStage() {
+      const slot = document.getElementById('lab-target-slot').value;
+      const name = document.getElementById('lab-name').value;
+      const role = document.getElementById('lab-role').value;
+      const img = document.getElementById('lab-preview-img').src;
+      const energy = document.getElementById('lab-slider-energy').value;
+      const slang = document.getElementById('lab-slider-slang').value;
+
+      hosts[slot] = { name, role, img, aura: selectedLabAura, energy, slang };
+
+      if (slot === 'hostA') {
+        document.getElementById('host-a-name').innerText = name;
+        document.getElementById('host-a-role').innerText = role;
+        document.getElementById('host-a-img').src = img;
+      } else {
+        document.getElementById('host-b-name').innerText = name;
+        document.getElementById('host-b-role').innerText = role;
+        document.getElementById('host-b-img').src = img;
+      }
+
+      switchTab('arena');
+    }
+
+    function quickTopic(t) {
+      document.getElementById('debate-topic').value = t;
+      startDebateRound();
+    }
+
+    function startDebateRound() {
+      const topicInput = document.getElementById('debate-topic');
+      const topic = topicInput.value.trim() || "Uncovering Redacted Archives";
+      const feed = document.getElementById('debate-feed');
+
+      feed.innerHTML = `
+        <div class="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-300 font-mono">
+          <span class="text-[#00ff66] font-bold">DEBATE INITIATED:</span> "${topic}"
+        </div>
+      `;
+
+      const dialogue = [
+        {
+          host: 'hostA',
+          speaker: hosts.hostA.name,
+          color: '#00ff66',
+          border: 'border-[#00ff66]/40',
+          text: `Let's break the silence on "${topic}". The official story doesn't add up, and if you trace the timeline, the whole narrative crumbles.`
+        },
+        {
+          host: 'hostB',
+          speaker: hosts.hostB.name,
+          color: '#a855f7',
+          border: 'border-purple-500/40',
+          text: `Hold your horses, ${hosts.hostA.name.split(' ')[0]}. You're jumping straight into the deep end. We need grounded proof on "${topic}" before spinning a wild reel.`
+        },
+        {
+          host: 'hostA',
+          speaker: hosts.hostA.name,
+          color: '#00ff66',
+          border: 'border-[#00ff66]/40',
+          text: `The proof is right there in the paper trail. While everyone is looking where the spotlight shines, the real data is buried right beneath our feet.`
+        },
+        {
+          host: 'hostB',
+          speaker: hosts.hostB.name,
+          color: '#a855f7',
+          border: 'border-purple-500/40',
+          text: `Fair enough, but let's make sure the listeners get the facts straight. Let's document each clue step-by-step.`
+        }
+      ];
+
+      debateHistory = dialogue;
+      let delay = 300;
+
+      dialogue.forEach((line, index) => {
+        setTimeout(() => {
+          const isA = line.host === 'hostA';
+          const avatarUrl = isA ? hosts.hostA.img : hosts.hostB.img;
+          
+          feed.innerHTML += `
+            <div class="flex gap-2.5 items-start ${isA ? '' : 'flex-row-reverse'}">
+              <img src="${avatarUrl}" class="w-8 h-8 rounded-full object-cover border ${line.border} flex-shrink-0 mt-1" />
+              <div class="max-w-[82%] p-3 rounded-2xl text-xs leading-relaxed ${isA ? 'bg-zinc-900 border border-[#00ff66]/30 text-zinc-100 rounded-tl-none' : 'bg-[#151221] border border-purple-500/30 text-purple-100 rounded-tr-none'}">
+                <div class="flex items-center gap-1.5 font-bold mb-1" style="color: ${line.color}; font-size: 11px;">
+                  <span>${line.speaker}</span>
+                </div>
+                <p>${line.text}</p>
+              </div>
+            </div>
+          `;
+          feed.scrollTop = feed.scrollHeight;
+
+          // Update Export Box
+          let fullScript = `[RHRR STUDIO DEBATE: ${topic.toUpperCase()}]\n\n`;
+          dialogue.slice(0, index + 1).forEach(d => {
+            fullScript += `${d.speaker.toUpperCase()}:\n"${d.text}"\n\n`;
+          });
+          document.getElementById('script-export-box').value = fullScript;
+
+        }, delay);
+        delay += 600;
+      });
+    }
+
+    function copyScript() {
+      const box = document.getElementById('script-export-box');
+      if (!box.value) return;
+      navigator.clipboard.writeText(box.value);
+      alert('Debate Script copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
