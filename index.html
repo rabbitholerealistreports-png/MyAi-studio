@@ -3,461 +3,373 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyAI Studio | Autonomous Audio & Voice Persona Engine</title>
+  <title>MyAI Studio | Advanced Persona Engine</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    body { background-color: #030712; color: #f8fafc; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    .neon-purple { box-shadow: 0 0 25px rgba(192, 132, 252, 0.3); border-color: rgba(192, 132, 252, 0.6); }
-    .neon-green { box-shadow: 0 0 25px rgba(74, 222, 128, 0.3); border-color: rgba(74, 222, 128, 0.6); }
+    body { background-color: #050505; color: #f8fafc; font-family: system-ui, sans-serif; }
+    .neon-purple { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); border-color: #a855f7; }
+    .neon-green { box-shadow: 0 0 20px rgba(74, 222, 128, 0.4); border-color: #4ade80; }
+    .neon-pink-text { text-shadow: 0 0 10px rgba(255, 20, 147, 0.8); color: #ff1493; }
+    .glitch { text-shadow: 2px 0 #4ade80, -2px 0 #a855f7; }
+    .silver-accent { background: linear-gradient(135deg, #e2e8f0, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
     .terms-scroll::-webkit-scrollbar { width: 6px; }
-    .terms-scroll::-webkit-scrollbar-thumb { background: #9333ea; border-radius: 4px; }
-    .terms-scroll::-webkit-scrollbar-track { background: #0b0f19; }
+    .terms-scroll::-webkit-scrollbar-thumb { background: #ff1493; border-radius: 4px; }
+    .terms-scroll::-webkit-scrollbar-track { background: #111; }
+    
+    /* Human Verification Slider Customization */
+    input[type=range].human-slider { -webkit-appearance: none; width: 100%; background: transparent; }
+    input[type=range].human-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #4ade80; cursor: pointer; box-shadow: 0 0 10px #4ade80; }
+    input[type=range].human-slider::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; background: #1f2937; border-radius: 6px; border: 1px solid #a855f7; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between pb-24 selection:bg-purple-600 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between pb-24 selection:bg-fuchsia-600 selection:text-white">
 
-  <!-- ============================================================ -->
-  <!-- TOP APP HEADER -->
-  <!-- ============================================================ -->
-  <header class="p-4 border-b border-slate-800/80 flex justify-between items-center bg-slate-950/90 backdrop-blur-md sticky top-0 z-40">
+  <!-- TOP HEADER -->
+  <header class="p-4 border-b border-purple-900/50 flex justify-between items-center bg-black/90 backdrop-blur-md sticky top-0 z-40">
     <div class="flex items-center gap-3">
-      <div id="navAvatar" class="w-10 h-10 rounded-full bg-purple-950 border border-purple-400 flex items-center justify-center overflow-hidden text-sm shadow-md">🎙️</div>
+      <div id="navAvatar" class="w-10 h-10 rounded-full bg-purple-950 border border-green-400 flex items-center justify-center overflow-hidden text-sm shadow-md">🎙️</div>
       <div>
-        <h1 class="text-sm font-black tracking-widest text-emerald-400 uppercase">MYAI <span class="text-purple-400">STUDIO</span></h1>
-        <p id="navUsername" class="text-[11px] text-slate-400 font-medium">Creator Mode</p>
+        <h1 class="text-sm font-black tracking-widest uppercase glitch">MYAI <span class="text-white">STUDIO</span></h1>
+        <p id="navUsername" class="text-[11px] text-gray-400 font-medium silver-accent">Creator Mode</p>
       </div>
     </div>
-    <button onclick="toggleAudioMode()" id="captionBtn" class="text-xs px-3 py-1.5 rounded-full bg-slate-900 border border-purple-500/40 text-slate-300 hover:text-white transition">
+    <button onclick="toggleAudioMode()" id="captionBtn" class="text-xs px-3 py-1.5 rounded-full bg-gray-900 border border-pink-500/50 text-gray-300 hover:text-white transition">
       🔊 Hostess Audio: ON
     </button>
   </header>
 
-  <!-- ============================================================ -->
-  <!-- MANDATORY 3-STEP LEGAL FORTRESS & ONBOARDING MODAL -->
-  <!-- ============================================================ -->
-  <div id="onboardingModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-2xl flex items-center justify-center p-4 z-50 overflow-y-auto">
+  <!-- ONBOARDING MODAL -->
+  <div id="onboardingModal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 z-50 overflow-y-auto">
     
-    <!-- STEP 1: STRICT 18+ / 13+ AGE GATING & LEGAL FORTRESS -->
-    <div id="stepVerify" class="max-w-md w-full bg-slate-900 border border-purple-500/50 rounded-3xl p-6 shadow-2xl neon-purple my-auto">
-      <div class="w-12 h-12 mx-auto rounded-full bg-purple-500/20 border border-purple-400 flex items-center justify-center text-xl mb-3">⚖️</div>
-      <h2 class="text-lg font-bold text-center text-white tracking-wide">Studio Terms & Age Gating</h2>
-      <p class="text-xs text-slate-400 text-center mb-3">Mandatory legal review. Read disclosures and input birthdate to proceed.</p>
+    <!-- STEP 1: STRICT GATING & VERIFICATION -->
+    <div id="stepVerify" class="max-w-md w-full bg-gray-950 border border-purple-500 rounded-3xl p-6 shadow-2xl neon-purple my-auto transition-all">
+      <div class="w-12 h-12 mx-auto rounded-full bg-purple-900/40 border border-pink-500 flex items-center justify-center text-xl mb-3">⚖️</div>
+      <h2 class="text-xl font-black text-center text-white tracking-wide uppercase">Legal & Age Gateway</h2>
+      <p class="text-xs text-gray-400 text-center mb-3">You must scroll to the absolute bottom of the terms to unlock.</p>
 
-      <!-- Scrollable Disclosures Box -->
-      <div id="termsScroll" onscroll="handleTermsScroll(this)" class="terms-scroll h-48 overflow-y-auto p-4 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] text-slate-300 space-y-3 leading-relaxed mb-4">
-        <p class="font-bold text-emerald-400 uppercase tracking-wider text-[10px]">1. STRICT AGE GATING & CONTENT JURISDICTION</p>
-        <p>• <strong>General Studio Tools (13+):</strong> You must be at least 13 years old to access standard scriptwriting, basic lyric forging, and teleprompter tooling.</p>
-        <p>• <strong>Explicit, Uncensored & Mature Themes (18+ MANDATORY):</strong> You must be at least 18 years of age (or legal age of majority) to create, voice-synthesize, export, or publish mature, horror, dark investigative, or explicit adult multi-host dialogues and lyrics.</p>
+      <!-- Scroll Box -->
+      <div id="termsScroll" onscroll="checkScrollBottom(this)" class="terms-scroll h-40 overflow-y-auto p-4 rounded-xl bg-black border border-purple-900 text-[11px] text-gray-300 space-y-3 mb-4 relative">
+        <p class="font-bold neon-pink-text uppercase tracking-wider text-[10px]">1. STRICT AGE GATING & CONTENT</p>
+        <p>• <strong>General Studio (13+):</strong> You must be 13+ for standard access.</p>
+        <p>• <strong>Explicit & Mature (18+ MANDATORY):</strong> You must be 18+ (or legal age of majority) to create, synthesize, or export mature, dark, horror, or explicit adult multi-host dialogues and lyrics.</p>
 
-        <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">2. 100% CREATOR LIABILITY & PLATFORM INDEMNIFICATION</p>
-        <p>You assume total legal responsibility and full copyright liability for all generated custom avatars, voice clones, scripts, and audio tracks. You agree to indemnify, defend, and hold harmless MyAI Studio and its operators from any claims, defamation lawsuits, copyright disputes, or damages resulting from your creations or social media broadcasts.</p>
+        <p class="font-bold text-green-400 uppercase tracking-wider text-[10px]">2. 100% CREATOR LIABILITY & VOICE CLONING</p>
+        <p>You assume total legal responsibility and full copyright liability for all generated custom avatars, cloned voices, scripts, and audio tracks. You agree to fully indemnify MyAI Studio from any claims, defamation, or damages.</p>
 
-        <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">3. SYNTHETIC VOICE & DEEPFAKE PROHIBITIONS</p>
-        <p>All virtual hosts are synthetic AI models. You explicitly agree never to use this studio to generate non-consensual voice clones, fraudulent impersonations, defamation, or misleading deepfakes of real individuals.</p>
+        <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">3. SYNTHETIC VOICE DEEPFAKE PROHIBITION</p>
+        <p>You explicitly agree never to use this studio's voice uploading and cloning tools for non-consensual voice clones, fraudulent impersonations, or misleading deepfakes.</p>
 
-        <p class="font-bold text-emerald-400 uppercase tracking-wider text-[10px]">4. COMMERCIAL RIGHTS & STEM OWNERSHIP</p>
-        <p>Exported .WAV master files and vocal stem packages purchased via Studio passes grant you 100% royalty-free commercial rights for YouTube, TikTok, Spotify, and broadcast distribution.</p>
-        
-        <p class="text-emerald-400 font-bold text-center pt-2 border-t border-slate-800">✓ End of Disclosures — Enter Date of Birth Below</p>
+        <div id="scrollBottomMarker" class="text-center pt-4 pb-2 text-pink-500 font-bold opacity-50">↓ Keep Scrolling ↓</div>
+        <p id="reachedBottomText" class="text-green-400 font-bold text-center pt-2 border-t border-gray-800 hidden">✓ Disclosures Reviewed</p>
       </div>
 
-      <!-- Date of Birth Gating Input -->
-      <div class="mb-4 bg-slate-950 p-3 rounded-xl border border-slate-800">
-        <label class="text-[11px] font-semibold text-slate-300 block mb-1">Verify Your Date of Birth (Required for 18+ Access)</label>
-        <input type="date" id="dobInput" onchange="validateAgeAndTerms()" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-purple-500" />
-        <p id="ageNotice" class="text-[10px] text-slate-400 mt-1">Select your DOB to verify age compliance.</p>
+      <!-- Human Verification Slider -->
+      <div class="mb-4 bg-black p-4 rounded-xl border border-gray-800">
+        <label class="text-[11px] font-bold text-gray-300 block mb-2 text-center">Slide to Prove You Are Human</label>
+        <input type="range" id="humanSlider" class="human-slider" min="0" max="100" value="0" oninput="checkUnlocks()">
+        <p id="humanNotice" class="text-[10px] text-gray-500 mt-2 text-center">Awaiting human verification...</p>
       </div>
 
-      <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer mb-4">
-        <input type="checkbox" id="termsCheck" onchange="validateAgeAndTerms()" class="w-4 h-4 accent-purple-500 rounded cursor-pointer" />
-        <span class="text-xs font-medium text-slate-300">I agree to terms, accept content liability, and verify my DOB</span>
-      </label>
+      <!-- DOB Gate -->
+      <div class="mb-5 bg-black p-3 rounded-xl border border-gray-800">
+        <label class="text-[11px] font-bold text-gray-300 block mb-1">Date of Birth (18+ Required for Explicit)</label>
+        <input type="date" id="dobInput" onchange="checkUnlocks()" class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-purple-500/50 text-xs text-white focus:outline-none" />
+        <p id="ageNotice" class="text-[10px] text-gray-500 mt-1">Select DOB to verify.</p>
+      </div>
 
-      <button id="verifyBtn" disabled onclick="goToProfileStep()" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-emerald-500 font-bold text-xs uppercase tracking-wider disabled:opacity-30 disabled:cursor-not-allowed transition shadow-lg text-white">
-        Enter Studio Profile Setup
+      <button id="verifyBtn" disabled onclick="goToProfileStep()" class="w-full py-3 rounded-xl bg-gray-800 text-gray-500 font-black text-xs uppercase tracking-wider transition-all">
+        Gateway Locked
       </button>
     </div>
 
-    <!-- STEP 2: CREATOR PROFILE GENERATOR -->
-    <div id="stepProfile" class="max-w-md w-full bg-slate-900 border border-purple-500/50 rounded-3xl p-6 shadow-2xl hidden neon-purple my-auto">
-      <h2 class="text-lg font-bold mb-1 text-white">Set Up Creator Profile</h2>
-      <p class="text-xs text-slate-400 mb-4">Choose your stage name and upload or generate your avatar.</p>
+    <!-- STEP 2: PROFILE SETUP -->
+    <div id="stepProfile" class="max-w-md w-full bg-gray-950 border border-green-500/50 rounded-3xl p-6 shadow-2xl hidden neon-green my-auto">
+      <h2 class="text-xl font-black mb-1 text-white uppercase tracking-wider glitch">Creator Profile</h2>
+      <p class="text-xs text-gray-400 mb-5">Establish your identity. Build a real profile.</p>
 
-      <div class="mb-4">
-        <label class="text-xs font-semibold text-slate-300 block mb-1">Stage / Creator Name</label>
-        <input type="text" id="usernameInput" placeholder="Enter your creator name..." class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:border-purple-500 focus:outline-none" />
+      <div class="mb-5">
+        <label class="text-[11px] font-bold text-gray-300 block mb-1 neon-pink-text">Creator Alias / Name</label>
+        <input type="text" id="usernameInput" placeholder="Enter your alias..." class="w-full px-4 py-3 rounded-xl bg-black border border-green-500/50 text-sm text-white focus:border-green-400 focus:outline-none" />
       </div>
 
       <div class="mb-6">
-        <label class="text-xs font-semibold text-slate-300 block mb-2">Avatar Choice</label>
-        <div class="flex items-center gap-4">
-          <div id="avatarPreview" class="w-16 h-16 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center overflow-hidden text-2xl">
-            🎧
+        <label class="text-[11px] font-bold text-gray-300 block mb-2 neon-pink-text">Avatar Selection</label>
+        <div class="flex items-center gap-4 p-3 bg-black border border-purple-500/30 rounded-xl">
+          <div id="avatarPreview" class="w-20 h-20 rounded-xl bg-gray-900 border border-gray-700 flex items-center justify-center overflow-hidden text-3xl">
+            📷
           </div>
           <div class="flex flex-col gap-2 flex-1">
-            <button onclick="generateRandomAvatar()" class="px-3 py-2 text-xs rounded-xl bg-purple-600/30 border border-purple-500/50 hover:bg-purple-600/50 text-purple-200 font-medium transition">
-              ⚡ Generate AI Avatar
+            <button onclick="generateRandomAvatar()" class="px-3 py-2 text-[11px] rounded-lg bg-purple-900/50 border border-purple-500 text-purple-200 font-bold transition">
+              ⚡ AI Generate Look
             </button>
-            <label class="px-3 py-2 text-xs rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-center cursor-pointer text-slate-300 font-medium transition">
-              📁 Upload Photo
+            <label class="px-3 py-2 text-[11px] rounded-lg bg-green-900/50 border border-green-500 text-center cursor-pointer text-green-200 font-bold transition">
+              📁 Upload Real Photo
               <input type="file" accept="image/*" class="hidden" onchange="previewUserPhoto(event)" />
             </label>
           </div>
         </div>
       </div>
 
-      <button onclick="goToWelcomeStep()" class="w-full py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-emerald-400 transition shadow-lg">
-        Save & Enter Studio Stage
+      <button onclick="goToWelcomeStep()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-green-500 to-purple-600 text-white font-black text-sm uppercase tracking-widest shadow-lg">
+        Initialize Studio
       </button>
     </div>
 
-    <!-- STEP 3: HYPNOTIC HOSTESS "VESPER" WELCOME & ROUTING -->
-    <div id="stepWelcome" class="max-w-md w-full bg-slate-900 border border-emerald-500/50 rounded-3xl p-6 shadow-2xl hidden neon-green my-auto">
+    <!-- STEP 3: WELCOME ROUTING -->
+    <div id="stepWelcome" class="max-w-md w-full bg-gray-950 border border-pink-500/50 rounded-3xl p-6 shadow-2xl hidden neon-purple my-auto">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-3">
-          <div id="welcomeAvatar" class="w-11 h-11 rounded-full border border-emerald-400 overflow-hidden flex items-center justify-center text-sm shadow-md">🎙️</div>
+          <div id="welcomeAvatar" class="w-12 h-12 rounded-full border-2 border-green-400 overflow-hidden flex items-center justify-center text-sm shadow-md">🎙️</div>
           <div>
-            <h3 id="welcomeHeading" class="font-bold text-sm text-emerald-400">Welcome, Creator!</h3>
-            <p class="text-[11px] text-slate-400">Studio Stage Ready</p>
+            <h3 id="welcomeHeading" class="font-black text-sm text-white uppercase glitch">Welcome!</h3>
+            <p class="text-[11px] text-gray-400 silver-accent font-bold">Studio Online</p>
           </div>
         </div>
-        <button onclick="playHostessVoice()" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white shadow-lg flex items-center gap-1.5">
-          <span>🔊</span> Play Voice
-        </button>
       </div>
 
-      <!-- Synchronized Closed Captions Display Box -->
-      <div class="p-3.5 mb-4 rounded-xl bg-slate-950 border border-purple-500/40 text-xs text-purple-200 leading-relaxed shadow-inner">
-        🎙️ <em id="captionsText">"Hey! How did you hear about us? Here are the things we can do together. I'm right here with you from start to finish. Let's go."</em>
-      </div>
-
-      <div class="mb-4">
-        <label class="text-xs font-semibold text-slate-300 block mb-1">How did you hear about MyAI Studio?</label>
-        <select class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-purple-500">
-          <option>YouTube</option>
-          <option>TikTok / Short</option>
-          <option>Friend / Peer Referral</option>
-          <option>Online Search</option>
-        </select>
-      </div>
-
-      <!-- Action Navigation Cards -->
-      <div class="space-y-2">
-        <button onclick="launchTab('avatarStudio')" class="w-full p-3 rounded-xl bg-gradient-to-r from-purple-900/40 to-emerald-900/40 border border-purple-500/50 hover:border-emerald-400 flex items-center gap-3 text-left transition">
-          <span class="text-2xl">⚡</span>
+      <div class="space-y-3">
+        <button onclick="launchTab('avatarStudio')" class="w-full p-4 rounded-xl bg-black border border-purple-500 hover:border-pink-500 flex items-center gap-4 text-left transition group">
+          <span class="text-3xl group-hover:scale-110 transition">🧬</span>
           <div>
-            <div class="text-xs font-bold text-white">Create Avatars & Custom Voices</div>
-            <div class="text-[11px] text-emerald-300">Name personas, tune vocal engines & export for socials</div>
+            <div class="text-sm font-black text-white uppercase tracking-wider neon-pink-text">Avatar & Voice Lab</div>
+            <div class="text-[10px] text-gray-400 mt-1">Clone voices, design personas, and tune algorithms.</div>
           </div>
         </button>
-        <button onclick="launchTab('studio')" class="w-full p-3 rounded-xl bg-purple-900/30 border border-purple-500/40 hover:bg-purple-900/50 flex items-center gap-3 text-left transition">
-          <span class="text-2xl">🎙️</span>
+        <button onclick="launchTab('studio')" class="w-full p-4 rounded-xl bg-black border border-green-500/50 hover:border-green-400 flex items-center gap-4 text-left transition group">
+          <span class="text-3xl group-hover:scale-110 transition">🎙️</span>
           <div>
-            <div class="text-xs font-bold text-white">Multi-Host Podcast Studio</div>
-            <div class="text-[11px] text-slate-400">Generate 4-speaker dialogue & .WAV masters</div>
-          </div>
-        </button>
-        <button onclick="launchTab('music')" class="w-full p-3 rounded-xl bg-emerald-900/30 border border-emerald-500/40 hover:bg-emerald-900/50 flex items-center gap-3 text-left transition">
-          <span class="text-2xl">🎵</span>
-          <div>
-            <div class="text-xs font-bold text-white">Suno Song & Lyric Forge</div>
-            <div class="text-[11px] text-slate-400">Write verses, hooks, and genre styling</div>
+            <div class="text-sm font-black text-white uppercase tracking-wider text-green-400">Podcast Arena</div>
+            <div class="text-[10px] text-gray-400 mt-1">Generate multi-host debates and explicit scripts.</div>
           </div>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- MAIN SUITE DASHBOARD -->
-  <!-- ============================================================ -->
+  <!-- MAIN APP DASHBOARD -->
   <main class="max-w-md mx-auto p-4 w-full flex-1">
     
-    <!-- TAB 1: AVATAR & CUSTOM VOICE CREATOR STUDIO -->
+    <!-- ADVANCED MULTI-PARAMETER AVATAR & VOICE CREATION ALGORITHM ENGINE -->
     <section id="tabAvatarStudio" class="space-y-4">
-      <div class="bg-slate-900/90 border border-purple-500/50 rounded-2xl p-5 shadow-2xl neon-purple">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-sm font-bold text-emerald-400 tracking-wide uppercase">Avatar & Voice Creator</h2>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-purple-950 border border-purple-500/40 text-purple-300">Persona Engine</span>
-        </div>
+      <div class="bg-gray-950 border border-purple-500 rounded-2xl p-5 shadow-2xl neon-purple">
+        <h2 class="text-lg font-black text-white tracking-widest uppercase mb-1 glitch">Persona Lab</h2>
+        <p class="text-[10px] text-gray-400 mb-5 font-bold silver-accent">Clone custom voices or engineer new vocal algorithms.</p>
 
-        <p class="text-xs text-slate-300 mb-4">Build custom avatars with unique vocal personalities for YouTube, TikTok, and podcasts.</p>
-
-        <!-- Persona Visualizer & Naming -->
-        <div class="flex items-center gap-4 mb-4 p-3 rounded-xl bg-slate-950 border border-slate-800">
-          <div id="creatorAvatarBox" class="w-16 h-16 rounded-2xl bg-purple-950/60 border border-purple-400 flex items-center justify-center text-3xl overflow-hidden shadow-inner">
+        <div class="flex items-center gap-4 mb-5 p-3 rounded-xl bg-black border border-gray-800">
+          <div id="creatorAvatarBox" class="w-16 h-16 rounded-xl bg-purple-900/40 border border-pink-500 flex items-center justify-center text-3xl overflow-hidden shadow-inner">
             👤
           </div>
-          <div class="flex-1">
-            <input type="text" id="avatarPersonaName" placeholder="Avatar / Persona Name..." class="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-emerald-400 mb-2" />
-            <button onclick="randomizeCreatorAvatar()" class="text-[11px] px-3 py-1 rounded bg-purple-600/30 border border-purple-500/50 text-purple-200 hover:bg-purple-600/50">
-              🎲 Randomize Look
+          <div class="flex-1 space-y-2">
+            <input type="text" id="avatarPersonaName" placeholder="Name this persona..." class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white focus:outline-none focus:border-green-400" />
+            <button onclick="randomizeCreatorAvatar()" class="text-[10px] px-3 py-1.5 rounded-lg bg-green-900/40 border border-green-500 text-green-300 font-bold w-full uppercase">
+              🎲 Randomize Visuals
             </button>
           </div>
         </div>
 
-        <!-- Voice Parameter Tuning Engine -->
-        <div class="space-y-3 mb-4">
-          <div>
-            <label class="text-[11px] font-semibold text-slate-300 block mb-1">Voice Profile Model</label>
-            <select id="voiceModelSelect" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-purple-500">
-              <option value="hypnotic-velvet">Vesper (Hypnotic Velvet / Late Night Studio)</option>
-              <option value="anchor-deep">Anchor (Deep Resonance / Authoritative)</option>
-              <option value="hyper-electric">Glitch (Hyperpop / Energetic Fast Cadence)</option>
-              <option value="country-grit">Outlaw (Country Grit / Smooth Storyteller)</option>
-              <option value="cinematic-whisper">Nocturne (Dark Cinematic / ASMR Whisper)</option>
-            </select>
-          </div>
+        <!-- VOICE CLONING MODULE -->
+        <div class="mb-5 p-4 rounded-xl bg-gray-900 border border-pink-500/50">
+          <h3 class="text-[11px] font-black uppercase tracking-widest neon-pink-text mb-2">Voice Cloning Engine</h3>
+          <p class="text-[10px] text-gray-400 mb-3">Upload a clean 30-second audio clip (.wav or .mp3) of a voice to create a custom neural clone.</p>
+          
+          <label class="flex items-center justify-center gap-2 w-full p-3 rounded-xl bg-black border border-dashed border-pink-500 cursor-pointer hover:bg-pink-900/20 transition mb-3">
+            <span class="text-xl">🎙️</span>
+            <span id="uploadLabel" class="text-[11px] text-pink-300 font-bold tracking-wider">Upload Voice Reference</span>
+            <input type="file" accept="audio/*" class="hidden" onchange="handleVoiceUpload(event)" />
+          </label>
 
-          <div class="grid grid-cols-2 gap-2">
+          <label class="flex items-start gap-2 cursor-pointer">
+            <input type="checkbox" id="voiceCloneConsent" class="w-4 h-4 mt-0.5 accent-pink-500 rounded" onchange="checkCloneConsent()" />
+            <span class="text-[9px] text-gray-400 leading-tight">I confirm I own the legal rights to this voice recording and consent to generating a synthetic AI model of it.</span>
+          </label>
+        </div>
+
+        <div class="mb-4">
+          <label class="text-[11px] font-bold text-gray-300 block mb-2 neon-pink-text">Custom Concept / Direction</label>
+          <textarea id="customVoicePrompt" placeholder="Type exactly what you want: e.g. Gritty, 90s casino boss with a raspy laugh, or a highly chaotic fast-talking glitch entity..." class="w-full h-16 p-3 rounded-xl bg-black border border-gray-700 text-xs text-gray-200 focus:outline-none focus:border-purple-500"></textarea>
+        </div>
+
+        <!-- Algorithm Matrix -->
+        <div class="space-y-4 mb-6 p-4 rounded-xl bg-black border border-gray-800">
+          <h3 class="text-[10px] text-purple-400 font-black uppercase tracking-widest border-b border-gray-800 pb-1">Vocal Architecture Matrix</h3>
+          
+          <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="text-[10px] text-slate-400 block mb-1">Pitch: <span id="pitchVal">1.0</span></label>
-              <input type="range" min="0.7" max="1.3" step="0.05" value="1.0" oninput="document.getElementById('pitchVal').innerText=this.value" class="w-full accent-purple-500" />
+              <label class="text-[10px] font-bold text-gray-400 block mb-1">Base Register</label>
+              <select id="paramGender" class="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white focus:outline-none focus:border-green-400">
+                <option value="female-velvet">Female (Velvet/Smooth)</option>
+                <option value="female-rasp">Female (Raspy/Gritty)</option>
+                <option value="male-deep">Male (Deep Baritone)</option>
+                <option value="male-tenor">Male (Energetic Tenor)</option>
+                <option value="child-bright">Child (Bright/Youthful)</option>
+                <option value="andro-glitch">Androgynous (Synthetic)</option>
+                <option value="monster-low">Creature (Sub-bass/Distorted)</option>
+              </select>
             </div>
             <div>
-              <label class="text-[10px] text-slate-400 block mb-1">Speed: <span id="speedVal">1.0x</span></label>
-              <input type="range" min="0.7" max="1.4" step="0.05" value="1.0" oninput="document.getElementById('speedVal').innerText=this.value+'x'" class="w-full accent-emerald-500" />
+              <label class="text-[10px] font-bold text-gray-400 block mb-1">Archetype Profile</label>
+              <select id="paramArchetype" class="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white focus:outline-none focus:border-green-400">
+                <option>Hypnotic Late-Night DJ</option>
+                <option>Gritty Casino Boss</option>
+                <option>Frantic Hacker / Cyberpunk</option>
+                <option>Authoritative Anchor</option>
+                <option>Dark True Crime Narrator</option>
+                <option>Bubbly Hyperpop Star</option>
+                <option>Seductive Villain</option>
+              </select>
             </div>
           </div>
 
-          <div>
-            <label class="text-[11px] font-semibold text-slate-300 block mb-1">Sample Line to Test Voice</label>
-            <input type="text" id="voiceTestSample" value="Hey, this is my custom avatar voice. Ready for the live broadcast." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-purple-500" />
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[10px] font-bold text-gray-400 block mb-1">Content / Intensity</label>
+              <select id="paramRating" class="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white focus:outline-none focus:border-pink-500">
+                <option value="clean">Standard (Clean)</option>
+                <option value="explicit" class="text-pink-500 font-bold">🔞 Explicit (Uncensored)</option>
+                <option value="horror" class="text-pink-700 font-bold">Horror / Extreme</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] font-bold text-gray-400 block mb-1">Emotional State</label>
+              <select id="paramEmotion" class="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white focus:outline-none focus:border-green-400">
+                <option>Calm & Calculated</option>
+                <option>Chaotic & Fast</option>
+                <option>Angry / Aggressive</option>
+                <option>Sad / Melancholic</option>
+                <option>Sarcastic / Dry</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 pt-2 border-t border-gray-800 mt-2">
+            <div>
+              <label class="text-[10px] text-gray-400 font-bold block mb-2">Pitch: <span id="pitchVal" class="text-purple-400">1.0</span></label>
+              <input type="range" min="0.5" max="1.6" step="0.05" value="1.0" oninput="document.getElementById('pitchVal').innerText=this.value" class="w-full" />
+            </div>
+            <div>
+              <label class="text-[10px] text-gray-400 font-bold block mb-2">Pacing Speed: <span id="speedVal" class="text-green-400">1.0x</span></label>
+              <input type="range" min="0.6" max="1.5" step="0.05" value="1.0" oninput="document.getElementById('speedVal').innerText=this.value+'x'" class="w-full" />
+            </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <button onclick="previewAvatarVoice()" class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-purple-300 transition">
-            ▶ Test Voice
-          </button>
-          <button onclick="saveAndExportAvatarPersona()" class="py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-emerald-500 text-xs font-bold text-white transition shadow-lg">
-            💾 Save Persona
-          </button>
-        </div>
+        <button id="savePersonaBtn" onclick="saveAndExportAvatarPersona()" class="w-full py-4 rounded-xl bg-purple-600 text-white font-black text-sm uppercase tracking-widest shadow-lg hover:bg-purple-500 transition">
+          💾 Compile & Save Persona
+        </button>
       </div>
 
-      <!-- Export Package Summary Card -->
-      <div id="personaExportCard" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl hidden">
-        <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Avatar Export Package Ready</h3>
-        <p id="exportPersonaSummary" class="text-xs text-slate-300 mb-3"></p>
-        <button onclick="switchTab('store')" class="w-full py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg">
-          ⚡ Export Avatar Media Kit ($0.99)
-        </button>
+      <div id="personaExportCard" class="bg-gray-950 border border-green-500 rounded-2xl p-5 shadow-xl hidden">
+        <h3 class="text-sm font-black text-green-400 uppercase tracking-widest mb-2 glitch">Persona Locked</h3>
+        <p id="exportPersonaSummary" class="text-[11px] text-gray-300 mb-4 font-mono bg-black p-3 rounded-lg border border-gray-800"></p>
+        <p class="text-[10px] text-pink-500 font-bold mb-3 italic">*Note: Full high-fidelity cloning & rendering requires backend API connection.*</p>
       </div>
     </section>
 
-    <!-- TAB 2: 4-HOST PODCAST & DEBATE ARENA -->
+    <!-- TAB 2: PODCAST ARENA -->
     <section id="tabStudio" class="space-y-4 hidden">
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
-        <h2 class="text-sm font-bold text-purple-400 tracking-wide uppercase mb-3">4-Host Stage Arena</h2>
-        
-        <div class="grid grid-cols-4 gap-2 mb-4">
-          <div class="p-2 rounded-xl bg-slate-950 border border-purple-500/40 text-center">
-            <div class="text-lg">🧔</div>
-            <div class="text-[10px] font-bold text-emerald-400 mt-1">Host 1</div>
-          </div>
-          <div class="p-2 rounded-xl bg-slate-950 border border-slate-800 text-center">
-            <div class="text-lg">👩</div>
-            <div class="text-[10px] font-bold text-purple-400 mt-1">Host 2</div>
-          </div>
-          <div class="p-2 rounded-xl bg-slate-950 border border-slate-800 text-center">
-            <div class="text-lg">🧑</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Host 3</div>
-          </div>
-          <div class="p-2 rounded-xl bg-slate-950 border border-slate-800 text-center">
-            <div class="text-lg">🤖</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Host 4</div>
-          </div>
-        </div>
-
-        <textarea id="podcastPromptInput" placeholder="Enter episode topic, controversy, or discussion outline..." class="w-full h-24 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-purple-500"></textarea>
-        
-        <button onclick="generateDialogue()" class="w-full mt-3 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition shadow-lg">
-          ⚡ Generate Episode Dialogue
+      <div class="bg-gray-950 border border-pink-500/50 rounded-2xl p-5 shadow-xl">
+        <h2 class="text-lg font-black text-white tracking-widest uppercase mb-4 neon-pink-text">Multi-Host Arena</h2>
+        <textarea id="podcastPromptInput" placeholder="Enter explicit episode topic, debate outline, etc..." class="w-full h-28 p-3 rounded-xl bg-black border border-gray-700 text-xs text-white focus:outline-none focus:border-pink-500"></textarea>
+        <button onclick="document.getElementById('dialogueOutputBox').classList.remove('hidden')" class="w-full mt-4 py-3 rounded-xl bg-pink-600 font-black text-white text-xs uppercase tracking-widest shadow-lg">
+          ⚡ Generate Script
         </button>
       </div>
-
-      <div id="dialogueOutputBox" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl hidden">
-        <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Generated Episode Script</h3>
-        <div id="scriptContent" class="space-y-2 text-xs text-slate-300 font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 max-h-48 overflow-y-auto"></div>
+      <div id="dialogueOutputBox" class="bg-gray-950 border border-gray-700 rounded-2xl p-5 shadow-xl hidden">
+        <p class="text-xs text-gray-400 font-mono italic">Script generated successfully based on parameters...</p>
       </div>
     </section>
-
-    <!-- TAB 3: SUNO SONG & LYRIC FORGE -->
-    <section id="tabMusic" class="space-y-4 hidden">
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
-        <h2 class="text-sm font-bold text-emerald-400 tracking-wide uppercase mb-3">Suno Song & Lyric Forge</h2>
-        <input type="text" id="songTheme" placeholder="Song theme or story concept..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white mb-3 focus:outline-none focus:border-emerald-500" />
-        <select id="genrePreset" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white mb-3 focus:outline-none">
-          <option>Country / Outlaw Story</option>
-          <option>Country-Rap / 808 Hybrid</option>
-          <option>Hyperpop / Glitch Electronic</option>
-          <option>Dark Cinematic / Suspense</option>
-        </select>
-        <button onclick="forgeLyrics()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg">
-          ⚡ Forge Lyrics & Style Tags
-        </button>
-      </div>
-
-      <div id="lyricOutputContainer" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl hidden">
-        <textarea id="lyricOutputBox" readonly class="w-full h-44 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-emerald-300 font-mono focus:outline-none"></textarea>
-      </div>
-    </section>
-
-    <!-- TAB 4: DYNAMIC TELEPROMPTER -->
-    <section id="tabPrompter" class="space-y-4 hidden">
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-sm font-bold text-blue-400 tracking-wide uppercase">Dynamic Teleprompter</h2>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-blue-950 border border-blue-500/40 text-blue-300">Voiceover Ready</span>
-        </div>
-
-        <div class="mb-3">
-          <label class="text-[11px] font-semibold text-slate-300 block mb-1">Pacing Speed (WPM)</label>
-          <input type="range" min="80" max="220" value="130" id="prompterSpeed" class="w-full accent-blue-500" />
-        </div>
-
-        <div id="prompterScrollWindow" class="h-44 overflow-y-auto p-4 rounded-xl bg-slate-950 border border-slate-800 text-sm font-medium text-slate-200 leading-relaxed terms-scroll">
-          <p id="prompterText">Welcome to the recording stage. When you tap Start Scroll, this teleprompter will pace your voiceover delivery smoothly. Keep your head up, speak into the mic, and deliver your lines with confidence.</p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2 mt-3">
-          <button onclick="togglePrompterScroll()" id="prompterScrollBtn" class="py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white transition shadow-lg">
-            ▶ Start Scroll
-          </button>
-          <button onclick="resetPrompter()" class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition">
-            ↺ Reset
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 5: PASSES & STRIPE STORE -->
-    <section id="tabStore" class="space-y-4 hidden">
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
-        <h2 class="text-sm font-bold text-amber-400 tracking-wide uppercase mb-1">Studio Passes & Exports</h2>
-        <p class="text-xs text-slate-400 mb-4">Export uncompressed .WAV masters, avatar kits, and isolated stems.</p>
-
-        <div class="space-y-3">
-          <div class="p-3.5 rounded-xl bg-slate-950 border border-purple-500/30 flex justify-between items-center">
-            <div>
-              <div class="text-xs font-bold text-white">Single Master / Avatar Pass</div>
-              <div class="text-[10px] text-slate-400">1 Full .WAV Master or Avatar Kit</div>
-            </div>
-            <a href="https://buy.stripe.com/" target="_blank" class="px-3 py-1.5 rounded-lg bg-purple-600 text-xs font-bold text-white">$0.99</a>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/30 flex justify-between items-center">
-            <div>
-              <div class="text-xs font-bold text-white">Creator Stem Bundle</div>
-              <div class="text-[10px] text-slate-400">Isolated 4-Host Stems + ZIP Package</div>
-            </div>
-            <a href="https://buy.stripe.com/" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-xs font-bold text-white">$2.99</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ============================================================ -->
-  <!-- BOTTOM DOCK NAVIGATION -->
-  <!-- ============================================================ -->
-  <nav class="fixed bottom-0 inset-x-0 bg-slate-950/95 border-t border-slate-800/80 p-2 flex justify-around items-center z-30">
-    <button onclick="switchTab('avatarStudio')" id="navTabAvatarStudio" class="flex flex-col items-center text-purple-400 text-xs gap-1">
-      <i class="fa-solid fa-wand-magic-sparkles"></i><span>Avatars</span>
+  <!-- BOTTOM NAVIGATION DOCK -->
+  <nav class="fixed bottom-0 inset-x-0 bg-black/95 border-t border-purple-900/50 p-3 flex justify-around items-center z-30 backdrop-blur-md">
+    <button onclick="switchTab('avatarStudio')" id="navTabAvatarStudio" class="flex flex-col items-center text-green-400 text-[10px] font-bold uppercase gap-1 tracking-wider">
+      <i class="fa-solid fa-wand-magic-sparkles text-lg"></i><span>Avatars</span>
     </button>
-    <button onclick="switchTab('studio')" id="navTabStudio" class="flex flex-col items-center text-slate-400 text-xs gap-1">
-      <i class="fa-solid fa-microphone"></i><span>Studio</span>
-    </button>
-    <button onclick="switchTab('music')" id="navTabMusic" class="flex flex-col items-center text-slate-400 text-xs gap-1">
-      <i class="fa-solid fa-music"></i><span>Song Forge</span>
-    </button>
-    <button onclick="switchTab('prompter')" id="navTabPrompter" class="flex flex-col items-center text-slate-400 text-xs gap-1">
-      <i class="fa-solid fa-scroll"></i><span>Prompter</span>
-    </button>
-    <button onclick="switchTab('store')" id="navTabStore" class="flex flex-col items-center text-slate-400 text-xs gap-1">
-      <i class="fa-solid fa-crown"></i><span>Store</span>
+    <button onclick="switchTab('studio')" id="navTabStudio" class="flex flex-col items-center text-gray-500 text-[10px] font-bold uppercase gap-1 tracking-wider">
+      <i class="fa-solid fa-microphone text-lg"></i><span>Arena</span>
     </button>
   </nav>
 
-  <!-- ============================================================ -->
-  <!-- CLIENT ENGINE LOGIC & AUDIO SYNTHESIZER -->
-  <!-- ============================================================ -->
+  <!-- SCRIPT LOGIC -->
   <script>
+    let hasScrolledBottom = false;
+    let isHumanVerified = false;
+    let isAgeVerified = false;
     let voiceActive = true;
     let selectedAvatarUrl = '';
-    let isAdultVerified = false;
-    let currentHostessText = "Hey! How did you hear about us? Here are the things we can do together. I'm right here with you from start to finish. Let's go.";
-    let prompterInterval = null;
+    let voiceCloneUploaded = false;
 
     function toggleAudioMode() {
       voiceActive = !voiceActive;
       document.getElementById('captionBtn').innerText = voiceActive ? "🔊 Hostess Audio: ON" : "💬 Captions Only";
     }
 
-    function handleTermsScroll(elem) {
-      // Validates scroll position
+    function checkScrollBottom(elem) {
+      if (elem.scrollTop + elem.clientHeight >= elem.scrollHeight - 15) {
+        hasScrolledBottom = true;
+        document.getElementById('scrollBottomMarker').classList.add('hidden');
+        document.getElementById('reachedBottomText').classList.remove('hidden');
+        checkUnlocks();
+      }
     }
 
-    function validateAgeAndTerms() {
-      const dobVal = document.getElementById('dobInput').value;
-      const termsChecked = document.getElementById('termsCheck').checked;
-      const notice = document.getElementById('ageNotice');
-
-      if (!dobVal) {
-        document.getElementById('verifyBtn').disabled = true;
-        return;
-      }
-
-      const birthDate = new Date(dobVal);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-
-      if (age < 13) {
-        notice.innerText = "❌ Access Restricted: You must be at least 13 to use MyAI Studio.";
-        notice.className = "text-[10px] text-red-400 mt-1 font-bold";
-        document.getElementById('verifyBtn').disabled = true;
-      } else if (age >= 18) {
-        isAdultVerified = true;
-        notice.innerText = `✓ Verified Age ${age}: Full 18+ Uncensored / Explicit Access Granted.`;
-        notice.className = "text-[10px] text-emerald-400 mt-1 font-bold";
-        document.getElementById('verifyBtn').disabled = !termsChecked;
+    function checkUnlocks() {
+      const termsMet = hasScrolledBottom;
+      const sliderVal = document.getElementById('humanSlider').value;
+      const humanNotice = document.getElementById('humanNotice');
+      
+      if (sliderVal == 100) {
+        isHumanVerified = true;
+        humanNotice.innerText = "✓ Human Confirmed";
+        humanNotice.className = "text-[10px] text-green-400 mt-2 text-center font-bold";
       } else {
-        isAdultVerified = false;
-        notice.innerText = `✓ Verified Age ${age}: General Creative Access Granted (Explicit 18+ Locked).`;
-        notice.className = "text-[10px] text-purple-400 mt-1 font-bold";
-        document.getElementById('verifyBtn').disabled = !termsChecked;
+        isHumanVerified = false;
+        humanNotice.innerText = "Slide fully to the right to prove you are human.";
+        humanNotice.className = "text-[10px] text-pink-500 mt-2 text-center font-bold";
       }
-    }
 
-    function speakNeural(text, pitch = 1.0, rate = 0.92) {
-      if (!voiceActive) return;
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        const voices = window.speechSynthesis.getVoices();
-        const studioVoice = voices.find(v => v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Karen')) || voices[0];
-        if (studioVoice) utterance.voice = studioVoice;
-        utterance.pitch = pitch;
-        utterance.rate = rate;
-        window.speechSynthesis.speak(utterance);
+      const dobVal = document.getElementById('dobInput').value;
+      const ageNotice = document.getElementById('ageNotice');
+      
+      if (dobVal) {
+        const birthDate = new Date(dobVal);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+
+        if (age < 13) {
+          isAgeVerified = false;
+          ageNotice.innerText = "❌ Under 13: Access Denied.";
+          ageNotice.className = "text-[10px] text-pink-500 mt-1 font-bold";
+        } else if (age >= 18) {
+          isAgeVerified = true;
+          ageNotice.innerText = `✓ Age ${age}: Explicit 18+ Access Granted.`;
+          ageNotice.className = "text-[10px] text-green-400 mt-1 font-bold";
+        } else {
+          isAgeVerified = true;
+          ageNotice.innerText = `✓ Age ${age}: General Access (Explicit Locked).`;
+          ageNotice.className = "text-[10px] text-purple-400 mt-1 font-bold";
+        }
       }
-    }
 
-    function playHostessVoice() {
-      speakNeural(currentHostessText, 1.05, 0.92);
+      const btn = document.getElementById('verifyBtn');
+      if (termsMet && isHumanVerified && isAgeVerified) {
+        btn.disabled = false;
+        btn.innerText = "Access Granted - Enter Setup";
+        btn.className = "w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-green-500 text-white font-black text-xs uppercase tracking-widest shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all";
+      } else {
+        btn.disabled = true;
+        btn.innerText = "Gateway Locked (Complete All Steps)";
+        btn.className = "w-full py-3 rounded-xl bg-gray-800 text-gray-500 font-black text-xs uppercase tracking-wider transition-all";
+      }
     }
 
     function goToProfileStep() {
       document.getElementById('stepVerify').classList.add('hidden');
       document.getElementById('stepProfile').classList.remove('hidden');
-      speakNeural("Welcome in. Let's create your creator profile before we hit the stage.");
     }
 
     function generateRandomAvatar() {
@@ -476,16 +388,13 @@
     function goToWelcomeStep() {
       const name = document.getElementById('usernameInput').value.trim() || 'Creator';
       document.getElementById('navUsername').innerText = name;
-      document.getElementById('welcomeHeading').innerText = `Welcome, ${name}!`;
+      
       if (selectedAvatarUrl) {
         document.getElementById('navAvatar').innerHTML = `<img src="${selectedAvatarUrl}" class="w-full h-full object-cover rounded-full" />`;
         document.getElementById('welcomeAvatar').innerHTML = `<img src="${selectedAvatarUrl}" class="w-full h-full object-cover rounded-full" />`;
       }
       document.getElementById('stepProfile').classList.add('hidden');
       document.getElementById('stepWelcome').classList.remove('hidden');
-      currentHostessText = `Hey ${name}! How did you hear about us? Here are the things we can do together. I'm right here with you from start to finish. Let's go.`;
-      document.getElementById('captionsText').innerText = `"${currentHostessText}"`;
-      playHostessVoice();
     }
 
     function launchTab(tabId) {
@@ -494,23 +403,19 @@
     }
 
     function switchTab(tabId) {
-      const tabs = ['avatarStudio', 'studio', 'music', 'prompter', 'store'];
+      const tabs = ['avatarStudio', 'studio'];
       tabs.forEach(t => {
         const sec = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         const btn = document.getElementById('navTab' + t.charAt(0).toUpperCase() + t.slice(1));
         if (sec) sec.classList.add('hidden');
         if (btn) {
-          btn.classList.remove('text-purple-400', 'text-emerald-400', 'text-blue-400', 'text-amber-400');
-          btn.classList.add('text-slate-400');
+          btn.classList.remove('text-green-400');
+          btn.classList.add('text-gray-500');
         }
       });
-      const activeSec = document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
-      const activeBtn = document.getElementById('navTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
-      if (activeSec) activeSec.classList.remove('hidden');
-      if (activeBtn) {
-        activeBtn.classList.remove('text-slate-400');
-        activeBtn.classList.add('text-purple-400');
-      }
+      document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.remove('hidden');
+      document.getElementById('navTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.add('text-green-400');
+      document.getElementById('navTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.remove('text-gray-500');
     }
 
     function randomizeCreatorAvatar() {
@@ -518,62 +423,44 @@
       const url = `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${seed}`;
       document.getElementById('creatorAvatarBox').innerHTML = `<img src="${url}" class="w-full h-full object-cover" />`;
     }
+    
+    function handleVoiceUpload(e) {
+      if (e.target.files && e.target.files[0]) {
+        voiceCloneUploaded = true;
+        document.getElementById('uploadLabel').innerText = "✓ " + e.target.files[0].name + " Uploaded";
+        document.getElementById('uploadLabel').classList.replace('text-pink-300', 'text-green-400');
+        checkCloneConsent();
+      }
+    }
 
-    function previewAvatarVoice() {
-      const sample = document.getElementById('voiceTestSample').value;
-      const pitch = parseFloat(document.getElementById('pitchVal').innerText);
-      const speed = parseFloat(document.getElementById('speedVal').innerText);
-      speakNeural(sample, pitch, speed);
+    function checkCloneConsent() {
+      const btn = document.getElementById('savePersonaBtn');
+      const consent = document.getElementById('voiceCloneConsent').checked;
+      if (voiceCloneUploaded && !consent) {
+        btn.disabled = true;
+        btn.innerText = "Must Check Cloning Consent to Save";
+        btn.classList.replace('bg-purple-600', 'bg-gray-800');
+      } else {
+        btn.disabled = false;
+        btn.innerText = "💾 Compile & Save Persona";
+        btn.classList.replace('bg-gray-800', 'bg-purple-600');
+      }
     }
 
     function saveAndExportAvatarPersona() {
-      const name = document.getElementById('avatarPersonaName').value || 'Nova Persona';
-      const voice = document.getElementById('voiceModelSelect').value;
+      const name = document.getElementById('avatarPersonaName').value || 'Glitch Entity';
+      const prompt = document.getElementById('customVoicePrompt').value || 'None provided';
+      const rating = document.getElementById('paramRating').value;
+      
+      let voiceType = voiceCloneUploaded ? "Custom Audio Clone (Pending API Render)" : "Algorithmic Base Register";
+      
       document.getElementById('personaExportCard').classList.remove('hidden');
-      document.getElementById('exportPersonaSummary').innerText = `Persona "${name}" configured with ${voice} model. Ready for social media rendering and export.`;
-    }
-
-    function generateDialogue() {
-      const prompt = document.getElementById('podcastPromptInput').value || "Synthetic Voices & Persona Creation";
-      document.getElementById('dialogueOutputBox').classList.remove('hidden');
-      document.getElementById('scriptContent').innerHTML = `
-        <p><strong class="text-emerald-400">[Host 1 - Anchor]:</strong> Breaking down "${prompt}" on the live stage.</p>
-        <p><strong class="text-purple-400">[Host 2 - Analyst]:</strong> The custom voice models are completely locked in.</p>
-        <p><strong class="text-slate-300">[Host 3 - Skeptic]:</strong> And creator liability is fully protected under terms.</p>
+      document.getElementById('exportPersonaSummary').innerHTML = `
+        <strong>Alias:</strong> ${name} <br/>
+        <strong>Rating:</strong> ${rating.toUpperCase()} <br/>
+        <strong>Voice Engine:</strong> ${voiceType} <br/>
+        <strong>Algorithm Prompt:</strong> "${prompt}"
       `;
-    }
-
-    function forgeLyrics() {
-      const theme = document.getElementById('songTheme').value || "Outlaw Midnight";
-      document.getElementById('lyricOutputContainer').classList.remove('hidden');
-      document.getElementById('lyricOutputBox').value = `[Verse 1]\nEngines roaring under midnight chrome\nSearching for an outlaw frequency to call our home\n\n[Chorus]\nWe are the sound that they can't erase\nCarving thunder in an open space!\n\n[Outro]\nFade out into bass... [Drop]`;
-    }
-
-    function togglePrompterScroll() {
-      const windowElem = document.getElementById('prompterScrollWindow');
-      const btn = document.getElementById('prompterScrollBtn');
-
-      if (prompterInterval) {
-        clearInterval(prompterInterval);
-        prompterInterval = null;
-        btn.innerText = "▶ Start Scroll";
-      } else {
-        btn.innerText = "⏸ Pause Scroll";
-        const speed = document.getElementById('prompterSpeed').value;
-        const intervalMs = Math.max(10, 250 - speed);
-        prompterInterval = setInterval(() => {
-          windowElem.scrollTop += 1;
-        }, intervalMs);
-      }
-    }
-
-    function resetPrompter() {
-      if (prompterInterval) {
-        clearInterval(prompterInterval);
-        prompterInterval = null;
-        document.getElementById('prompterScrollBtn').innerText = "▶ Start Scroll";
-      }
-      document.getElementById('prompterScrollWindow').scrollTop = 0;
     }
   </script>
 </body>
