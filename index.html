@@ -2,400 +2,1518 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Realist Studio | Dual-Host Debate Arena</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MyAI Studio | Executive AI Voice, Podcast & Music Suite</title>
+  
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#ffffff" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    :root {
-      --neon-green: #00ff66;
-      --deep-purple: #9333ea;
-      --cyber-pink: #ec4899;
-      --chrome-silver: #cbd5e1;
-      --bg-dark: #050508;
-    }
     body {
-      background-color: var(--bg-dark);
-      color: #f8fafc;
+      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.09), rgba(217, 70, 239, 0.07) 40%, #ffffff 85%);
+      color: #0f172a;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-    .neon-border-green { box-shadow: 0 0 15px rgba(0, 255, 102, 0.25), inset 0 0 10px rgba(0, 255, 102, 0.1); }
-    .neon-border-purple { box-shadow: 0 0 15px rgba(147, 51, 234, 0.25), inset 0 0 10px rgba(147, 51, 234, 0.1); }
-    .neon-border-pink { box-shadow: 0 0 15px rgba(236, 72, 153, 0.25), inset 0 0 10px rgba(236, 72, 153, 0.1); }
-    .scanline {
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-      background-size: 100% 3px, 4px 100%;
+    .silver-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(203, 213, 225, 0.85);
+      box-shadow: 0 10px 25px -5px rgba(148, 163, 184, 0.2), 0 8px 10px -6px rgba(148, 163, 184, 0.1);
     }
-    .active-tab { display: flex !important; }
+    .orchid-glow { box-shadow: 0 0 22px rgba(217, 70, 239, 0.28), inset 0 0 10px rgba(217, 70, 239, 0.08); }
+    .aqua-glow { box-shadow: 0 0 22px rgba(6, 182, 212, 0.28), inset 0 0 10px rgba(6, 182, 212, 0.08); }
+    .yellow-glow { box-shadow: 0 0 22px rgba(250, 204, 21, 0.28), inset 0 0 10px rgba(250, 204, 21, 0.08); }
+    .purple-glow { box-shadow: 0 0 22px rgba(126, 34, 206, 0.28), inset 0 0 10px rgba(126, 34, 206, 0.08); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: flex; flex-direction: column; }
+    .mirrored { transform: scaleX(-1); }
+
+    /* Talking Lip-Sync Pulse Auras */
+    .speaking-h1 { animation: pulseH1 0.75s infinite alternate ease-in-out; }
+    .speaking-h2 { animation: pulseH2 0.75s infinite alternate ease-in-out; }
+    .speaking-h3 { animation: pulseH3 0.75s infinite alternate ease-in-out; }
+    .speaking-h4 { animation: pulseH4 0.75s infinite alternate ease-in-out; }
+    @keyframes pulseH1 { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217, 70, 239, 0.7); } 100% { transform: scale(1.08); box-shadow: 0 0 22px 6px rgba(217, 70, 239, 0.6); } }
+    @keyframes pulseH2 { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); } 100% { transform: scale(1.08); box-shadow: 0 0 22px 6px rgba(6, 182, 212, 0.6); } }
+    @keyframes pulseH3 { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } 100% { transform: scale(1.08); box-shadow: 0 0 22px 6px rgba(250, 204, 21, 0.6); } }
+    @keyframes pulseH4 { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(126, 34, 206, 0.7); } 100% { transform: scale(1.08); box-shadow: 0 0 22px 6px rgba(126, 34, 206, 0.6); } }
+
+    #legal-scroll-container::-webkit-scrollbar { width: 6px; }
+    #legal-scroll-container::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+    #legal-scroll-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+    #legal-scroll-container::-webkit-scrollbar-thumb:hover { background: #7e22ce; }
   </style>
 </head>
-<body class="min-h-screen flex justify-center bg-black scanline pb-24">
+<body class="min-h-screen flex justify-center bg-slate-100 pb-24 select-none">
 
-  <div class="w-full max-w-lg min-h-screen flex flex-col bg-[#0b0b12] border-x border-zinc-800 shadow-2xl relative">
-    
-    <!-- Top Broadcast Header -->
-    <header class="px-4 py-3 bg-[#08080f]/95 border-b border-zinc-800/80 sticky top-0 z-40 backdrop-blur flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <div class="w-3 h-3 rounded-full bg-[#00ff66] animate-pulse shadow-[0_0_8px_#00ff66]"></div>
-        <div>
-          <h1 class="text-sm font-black tracking-wider uppercase text-white flex items-center gap-1.5">
-            RHRR <span class="text-[#00ff66]">STUDIO</span>
-          </h1>
-          <p class="text-[10px] text-zinc-400 font-mono tracking-widest">DEBATE & PERSONA MATRIX</p>
+  <!-- ==================== 1. TIMED LEGAL & COMPLIANCE DISCLOSURE GATE ==================== -->
+  <div id="legal-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white border-2 border-purple-600 rounded-3xl p-6 space-y-4 shadow-2xl relative overflow-hidden">
+      
+      <div class="text-center space-y-1 border-b border-slate-100 pb-3">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-purple-100 border border-purple-300 text-purple-700 text-xl shadow-sm">
+          <i class="fa-solid fa-scale-balanced"></i>
+        </div>
+        <h2 class="text-base font-black text-slate-900 tracking-tight uppercase">Legal Disclosures & Compliance Agreement</h2>
+        <p class="text-xs text-slate-500 font-medium">Mandatory review: Read thoroughly to unlock studio access.</p>
+      </div>
+
+      <!-- Anti-Speed Scroll Warning -->
+      <div id="legal-speed-warning" class="hidden p-2.5 bg-amber-50 border border-amber-300 rounded-2xl text-amber-900 text-[11px] font-bold text-center animate-pulse">
+        <i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Reading speed too fast! Please review terms carefully. Timer reset.
+      </div>
+
+      <!-- Reading Timer & Progress Bar -->
+      <div class="space-y-1">
+        <div class="flex justify-between text-[10px] font-bold font-mono text-slate-500">
+          <span>READING TIMER: <span id="legal-timer-text">10s remaining</span></span>
+          <span id="legal-scroll-percent">0% SCROLLED</span>
+        </div>
+        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+          <div id="legal-progress-bar" class="h-full bg-gradient-to-r from-fuchsia-600 to-purple-700 w-0 transition-all duration-300"></div>
         </div>
       </div>
-      <div class="flex items-center gap-1.5">
-        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono tracking-wider bg-purple-950/80 text-purple-300 border border-purple-800/60">
-          ON AIR
-        </span>
+
+      <!-- Enforced Scrollable Agreement -->
+      <div id="legal-scroll-container" onscroll="handleLegalScroll()" class="h-56 overflow-y-auto p-4 bg-slate-50 border border-slate-200 rounded-2xl text-[11px] text-slate-700 space-y-3 leading-relaxed font-sans shadow-inner">
+        
+        <div>
+          <h4 class="font-black text-slate-900 uppercase">1. User Uploads & Complete Indemnification</h4>
+          <p>By uploading any image, audio sample, custom graphic, or lyrics to MyAI Studio, you certify and warrant that you hold all legal ownership, licensing, and explicit rights to such materials. You explicitly agree <strong>NOT</strong> to upload copyrighted images, unauthorized celebrity likenesses, non-consensual voice clones, proprietary corporate trademarks, or unlawful media. You agree to defend, indemnify, and hold harmless MyAI Studio, its creators, operators, and hosting infrastructure from any intellectual property infringement, defamation, or publicity claims arising from your uploaded assets.</p>
+        </div>
+
+        <div>
+          <h4 class="font-black text-slate-900 uppercase">2. Synthetic AI Media & Voice Simulation Disclaimer</h4>
+          <p>All voices, avatars, scripts, and musical stems generated in this studio are synthetic algorithmic simulations. MyAI Studio makes no guarantees regarding the factual accuracy, historical reality, or veracity of generated scripts. Any resemblance of AI-synthesized voices or generated characters to real individuals, living or deceased, is unintentional and purely coincidental.</p>
+        </div>
+
+        <div>
+          <h4 class="font-black text-slate-900 uppercase">3. Prohibited Conduct & Zero-Tolerance Deepfake Policy</h4>
+          <p>You agree never to use MyAI Studio to generate: (a) defamatory, harassing, or hate speech; (b) deceptive deepfakes intended to defraud, mislead, or impersonate real persons without authorization; (c) electoral interference or political disinformation; (d) non-consensual sexually explicit content, CSAM, or violent threats. Violations result in immediate access revocation and law enforcement referral.</p>
+        </div>
+
+        <div>
+          <h4 class="font-black text-slate-900 uppercase">4. Explicit & Mature Content Liability (18+)</h4>
+          <p>Enabling the Explicit & Grit Dial (>0%) requires certified adult age (18+). You assume sole legal liability for any mature, raw, or uncensored language generated. You are strictly responsible for complying with third-party platform regulations (including YouTube age-gating, TikTok community standards, and podcast rating labels).</p>
+        </div>
+
+        <div>
+          <h4 class="font-black text-slate-900 uppercase">5. Commercial Rights & Third-Party Export</h4>
+          <p>You own the output of your custom scripts and purchased stem packages subject to compliance with upstream AI model provider terms (Suno, Web Speech APIs). You are responsible for ensuring exported content meets social media advertising and distribution policies.</p>
+        </div>
+
+        <div>
+          <h4 class="font-black text-slate-900 uppercase">6. Limitation of Platform Liability</h4>
+          <p>MyAI Studio is provided on an "as is" and "as available" basis without warranties of any kind. Under no circumstances shall the platform operators be liable for any direct, indirect, incidental, or consequential damages resulting from your use or public distribution of generated media.</p>
+        </div>
+
+        <div class="pt-2 text-center text-purple-800 font-extrabold text-[10px] uppercase font-mono">
+          [ End of Legal Agreement — Scroll to bottom to unlock confirmation ]
+        </div>
+      </div>
+
+      <!-- Acceptance Checkbox -->
+      <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+        <label class="flex items-center gap-2.5 cursor-pointer">
+          <input type="checkbox" id="legal-agree-check" disabled onchange="checkLegalReady()" class="w-4 h-4 rounded border-slate-300 accent-purple-700 cursor-not-allowed" />
+          <span class="text-xs text-slate-800 font-bold" id="legal-check-label">Read agreement & scroll to bottom to enable checkbox</span>
+        </label>
+      </div>
+
+      <button id="legal-submit-btn" disabled onclick="acceptLegalTerms()" class="w-full py-3.5 bg-slate-300 text-slate-500 font-extrabold uppercase tracking-wider rounded-2xl text-xs transition flex items-center justify-center gap-2 cursor-not-allowed shadow-none">
+        <i class="fa-solid fa-lock text-slate-400"></i> Accept Disclosures & Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== 2. GATEKEEPER ONBOARDING MODAL (13+) ==================== -->
+  <div id="gatekeeper-modal" class="fixed inset-0 z-40 bg-slate-900/65 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-6 space-y-5 shadow-2xl relative overflow-hidden">
+      <div class="absolute -top-12 -right-12 w-36 h-36 bg-gradient-to-br from-cyan-300 via-purple-300 to-fuchsia-300 rounded-full blur-2xl opacity-40"></div>
+      
+      <div class="text-center space-y-1.5 border-b border-slate-100 pb-4 relative z-10">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-fuchsia-600 via-purple-700 to-cyan-500 text-white text-xl shadow-lg shadow-purple-200">
+          <i class="fa-solid fa-crown text-yellow-300"></i>
+        </div>
+        <h2 class="text-lg font-black text-slate-900 tracking-tight uppercase">Executive Access Gate</h2>
+        <p class="text-xs text-slate-500 font-medium">Verify credentials & forge your VIP Studio profile</p>
+      </div>
+
+      <div class="bg-slate-50/90 border border-slate-200/80 p-4 rounded-2xl space-y-3">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="gate-age-check" class="w-4 h-4 rounded border-slate-300 bg-white accent-fuchsia-600" />
+          <span class="text-xs text-slate-700 font-semibold">I confirm that I am <strong>13+ years of age</strong>.</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="gate-human-check" class="w-4 h-4 rounded border-slate-300 bg-white accent-cyan-600" />
+          <span class="text-xs text-slate-700 font-semibold flex items-center gap-2">
+            <i class="fa-solid fa-shield-check text-cyan-600"></i> Human Creator Status Verified
+          </span>
+        </label>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1">Creator / Producer Handle</label>
+          <input id="gate-username" type="text" placeholder="e.g., Studio_Executive" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-fuchsia-500 focus:bg-white shadow-inner" />
+        </div>
+
+        <div>
+          <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1">Studio Profile Avatar</label>
+          <div class="flex items-center gap-3">
+            <img id="gate-avatar-preview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" class="w-12 h-12 rounded-2xl object-cover border-2 border-fuchsia-500 shadow-md" />
+            <div class="flex-1 flex gap-2">
+              <button onclick="document.getElementById('gate-file-input').click()" class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1 shadow-sm">
+                <i class="fa-solid fa-cloud-arrow-up text-indigo-500"></i> Upload
+              </button>
+              <input type="file" id="gate-file-input" accept="image/*" class="hidden" onchange="handleGateAvatarUpload(event)" />
+              <button onclick="assignRandomStudioAvatar()" class="flex-1 py-2 bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-purple-700 border border-purple-200 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1 shadow-sm">
+                <i class="fa-solid fa-dice text-fuchsia-600"></i> Assign
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="submitGatekeeper()" class="w-full py-3.5 bg-gradient-to-r from-fuchsia-600 via-purple-700 to-cyan-500 hover:opacity-95 text-white font-extrabold uppercase tracking-wider rounded-2xl text-xs shadow-lg shadow-purple-200 transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-key text-yellow-300"></i> Enter Studio Suite
+      </button>
+
+      <p id="gate-error-msg" class="text-[11px] text-fuchsia-600 font-semibold text-center hidden">
+        * Please confirm 13+ age status, verify human check, and enter a creator handle.
+      </p>
+    </div>
+  </div>
+
+  <!-- ==================== 3. SECONDARY 18+ EXPLICIT CONTENT MODAL ==================== -->
+  <div id="explicit-18-modal" class="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-white border-2 border-purple-600 rounded-3xl p-6 space-y-4 text-center shadow-2xl relative">
+      <div class="w-12 h-12 rounded-2xl bg-purple-100 border border-purple-300 text-purple-700 flex items-center justify-center text-xl mx-auto shadow-sm">
+        <i class="fa-solid fa-triangle-exclamation text-yellow-500"></i>
+      </div>
+      <h3 class="text-base font-black text-slate-900 uppercase tracking-tight">18+ Age Verification Required</h3>
+      <p class="text-xs text-slate-600">You are enabling uncensored, gritty dialogue, profanity, and mature storytelling themes.</p>
+      
+      <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl text-left">
+        <label class="flex items-center gap-2.5 cursor-pointer">
+          <input type="checkbox" id="explicit-consent-check" class="w-4 h-4 rounded border-slate-300 accent-purple-700" />
+          <span class="text-xs text-slate-800 font-bold">I certify that I am 18 years of age or older.</span>
+        </label>
+      </div>
+
+      <div class="space-y-2 pt-1">
+        <button onclick="confirm18PlusVerification()" class="w-full py-3 bg-gradient-to-r from-purple-700 to-indigo-600 text-white font-extrabold rounded-2xl text-xs shadow-md">Unlock Uncensored Mode</button>
+        <button onclick="cancelExplicitMode()" class="w-full py-2 text-slate-500 text-xs font-semibold">Keep Family-Safe (0%)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN STUDIO APP CONTAINER ==================== -->
+  <div class="w-full max-w-lg min-h-screen flex flex-col bg-white border-x border-slate-200/80 shadow-2xl relative">
+    
+    <!-- Top Broadcast Header -->
+    <header class="px-4 py-3.5 bg-white/90 border-b border-slate-200 sticky top-0 z-30 backdrop-blur flex justify-between items-center shadow-sm">
+      <div class="flex items-center space-x-3">
+        <div class="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-yellow-400 to-cyan-400 shadow-[0_0_10px_rgba(234,179,8,0.6)] animate-pulse"></div>
+        <div>
+          <h1 class="text-sm font-black tracking-tight text-slate-900 flex items-center gap-1.5">
+            MYAI <span class="bg-gradient-to-r from-fuchsia-600 via-purple-700 to-cyan-600 bg-clip-text text-transparent">STUDIO</span>
+          </h1>
+          <p class="text-[9px] text-slate-400 font-mono tracking-widest uppercase font-bold" id="header-user-display">CREATOR ENGINE</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <button onclick="setTab('director')" class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-300 text-purple-800 shadow-sm flex items-center gap-1">
+          <i class="fa-solid fa-robot text-purple-600"></i> Director
+        </button>
+        <button onclick="setTab('store')" id="pass-indicator-badge" class="px-2.5 py-1 rounded-full text-[10px] font-extrabold font-mono bg-gradient-to-r from-yellow-100 to-amber-100 border border-yellow-300 text-amber-900 shadow-sm flex items-center gap-1">
+          <i class="fa-solid fa-ticket text-yellow-600"></i> <span id="credit-count-text">1 PASS</span>
+        </button>
+        <img id="nav-profile-thumb" onclick="setTab('profile')" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" class="w-7 h-7 rounded-full object-cover border-2 border-purple-500 shadow cursor-pointer" />
       </div>
     </header>
 
-    <!-- TAB 1: DUAL-HOST DEBATE ARENA -->
-    <main id="tab-arena" class="active-tab flex-1 flex flex-col p-4 space-y-4">
+    <!-- TAB 1: 4-HOST BROADCAST STAGE & DYNAMIC STORY ENGINE -->
+    <main id="pane-arena" class="tab-pane active flex-1 p-3.5 space-y-4">
       
-      <!-- Side-by-Side Dual Host Stage -->
-      <div class="grid grid-cols-2 gap-3">
-        <!-- Host A Card -->
-        <div id="host-a-card" class="bg-zinc-900/90 border-2 border-[#00ff66]/70 rounded-2xl p-3 flex flex-col items-center text-center relative neon-border-green">
-          <span class="absolute top-2 left-2 text-[9px] font-mono text-[#00ff66] bg-black/60 px-1.5 py-0.5 rounded border border-[#00ff66]/40">HOST 1</span>
-          <img id="host-a-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-[#00ff66] shadow mt-2" />
-          <h3 id="host-a-name" class="text-xs font-bold text-white mt-1.5 truncate w-full">Aiden Ayers</h3>
-          <p id="host-a-role" class="text-[10px] text-zinc-400 font-mono truncate w-full">Uncensored Theorist</p>
-          <span class="mt-2 text-[9px] bg-zinc-950 text-[#00ff66] px-2 py-0.5 rounded border border-zinc-800">Radical Skeptic</span>
+      <!-- 4-Podium Stage Layout -->
+      <div class="grid grid-cols-4 gap-2">
+        <div class="silver-card rounded-2xl p-2 flex flex-col items-center text-center relative orchid-glow border-fuchsia-300">
+          <span class="text-[8px] font-extrabold text-fuchsia-700 bg-fuchsia-50 px-1 rounded-full border border-fuchsia-200">H1</span>
+          <img id="stage-host-1-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-xl object-cover border-2 border-fuchsia-500 shadow mt-1 transition-transform" />
+          <h4 id="stage-host-1-name" class="text-[10px] font-black text-slate-900 mt-1 truncate w-full">Aria Vance</h4>
         </div>
 
-        <!-- Host B Card -->
-        <div id="host-b-card" class="bg-zinc-900/90 border-2 border-purple-500/70 rounded-2xl p-3 flex flex-col items-center text-center relative neon-border-purple">
-          <span class="absolute top-2 left-2 text-[9px] font-mono text-purple-400 bg-black/60 px-1.5 py-0.5 rounded border border-purple-500/40">HOST 2</span>
-          <img id="host-b-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-purple-500 shadow mt-2" />
-          <h3 id="host-b-name" class="text-xs font-bold text-white mt-1.5 truncate w-full">Fern Elise</h3>
-          <p id="host-b-role" class="text-[10px] text-zinc-400 font-mono truncate w-full">Grounded Lyricist</p>
-          <span class="mt-2 text-[9px] bg-zinc-950 text-purple-300 px-2 py-0.5 rounded border border-zinc-800">Pragmatic Realist</span>
+        <div class="silver-card rounded-2xl p-2 flex flex-col items-center text-center relative aqua-glow border-cyan-300">
+          <span class="text-[8px] font-extrabold text-cyan-800 bg-cyan-50 px-1 rounded-full border border-cyan-200">H2</span>
+          <img id="stage-host-2-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-xl object-cover border-2 border-cyan-500 shadow mt-1 transition-transform" />
+          <h4 id="stage-host-2-name" class="text-[10px] font-black text-slate-900 mt-1 truncate w-full">Kai Sterling</h4>
+        </div>
+
+        <div class="silver-card rounded-2xl p-2 flex flex-col items-center text-center relative yellow-glow border-yellow-300">
+          <span class="text-[8px] font-extrabold text-amber-800 bg-amber-50 px-1 rounded-full border border-yellow-200">H3</span>
+          <img id="stage-host-3-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-xl object-cover border-2 border-yellow-500 shadow mt-1 transition-transform" />
+          <h4 id="stage-host-3-name" class="text-[10px] font-black text-slate-900 mt-1 truncate w-full">Aiden Stone</h4>
+        </div>
+
+        <div class="silver-card rounded-2xl p-2 flex flex-col items-center text-center relative purple-glow border-purple-300">
+          <span class="text-[8px] font-extrabold text-purple-800 bg-purple-50 px-1 rounded-full border border-purple-200">H4</span>
+          <img id="stage-host-4-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-xl object-cover border-2 border-purple-600 shadow mt-1 transition-transform" />
+          <h4 id="stage-host-4-name" class="text-[10px] font-black text-slate-900 mt-1 truncate w-full">Fern Elise</h4>
         </div>
       </div>
 
-      <!-- Debate Topic & Quick Generator -->
-      <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-3.5 space-y-3">
-        <label class="text-xs font-bold uppercase tracking-wider text-zinc-300 flex items-center justify-between">
-          <span><i class="fa-solid fa-bolt text-[#00ff66] mr-1.5"></i> Debate Topic / Report Investigation</span>
-          <span class="text-[10px] text-purple-400 font-mono">DUAL SCRIPT MODE</span>
-        </label>
-        <div class="flex gap-2">
-          <input id="debate-topic" type="text" placeholder="e.g., Hidden Cemetery Space Shortages or Corporate Redactions" class="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#00ff66]" />
-          <button onclick="startDebateRound()" class="px-4 py-2 bg-gradient-to-r from-[#00ff66] to-emerald-600 text-black font-extrabold rounded-xl text-xs hover:opacity-90 active:scale-95 transition shadow-lg flex items-center gap-1.5">
-            <i class="fa-solid fa-play"></i> Run
+      <!-- Live Equalizer Waveform & Audio Toggle -->
+      <div class="silver-card rounded-2xl p-2.5 flex items-center justify-between border-indigo-200/80">
+        <canvas id="waveform-canvas" width="260" height="28" class="w-7/12 h-7 rounded-lg bg-slate-900"></canvas>
+        <div class="flex items-center gap-1.5">
+          <button onclick="toggleVoice()" id="voice-toggle-btn" class="text-[10px] font-bold text-cyan-800 bg-cyan-50 px-2 py-1 rounded-xl border border-cyan-300 shadow-sm flex items-center gap-1">
+            <i class="fa-solid fa-volume-high text-cyan-600"></i> AUDIO: ON
           </button>
         </div>
       </div>
 
-      <!-- Live Broadcast Dialogue Feed -->
-      <div id="debate-feed" class="flex-1 space-y-3 overflow-y-auto min-h-[260px] max-h-[380px] p-2 bg-zinc-950/60 rounded-2xl border border-zinc-800/80">
-        <div class="text-center py-6 text-zinc-500 text-xs font-mono">
-          [ BROADCAST READY: Enter a topic above or tap preset prompts to initiate dual-host dialogue ]
+      <!-- AI Podcast & Story Script Generator Box -->
+      <div class="silver-card rounded-3xl p-3.5 space-y-3 border-purple-200">
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> AI Episode & Story Generator
+          </span>
+          <span class="text-[10px] font-bold text-slate-500 font-mono" id="explicit-indicator-tag">Clean (0%)</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <select id="podcast-category-select" class="col-span-1 px-2.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-bold text-slate-800 focus:outline-none focus:border-fuchsia-500">
+            <option value="podcast">Podcast Debate</option>
+            <option value="mystery">True Mystery</option>
+            <option value="tech">Future Tech & AI</option>
+            <option value="outlaw">Outlaw Lore</option>
+            <option value="commercial">30s Commercial</option>
+          </select>
+          <input id="podcast-topic-input" type="text" placeholder="Episode concept or plot hook..." class="col-span-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:bg-white" />
+        </div>
+
+        <!-- Explicit Dial Slider (0% to 100%) -->
+        <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-200 space-y-1.5">
+          <div class="flex justify-between text-[11px] font-bold text-slate-700">
+            <span class="flex items-center gap-1"><i class="fa-solid fa-bolt text-yellow-500"></i> Explicit & Grit Dial</span>
+            <span id="explicit-dial-val" class="font-mono text-purple-700">0% (Broadcast Safe)</span>
+          </div>
+          <input id="explicit-slider" type="range" min="0" max="100" step="5" value="0" oninput="handleExplicitSlider(this.value)" class="w-full accent-purple-700" />
+        </div>
+
+        <button onclick="generateFullAIEpisode()" class="w-full py-3 bg-gradient-to-r from-fuchsia-600 via-purple-700 to-cyan-600 hover:opacity-95 text-white font-black rounded-2xl text-xs uppercase tracking-wider shadow-md shadow-purple-200 transition flex items-center justify-center gap-2 active:scale-95">
+          <i class="fa-solid fa-sparkles text-yellow-300"></i> Generate Full 4-Host Script
+        </button>
+      </div>
+
+      <!-- Interactive Script Timeline -->
+      <div class="silver-card rounded-3xl p-3.5 space-y-3 border-indigo-200/70">
+        <div class="flex justify-between items-center">
+          <label class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-pen-nib text-fuchsia-600"></i> Script Timeline
+          </label>
+          <button onclick="addNewScriptLine()" class="text-[10px] font-bold text-fuchsia-600 bg-fuchsia-50 px-2 py-1 rounded-xl border border-fuchsia-200 hover:bg-fuchsia-100 flex items-center gap-1">
+            <i class="fa-solid fa-plus"></i> Add Line
+          </button>
+        </div>
+
+        <div id="script-editor-list" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Playback & Save -->
+        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200">
+          <button onclick="playFullScript()" id="play-script-btn" class="py-2.5 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white font-extrabold rounded-2xl text-xs shadow-md shadow-purple-200 flex items-center justify-center gap-1.5 active:scale-95 transition">
+            <i class="fa-solid fa-play text-yellow-300"></i> Synthesize & Play
+          </button>
+          <button onclick="saveProjectToVault()" class="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold border border-slate-300 rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-bookmark text-indigo-500"></i> Save Project
+          </button>
         </div>
       </div>
 
-      <!-- Preset Quick Triggers -->
-      <div class="flex gap-2 overflow-x-auto pb-1">
-        <button onclick="quickTopic('Uncovering Hidden Riverbed Mineral Secrets')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ Riverbed Anomaly</button>
-        <button onclick="quickTopic('Afterlife Logistics & Cemetery Real Estate')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ Cemetery Space</button>
-        <button onclick="quickTopic('AI Ethics & Avatar Autonomy')" class="whitespace-nowrap px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-[11px] font-mono">⚡ AI Sovereignty</button>
+      <!-- Soundboard & Music Bed Deck -->
+      <div class="silver-card rounded-3xl p-3.5 space-y-2.5 border-slate-200">
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-compact-disc text-cyan-600"></i> Music Beds & FX (Auto-Ducking)
+          </span>
+          <button onclick="toggleAmbientHum()" id="hum-btn" class="text-[9px] font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200">
+            Music Bed: OFF
+          </button>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="triggerSoundFX('chime')" class="py-2 bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-800 font-bold text-[10px] rounded-xl border border-purple-200 hover:border-purple-400">
+            ✨ Intro Chime
+          </button>
+          <button onclick="triggerSoundFX('swoosh')" class="py-2 bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-800 font-bold text-[10px] rounded-xl border border-cyan-200 hover:border-cyan-400">
+            💨 Swoosh FX
+          </button>
+          <button onclick="triggerSoundFX('bleep')" class="py-2 bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-800 font-bold text-[10px] rounded-xl border border-amber-200 hover:border-amber-400">
+            🤬 Censor Bleep
+          </button>
+        </div>
       </div>
-
     </main>
 
-    <!-- TAB 2: AVATAR FORGE & UPLOADER -->
-    <main id="tab-lab" class="hidden flex-1 flex flex-col p-4 space-y-5">
-      <div class="border-b border-zinc-800 pb-3">
-        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
-          <i class="fa-solid fa-dna text-purple-400"></i>
-          Avatar Forge & Image Lab
-        </h2>
-        <p class="text-xs text-zinc-400">Upload custom avatar artwork or dial in dynamic personality traits.</p>
-      </div>
-
-      <!-- Avatar Image Upload / Selector -->
-      <div class="bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl space-y-3">
-        <label class="text-xs font-bold uppercase tracking-wider text-zinc-300 block">Avatar Visual Source</label>
-        
-        <div class="flex items-center gap-4">
-          <img id="lab-preview-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" class="w-16 h-16 rounded-2xl object-cover border-2 border-[#00ff66] neon-border-green" />
-          <div class="flex-1 space-y-2">
-            <input type="file" id="avatar-file-input" accept="image/*" onchange="handleImageUpload(event)" class="text-[11px] text-zinc-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-800 file:text-zinc-200 hover:file:bg-zinc-700 cursor-pointer" />
-            <input id="lab-image-url" type="text" placeholder="Or paste image URL here..." oninput="updateLabPreviewUrl(this.value)" class="w-full px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-purple-500" />
-          </div>
-        </div>
-
-        <!-- Border Glow Selection -->
+    <!-- TAB 2: TELEPROMPTER & MULTI-PLATFORM VIDEO SUITE -->
+    <main id="pane-prompter" class="tab-pane flex-1 p-4 space-y-4">
+      <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
         <div>
-          <label class="text-[11px] font-semibold text-zinc-400 block mb-1.5">Aura / Border Glow</label>
-          <div class="flex gap-2">
-            <button onclick="setLabAura('green')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-[#00ff66] text-[#00ff66]">Neon Green</button>
-            <button onclick="setLabAura('purple')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-purple-500 text-purple-400">Deep Purple</button>
-            <button onclick="setLabAura('pink')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-pink-500 text-pink-400">Cyber Pink</button>
-            <button onclick="setLabAura('silver')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-zinc-950 border-2 border-slate-300 text-slate-300">Silver</button>
+          <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-tv text-cyan-600"></i>
+            Teleprompter & Social Exporter
+          </h2>
+          <p class="text-xs text-slate-500 font-medium">Auto-scroll reader with 1-click CapCut .SRT exports.</p>
+        </div>
+        <button onclick="triggerCapCutExport()" class="px-3.5 py-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white rounded-2xl text-xs font-bold shadow-md shadow-fuchsia-200 flex items-center gap-1.5">
+          <i class="fa-solid fa-download text-yellow-300"></i> Export .SRT
+        </button>
+      </div>
+
+      <div class="flex gap-2 text-xs">
+        <button class="flex-1 py-1.5 bg-purple-100 text-purple-800 font-bold rounded-xl border border-purple-300">16:9 YouTube</button>
+        <button class="flex-1 py-1.5 bg-slate-100 text-slate-700 font-medium rounded-xl border border-slate-200">9:16 Shorts/TikTok</button>
+        <button class="flex-1 py-1.5 bg-slate-100 text-slate-700 font-medium rounded-xl border border-slate-200">1:1 Square</button>
+      </div>
+
+      <!-- Prompter Controls -->
+      <div class="silver-card p-3 rounded-2xl flex flex-wrap gap-2 items-center justify-between text-xs">
+        <button onclick="togglePrompterScroll()" id="prompter-play-btn" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-extrabold rounded-xl flex items-center gap-1.5 shadow">
+          <i class="fa-solid fa-play"></i> Auto Scroll
+        </button>
+        <button onclick="resetPrompter()" class="px-3 py-2 bg-slate-100 text-slate-700 font-bold border border-slate-200 rounded-xl hover:bg-slate-200">
+          <i class="fa-solid fa-rotate-left"></i> Reset
+        </button>
+        <button onclick="toggleMirror()" id="mirror-btn" class="px-3 py-2 bg-slate-100 text-slate-700 font-bold border border-slate-200 rounded-xl hover:bg-slate-200">
+          <i class="fa-solid fa-arrows-left-right"></i> Mirror
+        </button>
+
+        <div class="flex items-center gap-3 w-full pt-2.5 border-t border-slate-200">
+          <span class="text-slate-500 text-[11px] font-bold uppercase">Speed:</span>
+          <input id="prompter-speed-slider" type="range" min="1" max="8" value="2" oninput="updateScrollSpeed(this.value)" class="flex-1 accent-cyan-600" />
+          <span id="speed-val" class="text-slate-800 font-bold font-mono text-[11px]">2x</span>
+        </div>
+      </div>
+
+      <!-- Viewport Window with Live Karaoke Highlight -->
+      <div id="prompter-scroll-area" class="h-96 overflow-y-auto bg-slate-900 border-2 border-indigo-300 rounded-3xl p-6 relative shadow-xl">
+        <div id="prompter-text-container" class="space-y-6 text-xl font-bold leading-relaxed transition-transform">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- TAB 3: SUNO MUSIC & LYRIC FORGE -->
+    <main id="pane-music" class="tab-pane flex-1 p-4 space-y-4">
+      <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-music text-fuchsia-600"></i>
+            Suno Lyric & Track Forge
+          </h2>
+          <p class="text-xs text-slate-500 font-medium">Structure song arrangements & style tags for Suno / Udio.</p>
+        </div>
+        <button onclick="copySunoPrompt()" class="px-3.5 py-1.5 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white rounded-2xl text-xs font-bold shadow flex items-center gap-1">
+          <i class="fa-solid fa-copy"></i> Copy Prompt
+        </button>
+      </div>
+
+      <!-- Style Tag Architect -->
+      <div class="silver-card p-3.5 rounded-3xl space-y-2.5 border-fuchsia-200">
+        <label class="text-xs font-black uppercase tracking-wider text-slate-800 block">Style & Acoustic Descriptors</label>
+        <div class="grid grid-cols-2 gap-2">
+          <input id="suno-genre-input" type="text" value="Modern Country, Outlaw Ballad" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:outline-none focus:border-fuchsia-500" />
+          <input id="suno-vocal-input" type="text" value="Warm rasp, dual harmonies, 85 BPM" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:outline-none focus:border-fuchsia-500" />
+        </div>
+        <div class="flex gap-1.5 flex-wrap">
+          <button onclick="insertLyricTag('[Intro]')" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-mono font-bold rounded-lg border border-slate-300">[Intro]</button>
+          <button onclick="insertLyricTag('[Verse 1]')" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-mono font-bold rounded-lg border border-slate-300">[Verse 1]</button>
+          <button onclick="insertLyricTag('[Chorus]')" class="px-2 py-0.5 bg-purple-100 hover:bg-purple-200 text-purple-800 text-[10px] font-mono font-bold rounded-lg border border-purple-300">[Chorus]</button>
+          <button onclick="insertLyricTag('[Bridge]')" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-mono font-bold rounded-lg border border-slate-300">[Bridge]</button>
+          <button onclick="insertLyricTag('[Outro]')" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-mono font-bold rounded-lg border border-slate-300">[Outro]</button>
+        </div>
+      </div>
+
+      <!-- Lyric Workspace -->
+      <textarea id="suno-lyric-area" class="w-full h-64 bg-slate-50 border border-slate-200 rounded-3xl p-4 text-xs text-slate-900 leading-relaxed focus:outline-none focus:border-fuchsia-500 focus:bg-white resize-none shadow-inner font-mono">[Verse 1]
+Dust on the dashboard, headlights cutting the pine
+We left the noise of the city three exits behind
+Looking for silver along the river's edge
+Living on the promise of words that we pledged
+
+[Chorus]
+Oh, let the signal ride across the midnight line
+Two voices speaking truth until the morning shines
+Underneath the radar, higher than the haze
+We'll write our own horizon through the darkest days</textarea>
+    </main>
+
+    <!-- TAB 4: VOICE & AVATAR LAB -->
+    <main id="pane-lab" class="tab-pane flex-1 p-4 space-y-5">
+      <div class="border-b border-slate-200 pb-3">
+        <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-purple-600"></i>
+          Voice Model & Persona Lab
+        </h2>
+        <p class="text-xs text-slate-500">Tune voice pitch, rate, and artwork for each podium host.</p>
+      </div>
+
+      <div class="silver-card p-4 rounded-3xl space-y-3 border-fuchsia-200">
+        <label class="text-xs font-black uppercase tracking-wider text-slate-800 block">Host Graphic Asset</label>
+        <div class="flex items-center gap-4">
+          <img id="avatar-preview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" class="w-16 h-16 rounded-2xl object-cover border-2 border-fuchsia-500 shadow-md" />
+          <div class="flex-1 space-y-2">
+            <input type="file" accept="image/*" onchange="uploadAvatarImage(event)" class="text-[11px] text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-800 cursor-pointer" />
+            <input id="avatar-url-field" type="text" placeholder="Or paste image URL..." oninput="setAvatarUrl(this.value)" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500" />
           </div>
         </div>
       </div>
 
-      <!-- Identity & Role -->
       <div class="space-y-3">
         <div>
-          <label class="text-xs font-bold text-zinc-400 block mb-1">Target Host Slot</label>
-          <select id="lab-target-slot" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]">
-            <option value="hostA">Assign to Host 1 (Left Podium)</option>
-            <option value="hostB">Assign to Host 2 (Right Podium)</option>
+          <label class="text-xs font-bold text-slate-700 block mb-1">Target Host Podium</label>
+          <select id="avatar-slot" onchange="loadVoiceSlotConfig(this.value)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-900 font-semibold focus:outline-none focus:border-fuchsia-500">
+            <option value="host1">Host 1 (Hawaiian Orchid Podium)</option>
+            <option value="host2">Host 2 (Tropical Aqua Podium)</option>
+            <option value="host3">Host 3 (Sunshine Yellow Podium)</option>
+            <option value="host4">Host 4 (Royal Purple Podium)</option>
           </select>
         </div>
+
         <div>
-          <label class="text-xs font-bold text-zinc-400 block mb-1">Persona Name</label>
-          <input id="lab-name" type="text" value="Aiden Ayers" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]" />
+          <label class="text-xs font-bold text-slate-700 block mb-1">Device Voice Model</label>
+          <select id="voice-model-selector" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-900 font-semibold focus:outline-none focus:border-cyan-500">
+            <!-- Dynamic System Voices -->
+          </select>
         </div>
+
         <div>
-          <label class="text-xs font-bold text-zinc-400 block mb-1">Role / Debate Philosophy</label>
-          <input id="lab-role" type="text" value="Investigative Operative & Uncensored Theorist" class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#00ff66]" />
+          <label class="text-xs font-bold text-slate-700 block mb-1">Persona Display Name</label>
+          <input id="persona-name-input" type="text" value="Aria Vance" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-900 font-semibold focus:outline-none focus:border-fuchsia-500" />
+        </div>
+        
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+              <span>Pitch</span>
+              <span id="label-pitch">0.9x</span>
+            </div>
+            <input id="slider-pitch" type="range" min="0.5" max="1.8" step="0.05" value="0.9" oninput="updatePitchVal(this.value)" class="w-full accent-fuchsia-600" />
+          </div>
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+              <span>Speed / Pace</span>
+              <span id="label-rate">1.0x</span>
+            </div>
+            <input id="slider-rate" type="range" min="0.6" max="1.6" step="0.05" value="1.0" oninput="updateRateVal(this.value)" class="w-full accent-cyan-600" />
+          </div>
         </div>
       </div>
 
-      <!-- Trait Sliders -->
-      <div class="bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-[#00ff66]">Cadence & Tone Modifiers</h3>
-        <div>
-          <div class="flex justify-between text-xs text-zinc-400 mb-1">
-            <span>Skepticism / Energy Pace</span>
-            <span id="lab-val-energy" class="text-zinc-200 font-mono">85%</span>
-          </div>
-          <input id="lab-slider-energy" type="range" min="0" max="100" value="85" oninput="document.getElementById('lab-val-energy').innerText = this.value + '%'" class="w-full accent-[#00ff66]" />
-        </div>
-        <div>
-          <div class="flex justify-between text-xs text-zinc-400 mb-1">
-            <span>Raw Cadence / Slang Index</span>
-            <span id="lab-val-slang" class="text-zinc-200 font-mono">60%</span>
-          </div>
-          <input id="lab-slider-slang" type="range" min="0" max="100" value="60" oninput="document.getElementById('lab-val-slang').innerText = this.value + '%'" class="w-full accent-purple-500" />
-        </div>
-      </div>
-
-      <button onclick="commitAvatarToStage()" class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 active:scale-95 text-white font-extrabold rounded-2xl text-xs tracking-wider uppercase transition shadow-lg shadow-purple-950 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-circle-check"></i> Deploy Persona to Arena
+      <button onclick="saveAvatarToPodium()" class="w-full py-3.5 bg-gradient-to-r from-fuchsia-600 via-purple-700 to-cyan-600 hover:opacity-95 text-white font-black rounded-2xl text-xs tracking-wider uppercase transition shadow-lg shadow-purple-200 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-circle-check text-yellow-300"></i> Deploy Voice Persona
       </button>
     </main>
 
-    <!-- TAB 3: SCRIPT LOGS / PROMPTS -->
-    <main id="tab-scripts" class="hidden flex-1 flex flex-col p-4 space-y-4">
-      <div class="border-b border-zinc-800 pb-3">
-        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
-          <i class="fa-solid fa-file-code text-pink-400"></i>
-          Broadcast Script Exporter
+    <!-- TAB 5: AI DIRECTOR ASSISTANT & CHATBOT -->
+    <main id="pane-director" class="tab-pane flex-1 p-4 space-y-4">
+      <div class="border-b border-slate-200 pb-3">
+        <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-robot text-purple-600"></i>
+          AI Studio Director
         </h2>
-        <p class="text-xs text-zinc-400">Export structured dialogue logs for CapCut, Suno, or documentary scripts.</p>
+        <p class="text-xs text-slate-500">Your multilingual assistant to prompt ideas, avatars, and audio workflows.</p>
       </div>
 
-      <div class="flex-1 flex flex-col space-y-2">
-        <textarea id="script-export-box" rows="12" class="w-full flex-1 p-3.5 bg-zinc-950 border border-zinc-800 rounded-2xl text-xs font-mono text-[#00ff66] focus:outline-none focus:border-[#00ff66]" readonly placeholder="Generated script output will appear here after running a debate round..."></textarea>
-        <button onclick="copyScript()" class="py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2">
-          <i class="fa-solid fa-copy"></i> Copy Script to Clipboard
+      <div class="grid grid-cols-2 gap-2">
+        <select id="director-lang-select" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
+          <option value="en">Language: English</option>
+          <option value="es">Language: Spanish</option>
+          <option value="fr">Language: French</option>
+          <option value="de">Language: German</option>
+          <option value="ja">Language: Japanese</option>
+        </select>
+        <select id="director-voice-select" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
+          <option value="female">Voice: Female Executive</option>
+          <option value="male">Voice: Male Lead Anchor</option>
+          <option value="neutral">Voice: Cyber Synthetic</option>
+        </select>
+      </div>
+
+      <!-- Chat Stream -->
+      <div id="director-chat-box" class="h-64 overflow-y-auto bg-slate-50 border border-slate-200 rounded-3xl p-3.5 space-y-3 shadow-inner text-xs">
+        <div class="p-3 bg-white border border-purple-200 rounded-2xl rounded-tl-none shadow-sm text-slate-800">
+          <span class="font-black text-purple-700 block mb-1">Director AI:</span>
+          Hello Producer! I'm your studio assistant. Tell me what kind of episode, podcast debate, or country track you want to create today.
+        </div>
+      </div>
+
+      <!-- Dynamic Upsell Suggestion Banner -->
+      <div id="director-upsell-box" class="p-3 rounded-2xl bg-gradient-to-r from-purple-50 to-fuchsia-50 border border-purple-200 flex justify-between items-center text-xs">
+        <div>
+          <span class="font-black text-purple-800 block">⚡ Creator Pro Recommendation</span>
+          <p class="text-[11px] text-slate-600">Unlock 4-Stem Isolated Tracks for CapCut editing.</p>
+        </div>
+        <button onclick="upgradeTier('Creator Pro')" class="px-3 py-1 bg-purple-700 text-white font-bold rounded-xl text-[11px] shadow">Unlock</button>
+      </div>
+
+      <div class="flex gap-2">
+        <input id="director-user-input" type="text" placeholder="Ask for avatar prompts, script ideas, or voice tuning..." class="flex-1 px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-purple-500" />
+        <button onclick="sendDirectorMessage()" class="px-4 py-2 bg-purple-700 text-white font-bold rounded-xl text-xs shadow hover:opacity-90">Send</button>
+      </div>
+    </main>
+
+    <!-- TAB 6: PROJECT VAULT & ASSET GALLERY -->
+    <main id="pane-profile" class="tab-pane flex-1 p-4 space-y-5">
+      <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-gem text-indigo-600"></i>
+            Executive Profile & Vault
+          </h2>
+          <p class="text-xs text-slate-500">Manage identity, passes, and saved creative assets.</p>
+        </div>
+        <span id="profile-tier-badge" class="px-2.5 py-1 rounded-full text-[10px] font-mono font-black bg-gradient-to-r from-purple-100 to-fuchsia-100 text-purple-800 border border-purple-200">FREE TIER</span>
+      </div>
+
+      <!-- ID Card -->
+      <div class="silver-card rounded-3xl p-4 flex items-center gap-4 border-indigo-200">
+        <img id="profile-card-img" src="" class="w-16 h-16 rounded-2xl object-cover border-2 border-fuchsia-500 shadow-md" />
+        <div>
+          <h3 id="profile-card-name" class="text-base font-black text-slate-900">Producer</h3>
+          <p class="text-xs text-slate-500 font-medium">Status: Verified Creator (13+)</p>
+          <p class="text-xs text-cyan-700 font-bold font-mono mt-1" id="profile-card-passes">Passes: 1 Remaining</p>
+        </div>
+      </div>
+
+      <!-- Saved Takes Vault -->
+      <div class="space-y-2">
+        <h3 class="text-xs font-black uppercase tracking-wider text-slate-800">Saved Projects</h3>
+        <div id="vault-project-list" class="space-y-2">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Visual Asset Vault -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xs font-black uppercase tracking-wider text-slate-800">Host Artwork Vault</h3>
+          <button onclick="document.getElementById('gallery-upload-input').click()" class="text-xs text-fuchsia-600 font-bold hover:underline">+ Add</button>
+          <input type="file" id="gallery-upload-input" accept="image/*" class="hidden" onchange="addToUserGallery(event)" />
+        </div>
+        <div id="user-gallery-grid" class="grid grid-cols-4 gap-2">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- TAB 7: UPGRADE STORE & 99¢ PASSES -->
+    <main id="pane-store" class="tab-pane flex-1 p-4 space-y-4">
+      <div class="border-b border-slate-200 pb-3">
+        <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-crown text-yellow-500"></i>
+          Passes & Creator Tiers
+        </h2>
+        <p class="text-xs text-slate-500">Instant micro-passes or unlimited studio memberships.</p>
+      </div>
+
+      <!-- 99¢ Single Episode Pass -->
+      <div class="p-3.5 rounded-3xl silver-card flex justify-between items-center border-slate-200">
+        <div>
+          <span class="text-[9px] font-black font-mono text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded-full border border-cyan-200">MICRO PASS</span>
+          <h3 class="text-xs font-black text-slate-900 mt-1">Single Episode .SRT Pass</h3>
+          <p class="text-[11px] text-slate-500">+1 Master .WAV + CapCut Subtitles</p>
+        </div>
+        <button onclick="buySinglePass(0.99)" class="px-3.5 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-extrabold rounded-2xl text-xs shadow-md">99¢</button>
+      </div>
+
+      <!-- $2.99 Full Production Pass -->
+      <div class="p-3.5 rounded-3xl silver-card flex justify-between items-center border-slate-200">
+        <div>
+          <span class="text-[9px] font-black font-mono text-purple-800 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200">FULL BUNDLE</span>
+          <h3 class="text-xs font-black text-slate-900 mt-1">Full 4-Stem Production Pass</h3>
+          <p class="text-[11px] text-slate-500">Master .WAV + 4 Vocal Stems + Subtitles</p>
+        </div>
+        <button onclick="buySinglePass(2.99)" class="px-3.5 py-2 bg-gradient-to-r from-purple-700 to-indigo-600 text-white font-extrabold rounded-2xl text-xs shadow-md">$2.99</button>
+      </div>
+
+      <!-- Creator Pro ($14.99/mo) -->
+      <div class="p-4 rounded-3xl bg-gradient-to-br from-fuchsia-50 via-purple-50 to-white border-2 border-fuchsia-400 relative orchid-glow space-y-2">
+        <div class="flex justify-between items-start">
+          <div>
+            <span class="text-[9px] font-black font-mono text-fuchsia-700 bg-fuchsia-100 px-2 py-0.5 rounded-full border border-fuchsia-200">MOST POPULAR</span>
+            <h3 class="text-sm font-black text-slate-900 mt-1">Creator Pro</h3>
+            <p class="text-xs text-slate-600">Unlimited episodes, 4-Host stage & Suno Lyric Forge.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-lg font-black text-slate-900">$14.99</span>
+            <span class="text-[9px] text-slate-500 font-bold block">/month</span>
+          </div>
+        </div>
+        <button onclick="upgradeTier('Creator Pro')" class="w-full py-2.5 bg-gradient-to-r from-fuchsia-600 via-purple-700 to-indigo-600 text-white font-extrabold rounded-2xl text-xs shadow-md shadow-purple-200">
+          Upgrade to Pro
+        </button>
+      </div>
+
+      <!-- Studio Elite ($29.99/mo) -->
+      <div class="p-4 rounded-3xl silver-card border-indigo-200 space-y-2">
+        <div class="flex justify-between items-start">
+          <div>
+            <span class="text-[9px] font-black font-mono text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-200">EXECUTIVE SUITE</span>
+            <h3 class="text-sm font-black text-slate-900 mt-1">Studio Elite</h3>
+            <p class="text-xs text-slate-500">Unlimited 4-stem multitrack exports & commercial rights.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-lg font-black text-slate-900">$29.99</span>
+            <span class="text-[9px] text-slate-500 font-bold block">/month</span>
+          </div>
+        </div>
+        <button onclick="upgradeTier('Studio Elite')" class="w-full py-2.5 bg-gradient-to-r from-indigo-700 via-purple-700 to-cyan-600 text-white font-extrabold rounded-2xl text-xs shadow-md shadow-indigo-200">
+          Upgrade to Elite
         </button>
       </div>
     </main>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-[#08080f]/95 backdrop-blur border-t border-zinc-800/90 px-6 py-2.5 flex justify-between items-center z-50">
-      <button onclick="switchTab('arena')" id="nav-arena" class="flex flex-col items-center gap-1 text-[#00ff66] font-bold">
-        <i class="fa-solid fa-podcast text-base"></i>
-        <span class="text-[10px] tracking-wide">Debate Arena</span>
+    <!-- Bottom Navigation Dock -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-white/95 backdrop-blur border-t border-slate-200 px-2 py-2 flex justify-between items-center z-30 shadow-lg">
+      <button onclick="setTab('arena')" id="nav-arena" class="flex flex-col items-center gap-0.5 text-fuchsia-600 font-bold">
+        <i class="fa-solid fa-microphone text-sm"></i>
+        <span class="text-[8px]">Studio</span>
       </button>
-      <button onclick="switchTab('lab')" id="nav-lab" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
-        <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
-        <span class="text-[10px] tracking-wide">Avatar Forge</span>
+      <button onclick="setTab('prompter')" id="nav-prompter" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-tv text-sm"></i>
+        <span class="text-[8px]">Prompter</span>
       </button>
-      <button onclick="switchTab('scripts')" id="nav-scripts" class="flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300">
-        <i class="fa-solid fa-scroll text-base"></i>
-        <span class="text-[10px] tracking-wide">Script Logs</span>
+      <button onclick="setTab('music')" id="nav-music" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-music text-sm"></i>
+        <span class="text-[8px]">Music</span>
+      </button>
+      <button onclick="setTab('lab')" id="nav-lab" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-sliders text-sm"></i>
+        <span class="text-[8px]">Voices</span>
+      </button>
+      <button onclick="setTab('director')" id="nav-director" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-robot text-sm"></i>
+        <span class="text-[8px]">Director</span>
+      </button>
+      <button onclick="setTab('profile')" id="nav-profile" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-user text-sm"></i>
+        <span class="text-[8px]">Profile</span>
+      </button>
+      <button onclick="setTab('store')" id="nav-store" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-crown text-sm"></i>
+        <span class="text-[8px]">Store</span>
       </button>
     </nav>
 
   </div>
 
+  <!-- PAYWALL MODAL -->
+  <div id="paywall-modal" class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-white border border-slate-200 rounded-3xl p-6 space-y-4 text-center shadow-2xl relative">
+      <div class="w-12 h-12 rounded-2xl bg-fuchsia-50 border border-fuchsia-200 text-fuchsia-600 flex items-center justify-center text-xl mx-auto shadow-sm">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h3 class="text-base font-black text-slate-900">Complimentary Pass Used</h3>
+      <p class="text-xs text-slate-500">Unlock this take with a 99¢ episode pass or get unlimited Creator Pro access.</p>
+      <div class="space-y-2 pt-2">
+        <button onclick="buySinglePass(0.99)" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-extrabold rounded-2xl text-xs shadow-md">Unlock Take for 99¢</button>
+        <button onclick="upgradeTier('Creator Pro')" class="w-full py-3 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white font-extrabold rounded-2xl text-xs shadow-md shadow-purple-200">Get Creator Pro ($14.99/mo)</button>
+        <button onclick="document.getElementById('paywall-modal').classList.add('hidden')" class="w-full py-2 text-slate-400 text-xs font-semibold">Continue in Sandbox</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // State Store
-    const hosts = {
-      hostA: {
-        name: "Aiden Ayers",
-        role: "Uncensored Theorist",
-        img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80",
-        aura: "green",
-        energy: 85,
-        slang: 60
-      },
-      hostB: {
-        name: "Fern Elise",
-        role: "Grounded Lyricist",
-        img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80",
-        aura: "purple",
-        energy: 50,
-        slang: 40
-      }
+    // State Architecture
+    const PRESET_AVATARS = [
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1563089145-599997674d42?w=150&auto=format&fit=crop&q=80"
+    ];
+
+    let userState = {
+      legalAccepted: false,
+      verified: false,
+      is18Verified: false,
+      username: "Executive Producer",
+      avatar: PRESET_AVATARS[0],
+      gallery: [...PRESET_AVATARS],
+      passes: 1,
+      tier: "Free Observer",
+      savedProjects: []
     };
 
-    let selectedLabAura = 'green';
-    let debateHistory = [];
+    let studioData = {
+      host1: { name: "Aria Vance", role: "Lead Anchor", img: PRESET_AVATARS[0], pitch: 0.90, rate: 1.00, voiceURI: null },
+      host2: { name: "Kai Sterling", role: "Co-Host Analyst", img: PRESET_AVATARS[1], pitch: 1.20, rate: 1.05, voiceURI: null },
+      host3: { name: "Aiden Stone", role: "Field Specialist", img: PRESET_AVATARS[2], pitch: 0.85, rate: 1.00, voiceURI: null },
+      host4: { name: "Fern Elise", role: "The Contrarian", img: PRESET_AVATARS[3], pitch: 1.15, rate: 0.95, voiceURI: null }
+    };
 
-    function switchTab(tab) {
-      ['arena', 'lab', 'scripts'].forEach(t => {
-        document.getElementById('tab-' + t).classList.add('hidden');
-        document.getElementById('tab-' + t).classList.remove('active-tab');
-        const navBtn = document.getElementById('nav-' + t);
-        navBtn.className = 'flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300';
-      });
+    let scriptLines = [
+      { speaker: "host1", text: "Welcome back to the studio roundtable. Today we are examining synthetic media and multi-host dynamics." },
+      { speaker: "host2", text: "The real breakthrough is balancing distinct frequencies across all four speakers so the conversation flows seamlessly." },
+      { speaker: "host3", text: "Exactly, Kai. When you track each vocal stem independently, the post-production in CapCut takes seconds." },
+      { speaker: "host4", text: "Let's test the pacing and lock this script into the teleprompter for export." }
+    ];
 
-      document.getElementById('tab-' + tab).classList.remove('hidden');
-      document.getElementById('tab-' + tab).classList.add('active-tab');
-      
-      const activeNav = document.getElementById('nav-' + tab);
-      if (tab === 'arena') activeNav.className = 'flex flex-col items-center gap-1 text-[#00ff66] font-bold';
-      if (tab === 'lab') activeNav.className = 'flex flex-col items-center gap-1 text-purple-400 font-bold';
-      if (tab === 'scripts') activeNav.className = 'flex flex-col items-center gap-1 text-pink-400 font-bold';
+    // Legal Timed Scroll Variables
+    const REQUIRED_READ_SECONDS = 10;
+    let legalSecondsElapsed = 0;
+    let legalTimerInterval = null;
+    let hasReachedBottom = false;
+
+    let availableVoices = [];
+    let voiceEnabled = true;
+    let explicitLevel = 0;
+    let prompterInterval = null;
+    let prompterSpeed = 2;
+    let isMirrored = false;
+    let isPlayingScript = false;
+
+    // Web Audio Synthesizer Engine
+    let audioCtx = null;
+    let ambientHumOsc = null;
+    let ambientHumGain = null;
+    let isHumActive = false;
+
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
     }
 
-    function handleImageUpload(e) {
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('myai_studio_state');
+      if (saved) {
+        userState = JSON.parse(saved);
+      }
+
+      // Enforce Legal Gate First
+      if (userState.legalAccepted) {
+        document.getElementById('legal-modal').style.display = 'none';
+        if (userState.verified) {
+          document.getElementById('gatekeeper-modal').style.display = 'none';
+        } else {
+          document.getElementById('gatekeeper-modal').classList.remove('hidden');
+          document.getElementById('gatekeeper-modal').classList.add('flex');
+        }
+      } else {
+        startLegalTimer();
+      }
+
+      populateSystemVoices();
+      if ('speechSynthesis' in window) window.speechSynthesis.onvoiceschanged = populateSystemVoices;
+      renderScriptEditor();
+      syncProfileUI();
+      renderVault();
+      initWaveformVisualizer();
+    });
+
+    function saveState() {
+      localStorage.setItem('myai_studio_state', JSON.stringify(userState));
+      syncProfileUI();
+      renderVault();
+    }
+
+    // ==================== TIMED LEGAL SCROLL ENGINE ====================
+    function startLegalTimer() {
+      legalSecondsElapsed = 0;
+      updateLegalProgress();
+      if (legalTimerInterval) clearInterval(legalTimerInterval);
+
+      legalTimerInterval = setInterval(() => {
+        legalSecondsElapsed++;
+        updateLegalProgress();
+        if (legalSecondsElapsed >= REQUIRED_READ_SECONDS) {
+          clearInterval(legalTimerInterval);
+          legalTimerInterval = null;
+          evaluateLegalAcceptance();
+        }
+      }, 1000);
+    }
+
+    function updateLegalProgress() {
+      const remaining = Math.max(0, REQUIRED_READ_SECONDS - legalSecondsElapsed);
+      const text = document.getElementById('legal-timer-text');
+      const bar = document.getElementById('legal-progress-bar');
+
+      if (remaining > 0) {
+        text.innerText = `${remaining}s remaining`;
+        bar.style.width = `${(legalSecondsElapsed / REQUIRED_READ_SECONDS) * 100}%`;
+      } else {
+        text.innerText = "Timer Complete ✓";
+        bar.style.width = "100%";
+      }
+    }
+
+    function handleLegalScroll() {
+      const el = document.getElementById('legal-scroll-container');
+      const scrollPercent = Math.round((el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100);
+      document.getElementById('legal-scroll-percent').innerText = `${Math.min(100, Math.max(0, scrollPercent))}% SCROLLED`;
+
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 15;
+
+      if (atBottom) {
+        if (legalSecondsElapsed < 5) {
+          triggerSpeedScrollViolation();
+          return;
+        }
+        hasReachedBottom = true;
+        evaluateLegalAcceptance();
+      }
+    }
+
+    function triggerSpeedScrollViolation() {
+      const el = document.getElementById('legal-scroll-container');
+      el.scrollTop = 0;
+      hasReachedBottom = false;
+      const warning = document.getElementById('legal-speed-warning');
+      warning.classList.remove('hidden');
+
+      setTimeout(() => {
+        warning.classList.add('hidden');
+      }, 4000);
+
+      startLegalTimer();
+    }
+
+    function evaluateLegalAcceptance() {
+      const check = document.getElementById('legal-agree-check');
+      const label = document.getElementById('legal-check-label');
+
+      if (hasReachedBottom && legalSecondsElapsed >= REQUIRED_READ_SECONDS) {
+        check.disabled = false;
+        check.classList.remove('cursor-not-allowed');
+        label.innerText = "I have read, understood, and agree to all legal disclosures.";
+        label.className = "text-xs text-purple-900 font-extrabold";
+      }
+    }
+
+    function checkLegalReady() {
+      const check = document.getElementById('legal-agree-check');
+      const btn = document.getElementById('legal-submit-btn');
+
+      if (check.checked) {
+        btn.disabled = false;
+        btn.className = "w-full py-3.5 bg-gradient-to-r from-purple-700 to-fuchsia-600 hover:opacity-95 text-white font-extrabold uppercase tracking-wider rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-purple-200 cursor-pointer";
+        btn.innerHTML = '<i class="fa-solid fa-circle-check text-yellow-300"></i> Accept Disclosures & Continue';
+      } else {
+        btn.disabled = true;
+        btn.className = "w-full py-3.5 bg-slate-300 text-slate-500 font-extrabold uppercase tracking-wider rounded-2xl text-xs transition flex items-center justify-center gap-2 cursor-not-allowed shadow-none";
+        btn.innerHTML = '<i class="fa-solid fa-lock text-slate-400"></i> Accept Disclosures & Continue';
+      }
+    }
+
+    function acceptLegalTerms() {
+      userState.legalAccepted = true;
+      saveState();
+      document.getElementById('legal-modal').style.display = 'none';
+
+      if (!userState.verified) {
+        document.getElementById('gatekeeper-modal').classList.remove('hidden');
+        document.getElementById('gatekeeper-modal').classList.add('flex');
+      }
+    }
+
+    // ==================== SYSTEM ENGINE & PODIUM METHODS ====================
+    function populateSystemVoices() {
+      if (!('speechSynthesis' in window)) return;
+      availableVoices = window.speechSynthesis.getVoices();
+      const selector = document.getElementById('voice-model-selector');
+      if (!selector) return;
+      selector.innerHTML = '';
+      availableVoices.forEach((v) => {
+        const opt = document.createElement('option');
+        opt.value = v.voiceURI;
+        opt.innerText = `${v.name} (${v.lang})`;
+        selector.appendChild(opt);
+      });
+    }
+
+    function initWaveformVisualizer() {
+      const canvas = document.getElementById('waveform-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let step = 0;
+      function draw() {
+        requestAnimationFrame(draw);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const bars = 26;
+        const barWidth = canvas.width / bars;
+        for (let i = 0; i < bars; i++) {
+          let height = isPlayingScript ? Math.sin(step + i * 0.4) * 10 + 12 + Math.random() * 5 : Math.sin(step * 0.2 + i * 0.3) * 3 + 4;
+          const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+          grad.addColorStop(0, '#d946ef');
+          grad.addColorStop(1, '#06b6d4');
+          ctx.fillStyle = grad;
+          ctx.fillRect(i * barWidth + 1, (canvas.height - height) / 2, barWidth - 2, height);
+        }
+        step += isPlayingScript ? 0.25 : 0.05;
+      }
+      draw();
+    }
+
+    // Explicit Slider & 18+ Verification
+    function handleExplicitSlider(val) {
+      val = parseInt(val);
+      if (val > 0 && !userState.is18Verified) {
+        document.getElementById('explicit-18-modal').classList.remove('hidden');
+        document.getElementById('explicit-18-modal').classList.add('flex');
+        document.getElementById('explicit-slider').value = 0;
+        return;
+      }
+      explicitLevel = val;
+      updateExplicitDisplay();
+    }
+
+    function updateExplicitDisplay() {
+      const tag = document.getElementById('explicit-indicator-tag');
+      const dialText = document.getElementById('explicit-dial-val');
+      if (explicitLevel === 0) {
+        tag.innerText = "Clean (0%)";
+        dialText.innerText = "0% (Broadcast Safe)";
+      } else if (explicitLevel <= 25) {
+        tag.innerText = `Mild (${explicitLevel}%)`;
+        dialText.innerText = `${explicitLevel}% (Late-Night Edge)`;
+      } else {
+        tag.innerText = `Uncensored (${explicitLevel}%)`;
+        dialText.innerText = `${explicitLevel}% (Raw Outlaw)`;
+      }
+    }
+
+    function confirm18PlusVerification() {
+      const checked = document.getElementById('explicit-consent-check').checked;
+      if (!checked) { alert("You must check the box confirming you are 18+."); return; }
+      userState.is18Verified = true;
+      saveState();
+      document.getElementById('explicit-18-modal').classList.add('hidden');
+      document.getElementById('explicit-18-modal').classList.remove('flex');
+      explicitLevel = 25;
+      document.getElementById('explicit-slider').value = 25;
+      updateExplicitDisplay();
+    }
+
+    function cancelExplicitMode() {
+      document.getElementById('explicit-18-modal').classList.add('hidden');
+      document.getElementById('explicit-18-modal').classList.remove('flex');
+      document.getElementById('explicit-slider').value = 0;
+      explicitLevel = 0;
+      updateExplicitDisplay();
+    }
+
+    // Dynamic 4-Host Script Generator
+    function generateFullAIEpisode() {
+      const category = document.getElementById('podcast-category-select').value;
+      const topic = document.getElementById('podcast-topic-input').value.trim() || "The Next Frontier of Audio Creation";
+      const flavor = explicitLevel > 20 ? "Let's cut the corporate noise and get straight to the point." : "Welcome back everyone, let's dive into the core findings.";
+
+      scriptLines = [
+        { speaker: "host1", text: `We are on air discussing "${topic}". ${flavor}` },
+        { speaker: "host2", text: `Looking at the telemetry, ${studioData.host1.name.split(' ')[0]}, the numbers confirm the shift.` },
+        { speaker: "host3", text: `From the field data, every metric has accelerated over the past three quarters.` },
+        { speaker: "host4", text: `Then let's document the breakdown so our listeners have the complete picture.` }
+      ];
+
+      renderScriptEditor();
+      setTab('arena');
+    }
+
+    function renderScriptEditor() {
+      const container = document.getElementById('script-editor-list');
+      container.innerHTML = '';
+
+      scriptLines.forEach((line, index) => {
+        const host = studioData[line.speaker] || studioData.host1;
+        container.innerHTML += `
+          <div class="p-2.5 rounded-2xl border border-slate-200 bg-white flex flex-col gap-1.5 shadow-sm">
+            <div class="flex justify-between items-center">
+              <select onchange="changeLineSpeaker(${index}, this.value)" class="text-[10px] font-bold px-2 py-0.5 rounded-full font-mono bg-slate-100 border border-slate-300 text-slate-800">
+                <option value="host1" ${line.speaker === 'host1' ? 'selected' : ''}>H1: ${studioData.host1.name}</option>
+                <option value="host2" ${line.speaker === 'host2' ? 'selected' : ''}>H2: ${studioData.host2.name}</option>
+                <option value="host3" ${line.speaker === 'host3' ? 'selected' : ''}>H3: ${studioData.host3.name}</option>
+                <option value="host4" ${line.speaker === 'host4' ? 'selected' : ''}>H4: ${studioData.host4.name}</option>
+              </select>
+              <button onclick="deleteScriptLine(${index})" class="text-slate-400 hover:text-fuchsia-600 text-xs px-1.5"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+            <textarea oninput="updateScriptText(${index}, this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-slate-800 focus:outline-none focus:border-purple-500 resize-none h-12">${line.text}</textarea>
+          </div>
+        `;
+      });
+      updatePrompterDisplay();
+    }
+
+    function addNewScriptLine() {
+      scriptLines.push({ speaker: "host1", text: "New spoken line added to the studio take." });
+      renderScriptEditor();
+    }
+
+    function changeLineSpeaker(index, newHost) {
+      scriptLines[index].speaker = newHost;
+      renderScriptEditor();
+    }
+
+    function updateScriptText(index, text) {
+      scriptLines[index].text = text;
+      updatePrompterDisplay();
+    }
+
+    function deleteScriptLine(index) {
+      if (scriptLines.length <= 1) return;
+      scriptLines.splice(index, 1);
+      renderScriptEditor();
+    }
+
+    // Playback Engine with 4-Host Lip-Sync Pulse
+    function playFullScript() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      isPlayingScript = true;
+      let currentIndex = 0;
+
+      function speakNext() {
+        if (currentIndex >= scriptLines.length) {
+          isPlayingScript = false;
+          clearAllAvatarPulses();
+          updatePrompterDisplay(-1);
+          return;
+        }
+
+        const line = scriptLines[currentIndex];
+        const hostKey = line.speaker;
+        const host = studioData[hostKey] || studioData.host1;
+
+        setHostPulse(hostKey);
+        updatePrompterDisplay(currentIndex);
+
+        const utterance = new SpeechSynthesisUtterance(line.text);
+        utterance.pitch = host.pitch;
+        utterance.rate = host.rate;
+
+        if (host.voiceURI && availableVoices.length) {
+          const selected = availableVoices.find(v => v.voiceURI === host.voiceURI);
+          if (selected) utterance.voice = selected;
+        }
+
+        utterance.onend = () => { currentIndex++; speakNext(); };
+        utterance.onerror = () => { currentIndex++; speakNext(); };
+
+        if (voiceEnabled && 'speechSynthesis' in window) {
+          window.speechSynthesis.speak(utterance);
+        } else {
+          setTimeout(() => { currentIndex++; speakNext(); }, 2500);
+        }
+      }
+      speakNext();
+    }
+
+    function setHostPulse(hostKey) {
+      clearAllAvatarPulses();
+      const num = hostKey.replace('host', '');
+      const img = document.getElementById(`stage-host-${num}-img`);
+      if (img) img.classList.add(`speaking-h${num}`);
+    }
+
+    function clearAllAvatarPulses() {
+      for (let i = 1; i <= 4; i++) {
+        const img = document.getElementById(`stage-host-${i}-img`);
+        if (img) img.className = img.className.replace(/speaking-h[1-4]/g, '').trim();
+      }
+    }
+
+    // Teleprompter
+    function updatePrompterDisplay(activeIdx = -1) {
+      const container = document.getElementById('prompter-text-container');
+      let html = `<div class="text-center pb-6 border-b border-slate-700">
+        <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">[ EXECUTIVE TRANSCRIPT ]</span>
+      </div>`;
+
+      scriptLines.forEach((s, idx) => {
+        const host = studioData[s.speaker] || studioData.host1;
+        const isCurrent = idx === activeIdx;
+        const activeBg = isCurrent ? 'bg-purple-950/70 p-3 rounded-2xl border border-purple-500' : '';
+
+        html += `
+          <div class="space-y-1.5 transition-all ${activeBg} text-slate-100">
+            <span class="text-xs font-bold uppercase tracking-wider block text-purple-300">${host.name}:</span>
+            <p class="text-lg font-medium leading-relaxed">"${s.text}"</p>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function togglePrompterScroll() {
+      const box = document.getElementById('prompter-scroll-area');
+      const btn = document.getElementById('prompter-play-btn');
+      if (prompterInterval) {
+        clearInterval(prompterInterval);
+        prompterInterval = null;
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> Auto Scroll';
+        btn.className = 'px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-extrabold rounded-xl flex items-center gap-1.5 shadow';
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Scroll';
+        btn.className = 'px-4 py-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white font-extrabold rounded-xl flex items-center gap-1.5 shadow';
+        prompterInterval = setInterval(() => { box.scrollTop += prompterSpeed; }, 35);
+      }
+    }
+
+    function resetPrompter() {
+      if (prompterInterval) togglePrompterScroll();
+      document.getElementById('prompter-scroll-area').scrollTop = 0;
+    }
+
+    function toggleMirror() {
+      isMirrored = !isMirrored;
+      const textContainer = document.getElementById('prompter-text-container');
+      const btn = document.getElementById('mirror-btn');
+      if (isMirrored) {
+        textContainer.classList.add('mirrored');
+        btn.className = 'px-3 py-2 bg-purple-600 text-white rounded-xl font-bold';
+      } else {
+        textContainer.classList.remove('mirrored');
+        btn.className = 'px-3 py-2 bg-slate-100 text-slate-700 font-bold border border-slate-200 rounded-xl hover:bg-slate-200';
+      }
+    }
+
+    function updateScrollSpeed(val) {
+      prompterSpeed = parseInt(val);
+      document.getElementById('speed-val').innerText = val + 'x';
+    }
+
+    // Soundboard & Music Bed
+    function triggerSoundFX(type) {
+      const ctx = getAudioContext();
+      if (ctx.state === 'suspended') ctx.resume();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      const now = ctx.currentTime;
+
+      if (type === 'chime') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.3);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+        osc.start(now); osc.stop(now + 0.8);
+      } else if (type === 'swoosh') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.2);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.start(now); osc.stop(now + 0.4);
+      } else if (type === 'bleep') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1000, now);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.start(now); osc.stop(now + 0.35);
+      }
+    }
+
+    function toggleAmbientHum() {
+      const ctx = getAudioContext();
+      if (ctx.state === 'suspended') ctx.resume();
+      const btn = document.getElementById('hum-btn');
+
+      if (isHumActive) {
+        if (ambientHumGain) ambientHumGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
+        setTimeout(() => { if (ambientHumOsc) ambientHumOsc.stop(); isHumActive = false; }, 500);
+        btn.innerText = "Music Bed: OFF";
+        btn.className = "text-[9px] font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200";
+      } else {
+        ambientHumOsc = ctx.createOscillator();
+        ambientHumGain = ctx.createGain();
+        ambientHumOsc.type = 'sine';
+        ambientHumOsc.frequency.setValueAtTime(65.41, ctx.currentTime);
+        ambientHumGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        ambientHumGain.gain.exponentialRampToValueAtTime(0.04, ctx.currentTime + 0.5);
+        ambientHumOsc.connect(ambientHumGain);
+        ambientHumGain.connect(ctx.destination);
+        ambientHumOsc.start();
+        isHumActive = true;
+        btn.innerText = "Music Bed: ON";
+        btn.className = "text-[9px] font-bold text-cyan-800 bg-cyan-100 px-2.5 py-0.5 rounded-full border border-cyan-300";
+      }
+    }
+
+    // CapCut SRT Exporter
+    function triggerCapCutExport() {
+      if (userState.tier === 'Free Observer' && userState.passes <= 0) {
+        document.getElementById('paywall-modal').classList.remove('hidden');
+        document.getElementById('paywall-modal').classList.add('flex');
+        return;
+      }
+      if (userState.tier === 'Free Observer') {
+        userState.passes--;
+        saveState();
+      }
+
+      let srtContent = "";
+      let currentTime = 1;
+      scriptLines.forEach((line, index) => {
+        const host = studioData[line.speaker] || studioData.host1;
+        let duration = Math.max(3, Math.ceil(line.text.split(" ").length / 2.5));
+        let start = formatSrtTime(currentTime);
+        let end = formatSrtTime(currentTime + duration);
+        srtContent += `${index + 1}\n${start} --> ${end}\n[${host.name}]: ${line.text}\n\n`;
+        currentTime += duration + 0.5;
+      });
+
+      const blob = new Blob([srtContent], { type: "text/plain;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `MyAI-Studio-Take-${Date.now()}.srt`;
+      link.click();
+    }
+
+    function formatSrtTime(totalSeconds) {
+      const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+      const secs = String(Math.floor(totalSeconds % 60)).padStart(2, '0');
+      return `${hrs}:${mins}:${secs},000`;
+    }
+
+    // Suno Lyric Forge
+    function insertLyricTag(tag) {
+      const area = document.getElementById('suno-lyric-area');
+      area.value += `\n\n${tag}\n`;
+    }
+
+    function copySunoPrompt() {
+      const genre = document.getElementById('suno-genre-input').value;
+      const vocals = document.getElementById('suno-vocal-input').value;
+      const lyrics = document.getElementById('suno-lyric-area').value;
+      const full = `[STYLE: ${genre} | ${vocals}]\n\n${lyrics}`;
+      navigator.clipboard.writeText(full);
+      alert("Suno / Udio Prompt Copied to Clipboard!");
+    }
+
+    // AI Director Chat
+    function sendDirectorMessage() {
+      const input = document.getElementById('director-user-input');
+      const box = document.getElementById('director-chat-box');
+      const text = input.value.trim();
+      if (!text) return;
+
+      box.innerHTML += `
+        <div class="p-2.5 bg-purple-100 text-purple-950 rounded-2xl rounded-tr-none ml-6 font-semibold shadow-sm">
+          ${text}
+        </div>
+      `;
+      input.value = '';
+
+      setTimeout(() => {
+        box.innerHTML += `
+          <div class="p-3 bg-white border border-purple-200 rounded-2xl rounded-tl-none shadow-sm text-slate-800">
+            <span class="font-black text-purple-700 block mb-1">Director AI:</span>
+            Great concept! I recommend assigning Host 1 to introduce the hook and setting Host 3 as your fast-talking field expert. Would you like me to auto-generate the 4-host dialogue now?
+          </div>
+        `;
+        box.scrollTop = box.scrollHeight;
+      }, 500);
+    }
+
+    // Voice Lab
+    function loadVoiceSlotConfig(slot) {
+      const host = studioData[slot];
+      document.getElementById('persona-name-input').value = host.name;
+      document.getElementById('avatar-preview').src = host.img;
+      document.getElementById('slider-pitch').value = host.pitch;
+      document.getElementById('slider-rate').value = host.rate;
+      document.getElementById('label-pitch').innerText = host.pitch + 'x';
+      document.getElementById('label-rate').innerText = host.rate + 'x';
+    }
+
+    function updatePitchVal(val) { document.getElementById('label-pitch').innerText = val + 'x'; }
+    function updateRateVal(val) { document.getElementById('label-rate').innerText = val + 'x'; }
+
+    function saveAvatarToPodium() {
+      const slot = document.getElementById('avatar-slot').value;
+      const name = document.getElementById('persona-name-input').value;
+      const img = document.getElementById('avatar-preview').src;
+      const pitch = parseFloat(document.getElementById('slider-pitch').value);
+      const rate = parseFloat(document.getElementById('slider-rate').value);
+      const voiceURI = document.getElementById('voice-model-selector').value;
+
+      studioData[slot] = { name, img, pitch, rate, voiceURI };
+      const num = slot.replace('host', '');
+      document.getElementById(`stage-host-${num}-name`).innerText = name;
+      document.getElementById(`stage-host-${num}-img`).src = img;
+
+      renderScriptEditor();
+      setTab('arena');
+    }
+
+    function uploadAvatarImage(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(evt) {
-          const url = evt.target.result;
-          document.getElementById('lab-preview-img').src = url;
-          document.getElementById('lab-image-url').value = '';
+        reader.onload = (evt) => {
+          document.getElementById('avatar-preview').src = evt.target.result;
+          if (!userState.gallery.includes(evt.target.result)) userState.gallery.push(evt.target.result);
+          saveState();
         };
         reader.readAsDataURL(file);
       }
     }
 
-    function updateLabPreviewUrl(url) {
-      if (url.trim()) {
-        document.getElementById('lab-preview-img').src = url.trim();
+    function setAvatarUrl(url) { if (url.trim()) document.getElementById('avatar-preview').src = url.trim(); }
+
+    // Vault & Projects
+    function saveProjectToVault() {
+      const title = prompt("Enter project name:", `Take #${(userState.savedProjects || []).length + 1}`);
+      if (!title) return;
+      if (!userState.savedProjects) userState.savedProjects = [];
+      userState.savedProjects.unshift({ id: Date.now(), title, date: new Date().toLocaleDateString(), script: [...scriptLines] });
+      saveState();
+      alert(`Project "${title}" saved!`);
+    }
+
+    function renderVault() {
+      const list = document.getElementById('vault-project-list');
+      const projects = userState.savedProjects || [];
+      if (!projects.length) {
+        list.innerHTML = `<div class="text-slate-400 text-xs font-mono p-3 bg-slate-50 rounded-2xl text-center">[ No saved projects ]</div>`;
+        return;
       }
-    }
-
-    function setLabAura(color) {
-      selectedLabAura = color;
-      const preview = document.getElementById('lab-preview-img');
-      preview.className = `w-16 h-16 rounded-2xl object-cover border-2 transition-all ${
-        color === 'green' ? 'border-[#00ff66] neon-border-green' :
-        color === 'purple' ? 'border-purple-500 neon-border-purple' :
-        color === 'pink' ? 'border-pink-500 neon-border-pink' : 'border-slate-300'
-      }`;
-    }
-
-    function commitAvatarToStage() {
-      const slot = document.getElementById('lab-target-slot').value;
-      const name = document.getElementById('lab-name').value;
-      const role = document.getElementById('lab-role').value;
-      const img = document.getElementById('lab-preview-img').src;
-      const energy = document.getElementById('lab-slider-energy').value;
-      const slang = document.getElementById('lab-slider-slang').value;
-
-      hosts[slot] = { name, role, img, aura: selectedLabAura, energy, slang };
-
-      if (slot === 'hostA') {
-        document.getElementById('host-a-name').innerText = name;
-        document.getElementById('host-a-role').innerText = role;
-        document.getElementById('host-a-img').src = img;
-      } else {
-        document.getElementById('host-b-name').innerText = name;
-        document.getElementById('host-b-role').innerText = role;
-        document.getElementById('host-b-img').src = img;
-      }
-
-      switchTab('arena');
-    }
-
-    function quickTopic(t) {
-      document.getElementById('debate-topic').value = t;
-      startDebateRound();
-    }
-
-    function startDebateRound() {
-      const topicInput = document.getElementById('debate-topic');
-      const topic = topicInput.value.trim() || "Uncovering Redacted Archives";
-      const feed = document.getElementById('debate-feed');
-
-      feed.innerHTML = `
-        <div class="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-300 font-mono">
-          <span class="text-[#00ff66] font-bold">DEBATE INITIATED:</span> "${topic}"
-        </div>
-      `;
-
-      const dialogue = [
-        {
-          host: 'hostA',
-          speaker: hosts.hostA.name,
-          color: '#00ff66',
-          border: 'border-[#00ff66]/40',
-          text: `Let's break the silence on "${topic}". The official story doesn't add up, and if you trace the timeline, the whole narrative crumbles.`
-        },
-        {
-          host: 'hostB',
-          speaker: hosts.hostB.name,
-          color: '#a855f7',
-          border: 'border-purple-500/40',
-          text: `Hold your horses, ${hosts.hostA.name.split(' ')[0]}. You're jumping straight into the deep end. We need grounded proof on "${topic}" before spinning a wild reel.`
-        },
-        {
-          host: 'hostA',
-          speaker: hosts.hostA.name,
-          color: '#00ff66',
-          border: 'border-[#00ff66]/40',
-          text: `The proof is right there in the paper trail. While everyone is looking where the spotlight shines, the real data is buried right beneath our feet.`
-        },
-        {
-          host: 'hostB',
-          speaker: hosts.hostB.name,
-          color: '#a855f7',
-          border: 'border-purple-500/40',
-          text: `Fair enough, but let's make sure the listeners get the facts straight. Let's document each clue step-by-step.`
-        }
-      ];
-
-      debateHistory = dialogue;
-      let delay = 300;
-
-      dialogue.forEach((line, index) => {
-        setTimeout(() => {
-          const isA = line.host === 'hostA';
-          const avatarUrl = isA ? hosts.hostA.img : hosts.hostB.img;
-          
-          feed.innerHTML += `
-            <div class="flex gap-2.5 items-start ${isA ? '' : 'flex-row-reverse'}">
-              <img src="${avatarUrl}" class="w-8 h-8 rounded-full object-cover border ${line.border} flex-shrink-0 mt-1" />
-              <div class="max-w-[82%] p-3 rounded-2xl text-xs leading-relaxed ${isA ? 'bg-zinc-900 border border-[#00ff66]/30 text-zinc-100 rounded-tl-none' : 'bg-[#151221] border border-purple-500/30 text-purple-100 rounded-tr-none'}">
-                <div class="flex items-center gap-1.5 font-bold mb-1" style="color: ${line.color}; font-size: 11px;">
-                  <span>${line.speaker}</span>
-                </div>
-                <p>${line.text}</p>
-              </div>
+      list.innerHTML = '';
+      projects.forEach(p => {
+        list.innerHTML += `
+          <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-2xl flex justify-between items-center text-xs">
+            <div>
+              <span class="font-black text-slate-900 block">${p.title}</span>
+              <span class="text-[10px] text-slate-500 font-mono">${p.date} • ${p.script.length} lines</span>
             </div>
-          `;
-          feed.scrollTop = feed.scrollHeight;
-
-          // Update Export Box
-          let fullScript = `[RHRR STUDIO DEBATE: ${topic.toUpperCase()}]\n\n`;
-          dialogue.slice(0, index + 1).forEach(d => {
-            fullScript += `${d.speaker.toUpperCase()}:\n"${d.text}"\n\n`;
-          });
-          document.getElementById('script-export-box').value = fullScript;
-
-        }, delay);
-        delay += 600;
+            <button onclick="loadVaultProject(${p.id})" class="px-2.5 py-1 bg-purple-700 text-white font-bold rounded-xl text-[11px]">Load</button>
+          </div>
+        `;
       });
     }
 
-    function copyScript() {
-      const box = document.getElementById('script-export-box');
-      if (!box.value) return;
-      navigator.clipboard.writeText(box.value);
-      alert('Debate Script copied to clipboard!');
+    function loadVaultProject(id) {
+      const p = (userState.savedProjects || []).find(proj => proj.id === id);
+      if (!p) return;
+      scriptLines = [...p.script];
+      renderScriptEditor();
+      setTab('arena');
+    }
+
+    // Gatekeeper & Profile
+    function handleGateAvatarUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          document.getElementById('gate-avatar-preview').src = evt.target.result;
+          if (!userState.gallery.includes(evt.target.result)) userState.gallery.push(evt.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function assignRandomStudioAvatar() {
+      const random = PRESET_AVATARS[Math.floor(Math.random() * PRESET_AVATARS.length)];
+      document.getElementById('gate-avatar-preview').src = random;
+    }
+
+    function submitGatekeeper() {
+      const ageChecked = document.getElementById('gate-age-check').checked;
+      const humanChecked = document.getElementById('gate-human-check').checked;
+      const username = document.getElementById('gate-username').value.trim();
+
+      if (!ageChecked || !humanChecked || !username) {
+        document.getElementById('gate-error-msg').classList.remove('hidden');
+        return;
+      }
+
+      userState.verified = true;
+      userState.username = username;
+      userState.avatar = document.getElementById('gate-avatar-preview').src;
+      saveState();
+      document.getElementById('gatekeeper-modal').style.display = 'none';
+    }
+
+    function syncProfileUI() {
+      document.getElementById('header-user-display').innerText = userState.username.toUpperCase();
+      document.getElementById('credit-count-text').innerText = userState.tier !== 'Free Observer' ? 'UNLIMITED' : `${userState.passes} PASS`;
+      document.getElementById('nav-profile-thumb').src = userState.avatar;
+      document.getElementById('profile-card-img').src = userState.avatar;
+      document.getElementById('profile-card-name').innerText = userState.username;
+      document.getElementById('profile-tier-badge').innerText = userState.tier.toUpperCase();
+      document.getElementById('profile-card-passes').innerText = `Passes: ${userState.tier !== 'Free Observer' ? 'Unlimited' : userState.passes + ' Remaining'}`;
+
+      const grid = document.getElementById('user-gallery-grid');
+      grid.innerHTML = '';
+      userState.gallery.forEach(imgUrl => {
+        grid.innerHTML += `<img src="${imgUrl}" onclick="setActiveAvatar('${imgUrl}')" class="w-full h-14 rounded-xl object-cover border-2 ${imgUrl === userState.avatar ? 'border-fuchsia-500 shadow-md' : 'border-slate-200'} cursor-pointer hover:opacity-80 transition" />`;
+      });
+    }
+
+    function setActiveAvatar(url) { userState.avatar = url; saveState(); }
+
+    function addToUserGallery(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          userState.gallery.push(evt.target.result);
+          userState.avatar = evt.target.result;
+          saveState();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function setTab(tabId) {
+      ['arena', 'prompter', 'music', 'lab', 'director', 'profile', 'store'].forEach(t => {
+        document.getElementById('pane-' + t).classList.remove('active');
+        const nav = document.getElementById('nav-' + t);
+        if (nav) nav.className = 'flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600';
+      });
+      document.getElementById('pane-' + tabId).classList.add('active');
+      const activeNav = document.getElementById('nav-' + tabId);
+      if (activeNav) activeNav.className = 'flex flex-col items-center gap-0.5 text-fuchsia-600 font-bold';
+    }
+
+    function toggleVoice() {
+      voiceEnabled = !voiceEnabled;
+      const btn = document.getElementById('voice-toggle-btn');
+      if (voiceEnabled) {
+        btn.innerHTML = `<i class="fa-solid fa-volume-high text-cyan-600"></i> AUDIO: ON`;
+        btn.className = "text-[10px] font-bold text-cyan-800 bg-cyan-50 px-2 py-1 rounded-xl border border-cyan-300 shadow-sm flex items-center gap-1";
+      } else {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        btn.innerHTML = `<i class="fa-solid fa-volume-xmark text-slate-400"></i> AUDIO: OFF`;
+        btn.className = "text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-xl border border-slate-300 flex items-center gap-1";
+      }
+    }
+
+    function buySinglePass(cost) {
+      userState.passes += 1;
+      saveState();
+      document.getElementById('paywall-modal').classList.add('hidden');
+      alert(`+1 Episode Pass added to your account ($${cost})!`);
+    }
+
+    function upgradeTier(tierName) {
+      userState.tier = tierName;
+      saveState();
+      document.getElementById('paywall-modal').classList.add('hidden');
+      alert(`Upgraded to ${tierName}! Unlimited studio creation unlocked.`);
     }
   </script>
 </body>
