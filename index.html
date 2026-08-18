@@ -7,42 +7,24 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #050505; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; padding-bottom: 90px; }
+    body { background-color: #050505; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; padding-bottom: 100px; }
     
-    /* Utility Layout Classes */
     .hidden { display: none !important; }
     .flex { display: flex; }
     .flex-col { flex-direction: column; }
     .items-center { align-items: center; }
     .justify-between { justify-content: space-between; }
-    .justify-around { justify-content: space-around; }
     .gap-2 { gap: 8px; }
     .gap-3 { gap: 12px; }
-    .gap-4 { gap: 16px; }
     .w-full { width: 100%; }
     .max-w-md { max-width: 440px; margin: 0 auto; }
-    .p-3 { padding: 12px; }
-    .p-4 { padding: 16px; }
-    .p-5 { padding: 20px; }
-    .mb-3 { margin-bottom: 12px; }
-    .mb-4 { margin-bottom: 16px; }
-    .mb-5 { margin-bottom: 20px; }
-    .mt-2 { margin-top: 8px; }
-    .text-center { text-align: center; }
-    .font-bold { font-weight: 700; }
-    .text-xs { font-size: 12px; }
-    .text-sm { font-size: 14px; }
-    .text-lg { font-size: 18px; }
-    .text-xl { font-size: 20px; }
-
-    /* Custom Studio Aesthetics */
+    
     header { background: rgba(0,0,0,0.95); border-bottom: 1px solid rgba(168, 85, 247, 0.4); position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px); }
     main { padding: 16px; width: 100%; max-width: 440px; margin: 0 auto; }
     
     .card { background: #0b0f19; border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 20px; padding: 20px; box-shadow: 0 0 25px rgba(168, 85, 247, 0.2); margin-bottom: 16px; }
     .card-green { border-color: rgba(74, 222, 128, 0.4); box-shadow: 0 0 25px rgba(74, 222, 128, 0.2); }
     .card-pink { border-color: rgba(255, 20, 147, 0.4); box-shadow: 0 0 25px rgba(255, 20, 147, 0.2); }
-    .card-emerald { border-color: rgba(52, 211, 153, 0.4); box-shadow: 0 0 25px rgba(52, 211, 153, 0.2); }
 
     input, select, textarea { width: 100%; background: #000; border: 1px solid #374151; color: #fff; padding: 10px 14px; border-radius: 12px; font-size: 13px; outline: none; margin-top: 4px; }
     input:focus, select:focus, textarea:focus { border-color: #a855f7; }
@@ -54,22 +36,19 @@
     .neon-green { color: #4ade80; }
     .neon-purple { color: #c084fc; }
 
-    /* Modal Overlay */
     #onboardingModal { position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; overflow-y: auto; }
     
-    /* Scrollbox */
     .terms-scroll { max-height: 160px; overflow-y: auto; background: #000; border: 1px solid #374151; padding: 12px; border-radius: 12px; font-size: 11px; color: #d1d5db; line-height: 1.5; }
     .terms-scroll::-webkit-scrollbar { width: 6px; }
     .terms-scroll::-webkit-scrollbar-thumb { background: #ff1493; border-radius: 4px; }
 
-    /* Human Slider */
     input[type=range].human-slider { -webkit-appearance: none; width: 100%; background: transparent; margin: 8px 0; }
     input[type=range].human-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 22px; width: 22px; border-radius: 50%; background: #4ade80; cursor: pointer; box-shadow: 0 0 10px #4ade80; }
     input[type=range].human-slider::-webkit-slider-runnable-track { width: 100%; height: 10px; background: #1f2937; border-radius: 5px; border: 1px solid #a855f7; }
 
-    /* Bottom Dock */
-    nav.bottom-dock { position: fixed; bottom: 0; inset-x: 0; background: rgba(0,0,0,0.95); border-top: 1px solid rgba(168, 85, 247, 0.4); padding: 10px 4px; display: flex; justify-around; align-items: center; z-index: 50; backdrop-filter: blur(10px); }
-    nav.bottom-dock button { background: none; border: none; color: #9ca3af; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: 700; text-transform: uppercase; gap: 2px; cursor: pointer; }
+    /* Clean Bottom Dock */
+    nav.bottom-dock { position: fixed; bottom: 0; inset-x: 0; background: rgba(0,0,0,0.98); border-top: 1px solid rgba(168, 85, 247, 0.4); padding: 10px 6px; display: flex; justify-content: space-around; align-items: center; z-index: 50; backdrop-filter: blur(10px); }
+    nav.bottom-dock button { background: none; border: none; color: #9ca3af; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: 700; text-transform: uppercase; gap: 3px; cursor: pointer; flex: 1; }
     nav.bottom-dock button.active-tab { color: #c084fc; }
   </style>
 </head>
@@ -86,14 +65,12 @@
     </div>
     <div class="flex gap-2">
       <button onclick="playNeuralHostess()" style="background:#581c87; border:1px solid #c084fc; color:#fff; padding:6px 10px; border-radius:20px; font-size:10px; font-weight:bold; cursor:pointer;">🔊 Vesper</button>
-      <button onclick="toggleAudioMode()" id="captionBtn" style="background:#111; border:1px solid #ec4899; color:#d1d5db; padding:6px 10px; border-radius:20px; font-size:10px; font-weight:bold; cursor:pointer;">🔊 Live: ON</button>
+      <button onclick="toggleAudioMode()" id="captionBtn" style="background:#111; border:1px solid #ec4899; color:#d1d5db; padding:6px 10px; border-radius:20px; font-size:10px; font-weight:bold; cursor:pointer;">🔊 Neural: ON</button>
     </div>
   </header>
 
-  <!-- ONBOARDING & MASTER GATEWAY MODAL -->
+  <!-- ONBOARDING MODAL -->
   <div id="onboardingModal">
-    
-    <!-- STEP 1: STRICT GATING -->
     <div id="stepVerify" class="card w-full max-w-md">
       <div style="width:45px; height:45px; margin:0 auto 12px auto; border-radius:50%; background:rgba(147,51,234,0.2); border:1px solid #ec4899; display:flex; align-items:center; justify-content:center; font-size:18px;">⚖️</div>
       <h2 class="text-lg font-bold text-center mb-1">Legal & Age Gateway</h2>
@@ -104,9 +81,7 @@
         <p style="margin-bottom:6px;">• <strong>General Studio (13+):</strong> You must be 13+ for standard access.</p>
         <p style="margin-bottom:8px;">• <strong>Explicit & Mature (18+ MANDATORY):</strong> You must be 18+ to create or export mature, dark, or explicit adult content.</p>
         <p class="font-bold neon-green" style="margin-bottom:6px;">2. 100% CREATOR LIABILITY</p>
-        <p style="margin-bottom:8px;">You assume total legal and copyright responsibility for all generated custom avatars, cloned voices, and audio tracks, indemnifying MyAI Studio.</p>
-        <p class="font-bold neon-purple" style="margin-bottom:6px;">3. DEEPFAKE PROHIBITION</p>
-        <p style="margin-bottom:6px;">Never use voice cloning tools for non-consensual voice clones or fraudulent impersonations.</p>
+        <p style="margin-bottom:8px;">You assume total legal and copyright responsibility for all generated custom avatars, cloned voices, and audio tracks.</p>
         <div id="scrollBottomMarker" class="text-center pt-2 text-xs" style="color:#ec4899; font-weight:bold;">↓ Keep Scrolling ↓</div>
         <p id="reachedBottomText" class="neon-green font-bold text-center pt-2 hidden" style="border-top:1px solid #374151;">✓ Disclosures Reviewed</p>
       </div>
@@ -126,16 +101,13 @@
       <button id="verifyBtn" disabled onclick="goToProfileStep()" class="btn-primary">Gateway Locked</button>
     </div>
 
-    <!-- STEP 2: PROFILE SETUP -->
     <div id="stepProfile" class="card card-green w-full max-w-md hidden">
       <h2 class="text-lg font-bold mb-1">Creator Profile</h2>
       <p class="text-xs mb-4" style="color:#9ca3af;">Establish your identity and avatar look.</p>
-
       <div class="mb-4">
         <label class="text-xs font-bold block mb-1 neon-pink">Creator Alias / Name</label>
         <input type="text" id="usernameInput" placeholder="Enter your alias..." />
       </div>
-
       <div class="mb-5">
         <label class="text-xs font-bold block mb-2 neon-pink">Avatar Selection</label>
         <div class="card flex items-center gap-3" style="padding:10px; margin:0;">
@@ -149,11 +121,9 @@
           </div>
         </div>
       </div>
-
       <button onclick="goToWelcomeStep()" class="btn-primary" style="background:linear-gradient(135deg, #4ade80, #9333ea); color:#000;">Initialize Studio</button>
     </div>
 
-    <!-- STEP 3: WELCOME ROUTING -->
     <div id="stepWelcome" class="card card-pink w-full max-w-md hidden">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-3">
@@ -164,7 +134,6 @@
           </div>
         </div>
       </div>
-
       <div class="card mb-4" style="padding:10px; margin:0;">
         <label class="text-xs font-bold block mb-1">How did you hear about MyAI Studio?</label>
         <select onchange="handleReferralSelect(this)" class="mb-2">
@@ -177,39 +146,7 @@
         </select>
         <input type="text" id="customReferralInput" placeholder="Type where you heard about us..." class="hidden" />
       </div>
-
-      <div class="terms-scroll" style="max-height:240px;">
-        <div class="flex flex-col gap-2">
-          <button onclick="launchTab('avatarStudio')" class="card text-center" style="padding:12px; margin:0; cursor:pointer; text-align:left;">
-            <div class="text-xs font-bold neon-pink">🧬 Avatar & Voice Lab</div>
-            <div class="text-xs" style="color:#9ca3af; font-size:10px;">Clone voices & tune neural algorithms.</div>
-          </button>
-          <button onclick="launchTab('studio')" class="card text-center" style="padding:12px; margin:0; cursor:pointer; text-align:left;">
-            <div class="text-xs font-bold neon-green">🎙️ Podcast Arena</div>
-            <div class="text-xs" style="color:#9ca3af; font-size:10px;">Generate multi-host debates.</div>
-          </button>
-          <button onclick="launchTab('music')" class="card text-center" style="padding:12px; margin:0; cursor:pointer; text-align:left;">
-            <div class="text-xs font-bold neon-purple">🎵 Suno Lyric Forge</div>
-            <div class="text-xs" style="color:#9ca3af; font-size:10px;">Write verses, hooks & tags.</div>
-          </button>
-          <button onclick="launchTab('prompter')" class="card text-center" style="padding:12px; margin:0; cursor:pointer; text-align:left;">
-            <div class="text-xs font-bold" style="color:#d1d5db;">📜 Dynamic Prompter</div>
-            <div class="text-xs" style="color:#9ca3af; font-size:10px;">Paced voiceover assistant.</div>
-          </button>
-          <button onclick="launchTab('agent')" class="card text-center" style="padding:12px; margin:0; cursor:pointer; text-align:left;">
-            <div class="text-xs font-bold" style="color:#ec4899;">🤖 AI Voice Assistant Studio</div>
-            <div class="text-xs" style="color:#9ca3af; font-size:10px;">Conversational voice agent matrix.</div>
-          </button>
-          <button onclick="launchTab('scout')" class="card text-center" style="padding:12px; margin:0; cursor:pointer; text-align:left;">
-            <div class="text-xs font-bold" style="color:#34d399;">🗺️ ZombieScout Module</div>
-            <div class="text-xs" style="color:#9ca3af; font-size:10px;">Abandoned property asset finder.</div>
-          </button>
-          <button onclick="launchTab('store')" class="card text-center" style="padding:12px; margin:0; cursor:pointer; text-align:left;">
-            <div class="text-xs font-bold" style="color:#ec4899;">👑 Store & Upgrades</div>
-            <div class="text-xs" style="color:#9ca3af; font-size:10px;">Stripe secure passes & stems.</div>
-          </button>
-        </div>
-      </div>
+      <button onclick="launchTab('avatarStudio')" class="btn-primary" style="background:#9333ea;">Enter Studio Stage ⚡</button>
     </div>
   </div>
 
@@ -220,7 +157,7 @@
     <section id="tabAvatarStudio" class="space-y-4">
       <div class="card">
         <h2 class="text-sm font-bold uppercase tracking-wider mb-1" style="color:#4ade80;">Persona Lab</h2>
-        <p class="text-xs mb-4" style="color:#9ca3af;">Clone custom voices or engineer new vocal algorithms.</p>
+        <p class="text-xs mb-4" style="color:#9ca3af;">Clone custom voices and stream live neural audio.</p>
 
         <div class="card flex items-center gap-3 mb-4" style="padding:10px; margin:0;">
           <div id="creatorAvatarBox" style="width:50px; height:50px; border-radius:12px; background:#111; border:1px solid #ec4899; display:flex; align-items:center; justify-content:center; font-size:22px;">👤</div>
@@ -238,10 +175,6 @@
             <span id="uploadLabel" class="text-xs font-bold neon-pink">Upload Voice Reference</span>
             <input type="file" accept="audio/*" class="hidden" onchange="handleVoiceUpload(event)" />
           </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="voiceCloneConsent" style="width:16px; height:16px; accent-color:#ec4899;" onchange="checkCloneConsent()" />
-            <span style="font-size:9px; color:#9ca3af;">I own the legal rights to this recording and consent to synthetic cloning.</span>
-          </label>
         </div>
 
         <div class="mb-4">
@@ -250,59 +183,27 @@
         </div>
 
         <div class="card mb-4" style="padding:12px; margin:0;">
-          <h3 class="text-xs font-bold uppercase tracking-wider neon-purple mb-2" style="border-bottom:1px solid #374151; padding-bottom:4px;">Vocal Architecture Matrix</h3>
+          <h3 class="text-xs font-bold uppercase tracking-wider neon-purple mb-2" style="border-bottom:1px solid #374151; padding-bottom:4px;">Neural Voice Engine</h3>
           
-          <div class="card" style="background:#000; padding:8px; margin-bottom:8px; display:flex; justify-between; align-items:center;">
-             <span class="text-xs" style="color:#c084fc; font-weight:bold;">API: ELEVENLABS CONNECTED</span>
-             <span class="text-xs" style="background:rgba(74,222,128,0.2); color:#4ade80; padding:2px 6px; border-radius:4px; font-size:9px;">Live Neural Engine</span>
+          <div class="card" style="background:#000; padding:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+             <span class="text-xs" style="color:#c084fc; font-weight:bold;">BACKEND: ELEVENLABS</span>
+             <span class="text-xs" style="background:rgba(74,222,128,0.2); color:#4ade80; padding:2px 6px; border-radius:4px; font-size:9px;">Active Stream</span>
           </div>
 
           <div class="mb-3">
-            <label class="text-xs font-bold block mb-1" style="color:#9ca3af;">Base Register</label>
-            <select id="paramGender">
-              <option value="female-velvet">Female (Velvet/Smooth)</option>
-              <option value="female-rasp">Female (Raspy/Gritty)</option>
-              <option value="male-deep">Male (Deep Baritone)</option>
-              <option value="child-bright">Child (Bright/Youthful)</option>
-              <option value="andro-glitch">Androgynous (Synthetic)</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label class="text-xs font-bold block mb-1" style="color:#9ca3af;">Archetype Profile</label>
+            <label class="text-xs font-bold block mb-1" style="color:#9ca3af;">Voice Archetype</label>
             <select id="paramArchetype">
-              <option>Hypnotic Late-Night DJ</option>
-              <option>Gritty Casino Boss</option>
-              <option>Frantic Hacker / Cyberpunk</option>
-              <option>Authoritative Anchor</option>
-              <option>Dark True Crime Narrator</option>
+              <option value="21m00Tcm4TlvDq8ikWAM">Rachel (Velvet / Smooth)</option>
+              <option value="AZnzlk1XvdvUeBnXmlld">Domi (Confident Anchor)</option>
+              <option value="EXAVITQu4vr4xnSDxMaL">Bella (Soft Narrator)</option>
+              <option value="ErXwobaYiN019PkySvjV">Antoni (Deep Resonance)</option>
             </select>
-          </div>
-
-          <div class="mb-3">
-            <label class="text-xs font-bold block mb-1" style="color:#9ca3af;">Content Intensity</label>
-            <select id="paramRating">
-              <option value="clean">Standard (Clean)</option>
-              <option value="explicit">🔞 Explicit (Uncensored)</option>
-              <option value="horror">Horror / Extreme</option>
-            </select>
-          </div>
-
-          <div class="flex gap-2 mb-3">
-            <div class="w-full">
-              <label class="text-xs" style="color:#9ca3af;">Pitch: <span id="pitchVal" class="neon-purple">1.0</span></label>
-              <input type="range" min="0.5" max="1.6" step="0.05" value="1.0" oninput="document.getElementById('pitchVal').innerText=this.value" />
-            </div>
-            <div class="w-full">
-              <label class="text-xs" style="color:#9ca3af;">Speed: <span id="speedVal" class="neon-green">1.0x</span></label>
-              <input type="range" min="0.6" max="1.5" step="0.05" value="1.0" oninput="document.getElementById('speedVal').innerText=this.value+'x'" />
-            </div>
           </div>
 
           <div class="mb-2">
             <label class="text-xs font-bold block mb-1">Test Neural Engine Output</label>
             <input type="text" id="voiceTestSample" value="Welcome to the high-stakes table. Let's run it." class="mb-2" />
-            <button onclick="playNeuralTestVoice()" class="btn-primary" style="margin-top:0;">▶ Stream Live Neural Audio</button>
+            <button onclick="playNeuralTestVoice()" class="btn-primary" style="margin-top:0;">▶ Stream ElevenLabs Neural Audio</button>
           </div>
         </div>
 
@@ -342,7 +243,7 @@
         <button onclick="document.getElementById('lyricOutputContainer').classList.remove('hidden')" class="btn-primary">⚡ Forge Lyrics & Tags</button>
       </div>
       <div id="lyricOutputContainer" class="card hidden">
-        <textarea readonly style="height:120px; font-family:monospace; color:#c084fc;">[Verse 1]\nNeon glowing in the midnight rain...</textarea>
+        <textarea readonly style="height:120px; font-family:monospace; color:#c084fc;">[Verse 1]&#10;Neon glowing in the midnight rain...</textarea>
       </div>
     </section>
 
@@ -355,50 +256,12 @@
           <input type="range" min="80" max="220" value="130" />
         </div>
         <div class="terms-scroll" style="max-height:160px; font-size:13px; color:#e5e7eb;">
-          <p>Welcome to the recording stage. Read this script smoothly and pace your voiceover delivery. Keep your head up, speak into the mic, and deliver your lines.</p>
+          <p>Welcome to the recording stage. Read this script smoothly and pace your voiceover delivery.</p>
         </div>
       </div>
     </section>
 
-    <!-- TAB 5: AI VOICE ASSISTANT STUDIO -->
-    <section id="tabAgent" class="space-y-4 hidden">
-      <div class="card card-pink">
-        <h2 class="text-sm font-bold uppercase tracking-wider mb-2 neon-pink">AI Voice Assistant Studio</h2>
-        <p class="text-xs mb-3" style="color:#9ca3af;">Configure custom interactive voice agent flows and conversational personas.</p>
-        <div class="mb-3">
-          <label class="text-xs font-bold block mb-1">Agent Name</label>
-          <input type="text" value="Vesper Assistant" />
-        </div>
-        <div class="mb-4">
-          <label class="text-xs font-bold block mb-1">System Behavior Prompt</label>
-          <textarea style="height:70px;">You are Vesper, a hypnotic studio assistant guiding creators.</textarea>
-        </div>
-        <button onclick="alert('Agent Matrix Compiled Successfully!')" class="btn-primary" style="background:#ec4899;">⚡ Deploy Voice Assistant</button>
-      </div>
-    </section>
-
-    <!-- TAB 6: ZOMBIESCOUT MODULE -->
-    <section id="tabScout" class="space-y-4 hidden">
-      <div class="card card-emerald">
-        <h2 class="text-sm font-bold uppercase tracking-wider mb-2" style="color:#34d399;">ZombieScout Module</h2>
-        <p class="text-xs mb-3" style="color:#9ca3af;">Scan tax-delinquent and abandoned properties.</p>
-        <div class="mb-3">
-          <label class="text-xs font-bold block mb-1">Target Region / Zip Code</label>
-          <input type="text" placeholder="e.g. Reno, NV 89501" />
-        </div>
-        <div class="mb-4">
-          <label class="text-xs font-bold block mb-1">Asset Filter</label>
-          <select>
-            <option>Tax-Delinquent Parcels</option>
-            <option>Abandoned Industrial Lots</option>
-            <option>Historical & Mineral Sites</option>
-          </select>
-        </div>
-        <button onclick="alert('Scanning regional asset database...')" class="btn-primary" style="background:#34d399; color:#000;">🗺️ Run ZombieScout Scan</button>
-      </div>
-    </section>
-
-    <!-- TAB 7: STORE / STRIPE PASSES -->
+    <!-- TAB 5: STORE / STRIPE PASSES -->
     <section id="tabStore" class="space-y-4 hidden">
       <div class="card card-pink">
         <h2 class="text-sm font-bold uppercase tracking-wider mb-2 neon-pink">Store & Upgrades</h2>
@@ -420,14 +283,6 @@
             </div>
             <a href="https://buy.stripe.com/" target="_blank" style="background:#4ade80; color:#000; padding:6px 12px; border-radius:8px; font-size:11px; font-weight:bold; text-decoration:none;">$2.99</a>
           </div>
-
-          <div class="card flex justify-between items-center" style="padding:12px; margin:0;">
-            <div>
-              <div class="text-xs font-bold">Pro Studio Unlimited</div>
-              <div class="text-xs" style="color:#9ca3af; font-size:10px;">Unlimited Generations</div>
-            </div>
-            <a href="https://buy.stripe.com/" target="_blank" style="background:#ec4899; color:#fff; padding:6px 12px; border-radius:8px; font-size:11px; font-weight:bold; text-decoration:none;">$9.99/mo</a>
-          </div>
         </div>
       </div>
     </section>
@@ -440,14 +295,12 @@
     <button onclick="toggleVesperChat()" style="width:44px; height:44px; border-radius:50%; background:#581c87; border:2px solid #4ade80; color:#fff; font-size:18px; cursor:pointer; box-shadow:0 0 15px rgba(74,222,128,0.5);">🎙️</button>
   </div>
 
-  <!-- BOTTOM NAVIGATION DOCK -->
+  <!-- CLEAN BOTTOM NAVIGATION DOCK (5 FOCUSED TABS) -->
   <nav class="bottom-dock">
     <button onclick="switchTab('avatarStudio')" id="navTabAvatarStudio" class="active-tab"><i class="fa-solid fa-wand-magic-sparkles text-sm"></i><span>Avatars</span></button>
     <button onclick="switchTab('studio')" id="navTabStudio"><i class="fa-solid fa-microphone text-sm"></i><span>Arena</span></button>
     <button onclick="switchTab('music')" id="navTabMusic"><i class="fa-solid fa-music text-sm"></i><span>Forge</span></button>
     <button onclick="switchTab('prompter')" id="navTabPrompter"><i class="fa-solid fa-scroll text-sm"></i><span>Prompt</span></button>
-    <button onclick="switchTab('agent')" id="navTabAgent"><i class="fa-solid fa-robot text-sm"></i><span>Agent</span></button>
-    <button onclick="switchTab('scout')" id="navTabScout"><i class="fa-solid fa-map-location-dot text-sm"></i><span>Scout</span></button>
     <button onclick="switchTab('store')" id="navTabStore"><i class="fa-solid fa-crown text-sm"></i><span>Store</span></button>
   </nav>
 
@@ -458,22 +311,11 @@
     let isAgeVerified = false;
     let voiceActive = true;
     let selectedAvatarUrl = '';
-    let voiceCloneUploaded = false;
-    let currentHostessText = "Hey! How did you hear about us? Here are the things we can do together. I'm right here with you from start to finish. Let's go.";
-    
-    const vesperContexts = {
-      avatarStudio: "Want to clone a voice? Upload a clean .wav file or stream live neural audio.",
-      studio: "Ready for the arena? Add an explicit prompt to generate the multi-host debate.",
-      music: "Select your genre and theme. I'll auto-format the verse and chorus tags.",
-      prompter: "Adjust the WPM slider so your voiceover pacing is perfect.",
-      agent: "Configure your conversational assistant matrix and triggers.",
-      scout: "Run regional grid scans for tax-delinquent and abandoned assets.",
-      store: "Grab a Pro pass to unlock unlimited uncompressed master exports."
-    };
+    let currentHostessText = "Welcome to MyAI Studio. Let's build your custom voice persona.";
 
     function toggleAudioMode() {
       voiceActive = !voiceActive;
-      document.getElementById('captionBtn').innerText = voiceActive ? "🔊 Live: ON" : "💬 Live: OFF";
+      document.getElementById('captionBtn').innerText = voiceActive ? "🔊 Neural: ON" : "💬 Neural: OFF";
     }
 
     function handleReferralSelect(selectElem) {
@@ -587,7 +429,7 @@
     }
 
     function switchTab(tabId) {
-      const tabs = ['avatarStudio', 'studio', 'music', 'prompter', 'agent', 'scout', 'store'];
+      const tabs = ['avatarStudio', 'studio', 'music', 'prompter', 'store'];
       tabs.forEach(t => {
         const sec = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         const btn = document.getElementById('navTab' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -596,16 +438,6 @@
       });
       document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.remove('hidden');
       document.getElementById('navTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.add('active-tab');
-
-      const bubble = document.getElementById('vesperChatBubble');
-      bubble.innerText = '"' + vesperContexts[tabId] + '"';
-      bubble.style.display = 'block';
-      setTimeout(() => { bubble.style.display = 'none'; }, 5000);
-    }
-    
-    function toggleVesperChat() {
-      const bubble = document.getElementById('vesperChatBubble');
-      bubble.style.display = bubble.style.display === 'block' ? 'none' : 'block';
     }
 
     function randomizeCreatorAvatar() {
@@ -616,53 +448,36 @@
     
     function handleVoiceUpload(e) {
       if (e.target.files && e.target.files[0]) {
-        voiceCloneUploaded = true;
         document.getElementById('uploadLabel').innerText = "✓ " + e.target.files[0].name + " Uploaded";
         document.getElementById('uploadLabel').style.color = "#4ade80";
-        checkCloneConsent();
-      }
-    }
-
-    function checkCloneConsent() {
-      const btn = document.getElementById('savePersonaBtn');
-      const consent = document.getElementById('voiceCloneConsent').checked;
-      if (voiceCloneUploaded && !consent) {
-        btn.disabled = true;
-        btn.innerText = "Must Check Consent to Save";
-        btn.style.background = "#374151";
-      } else {
-        btn.disabled = false;
-        btn.innerText = "💾 Compile & Save Persona";
-        btn.style.background = "linear-gradient(135deg, #9333ea, #4ade80)";
       }
     }
 
     function saveAndExportAvatarPersona() {
-      const name = document.getElementById('avatarPersonaName').value || 'Glitch Entity';
+      const name = document.getElementById('avatarPersonaName').value || 'Custom Persona';
       const prompt = document.getElementById('customVoicePrompt').value || 'None provided';
-      const rating = document.getElementById('paramRating').value;
-      
-      let voiceType = voiceCloneUploaded ? "Custom Audio Clone (ElevenLabs Ready)" : "Algorithmic Base Register";
       
       document.getElementById('personaExportCard').classList.remove('hidden');
-      document.getElementById('exportPersonaSummary').innerHTML = "<strong>Alias:</strong> " + name + "<br/><strong>Rating:</strong> " + rating.toUpperCase() + "<br/><strong>Voice Engine:</strong> " + voiceType + "<br/><strong>Algorithm Prompt:</strong> \"" + prompt + "\"";
+      document.getElementById('exportPersonaSummary').innerHTML = "<strong>Persona:</strong> " + name + "<br/><strong>Prompt:</strong> \"" + prompt + "\"";
     }
 
     async function playNeuralAudio(textToSpeak) {
       if (!voiceActive) return;
+      const voiceId = document.getElementById('paramArchetype') ? document.getElementById('paramArchetype').value : '21m00Tcm4TlvDq8ikWAM';
       try {
         const response = await fetch('/api/tts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: textToSpeak })
+          body: JSON.stringify({ text: textToSpeak, voiceId: voiceId })
         });
         
-        if (!response.ok) throw new Error('Failed to stream audio.');
+        if (!response.ok) throw new Error('ElevenLabs Stream Error');
         
         const audioBlob = await response.blob();
         const audioUrl = URL.createObjectURL(audioBlob);
         new Audio(audioUrl).play();
       } catch (err) {
+        // Fallback to browser voice only if API fails
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
         window.speechSynthesis.speak(utterance);
       }
