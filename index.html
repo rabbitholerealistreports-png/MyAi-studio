@@ -18,7 +18,7 @@
     .terms-scroll::-webkit-scrollbar-thumb { background: #ff1493; border-radius: 4px; }
     .terms-scroll::-webkit-scrollbar-track { background: #111; }
     
-    /* Human Verification Slider Customization */
+    /* Human Verification Slider */
     input[type=range].human-slider { -webkit-appearance: none; width: 100%; background: transparent; }
     input[type=range].human-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #4ade80; cursor: pointer; box-shadow: 0 0 10px #4ade80; }
     input[type=range].human-slider::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; background: #1f2937; border-radius: 6px; border: 1px solid #a855f7; }
@@ -60,6 +60,9 @@
 
         <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">3. SYNTHETIC VOICE DEEPFAKE PROHIBITION</p>
         <p>You explicitly agree never to use this studio's voice uploading and cloning tools for non-consensual voice clones, fraudulent impersonations, or misleading deepfakes.</p>
+
+        <p class="font-bold text-green-400 uppercase tracking-wider text-[10px]">4. COMMERCIAL EXPORT RIGHTS</p>
+        <p>Exported .WAV masters and stem packages purchased via Studio passes grant you 100% royalty-free commercial rights.</p>
 
         <div id="scrollBottomMarker" class="text-center pt-4 pb-2 text-pink-500 font-bold opacity-50">↓ Keep Scrolling ↓</div>
         <p id="reachedBottomText" class="text-green-400 font-bold text-center pt-2 border-t border-gray-800 hidden">✓ Disclosures Reviewed</p>
@@ -117,7 +120,7 @@
       </button>
     </div>
 
-    <!-- STEP 3: WELCOME ROUTING -->
+    <!-- STEP 3: WELCOME ROUTING & AI ASSISTANT BUBBLE -->
     <div id="stepWelcome" class="max-w-md w-full bg-gray-950 border border-pink-500/50 rounded-3xl p-6 shadow-2xl hidden neon-purple my-auto">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-3">
@@ -127,6 +130,14 @@
             <p class="text-[11px] text-gray-400 silver-accent font-bold">Studio Online</p>
           </div>
         </div>
+        <button onclick="playHostessVoice()" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white shadow-lg flex items-center gap-1.5 animate-pulse">
+          <span>🔊</span> Play Voice
+        </button>
+      </div>
+
+      <!-- AI Assistant Chat Bubble (RESTORED) -->
+      <div class="p-4 mb-5 rounded-xl bg-black border border-purple-500/40 text-xs text-purple-200 leading-relaxed shadow-inner">
+        🎙️ <em id="captionsText">"Hey! How did you hear about us? Here are the things we can do together. I'm right here with you from start to finish. Let's go."</em>
       </div>
 
       <div class="space-y-3">
@@ -151,12 +162,13 @@
   <!-- MAIN APP DASHBOARD -->
   <main class="max-w-md mx-auto p-4 w-full flex-1">
     
-    <!-- ADVANCED MULTI-PARAMETER AVATAR & VOICE CREATION ALGORITHM ENGINE -->
+    <!-- TAB 1: AVATAR & VOICE CREATION ENGINE -->
     <section id="tabAvatarStudio" class="space-y-4">
       <div class="bg-gray-950 border border-purple-500 rounded-2xl p-5 shadow-2xl neon-purple">
         <h2 class="text-lg font-black text-white tracking-widest uppercase mb-1 glitch">Persona Lab</h2>
         <p class="text-[10px] text-gray-400 mb-5 font-bold silver-accent">Clone custom voices or engineer new vocal algorithms.</p>
 
+        <!-- Persona Visuals -->
         <div class="flex items-center gap-4 mb-5 p-3 rounded-xl bg-black border border-gray-800">
           <div id="creatorAvatarBox" class="w-16 h-16 rounded-xl bg-purple-900/40 border border-pink-500 flex items-center justify-center text-3xl overflow-hidden shadow-inner">
             👤
@@ -186,12 +198,13 @@
           </label>
         </div>
 
+        <!-- Algorithm Prompt -->
         <div class="mb-4">
           <label class="text-[11px] font-bold text-gray-300 block mb-2 neon-pink-text">Custom Concept / Direction</label>
-          <textarea id="customVoicePrompt" placeholder="Type exactly what you want: e.g. Gritty, 90s casino boss with a raspy laugh, or a highly chaotic fast-talking glitch entity..." class="w-full h-16 p-3 rounded-xl bg-black border border-gray-700 text-xs text-gray-200 focus:outline-none focus:border-purple-500"></textarea>
+          <textarea id="customVoicePrompt" placeholder="Describe it: e.g. Gritty, 90s casino boss with a raspy laugh, or a highly chaotic fast-talking glitch entity..." class="w-full h-16 p-3 rounded-xl bg-black border border-gray-700 text-xs text-gray-200 focus:outline-none focus:border-purple-500"></textarea>
         </div>
 
-        <!-- Algorithm Matrix -->
+        <!-- Massive Algorithm Matrix -->
         <div class="space-y-4 mb-6 p-4 rounded-xl bg-black border border-gray-800">
           <h3 class="text-[10px] text-purple-400 font-black uppercase tracking-widest border-b border-gray-800 pb-1">Vocal Architecture Matrix</h3>
           
@@ -202,7 +215,6 @@
                 <option value="female-velvet">Female (Velvet/Smooth)</option>
                 <option value="female-rasp">Female (Raspy/Gritty)</option>
                 <option value="male-deep">Male (Deep Baritone)</option>
-                <option value="male-tenor">Male (Energetic Tenor)</option>
                 <option value="child-bright">Child (Bright/Youthful)</option>
                 <option value="andro-glitch">Androgynous (Synthetic)</option>
                 <option value="monster-low">Creature (Sub-bass/Distorted)</option>
@@ -217,7 +229,6 @@
                 <option>Authoritative Anchor</option>
                 <option>Dark True Crime Narrator</option>
                 <option>Bubbly Hyperpop Star</option>
-                <option>Seductive Villain</option>
               </select>
             </div>
           </div>
@@ -253,6 +264,15 @@
               <input type="range" min="0.6" max="1.5" step="0.05" value="1.0" oninput="document.getElementById('speedVal').innerText=this.value+'x'" class="w-full" />
             </div>
           </div>
+
+          <div>
+            <label class="text-[11px] font-semibold text-gray-300 block mb-1">Test Engine Output</label>
+            <input type="text" id="voiceTestSample" value="Welcome to the high-stakes table. Let's run it." class="w-full px-3 py-2 rounded-xl bg-black border border-gray-700 text-xs text-gray-200 focus:outline-none focus:border-purple-500" />
+          </div>
+          
+          <button onclick="previewAvatarVoice()" class="w-full py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 text-xs font-bold text-purple-300 transition">
+            ▶ Play Test Voice (Browser Synthesizer)
+          </button>
         </div>
 
         <button id="savePersonaBtn" onclick="saveAndExportAvatarPersona()" class="w-full py-4 rounded-xl bg-purple-600 text-white font-black text-sm uppercase tracking-widest shadow-lg hover:bg-purple-500 transition">
@@ -263,11 +283,13 @@
       <div id="personaExportCard" class="bg-gray-950 border border-green-500 rounded-2xl p-5 shadow-xl hidden">
         <h3 class="text-sm font-black text-green-400 uppercase tracking-widest mb-2 glitch">Persona Locked</h3>
         <p id="exportPersonaSummary" class="text-[11px] text-gray-300 mb-4 font-mono bg-black p-3 rounded-lg border border-gray-800"></p>
-        <p class="text-[10px] text-pink-500 font-bold mb-3 italic">*Note: Full high-fidelity cloning & rendering requires backend API connection.*</p>
+        <button onclick="switchTab('store')" class="w-full py-3 rounded-xl bg-green-500 text-black font-black text-xs uppercase tracking-widest shadow-lg">
+          ⚡ Export Media Kit to Store
+        </button>
       </div>
     </section>
 
-    <!-- TAB 2: PODCAST ARENA -->
+    <!-- TAB 2: PODCAST ARENA (RESTORED) -->
     <section id="tabStudio" class="space-y-4 hidden">
       <div class="bg-gray-950 border border-pink-500/50 rounded-2xl p-5 shadow-xl">
         <h2 class="text-lg font-black text-white tracking-widest uppercase mb-4 neon-pink-text">Multi-Host Arena</h2>
@@ -280,15 +302,94 @@
         <p class="text-xs text-gray-400 font-mono italic">Script generated successfully based on parameters...</p>
       </div>
     </section>
+
+    <!-- TAB 3: SUNO SONG & LYRIC FORGE (RESTORED) -->
+    <section id="tabMusic" class="space-y-4 hidden">
+      <div class="bg-gray-950 border border-green-500/50 rounded-2xl p-5 shadow-xl">
+        <h2 class="text-lg font-black text-white tracking-widest uppercase mb-3 text-green-400">Suno Lyric Forge</h2>
+        <input type="text" id="songTheme" placeholder="Song theme or story concept..." class="w-full px-3 py-3 rounded-xl bg-black border border-gray-700 text-xs text-white mb-3 focus:outline-none focus:border-green-500" />
+        <select class="w-full px-3 py-3 rounded-xl bg-black border border-gray-700 text-xs text-white mb-4 focus:outline-none">
+          <option>Country / Outlaw Story</option>
+          <option>Country-Rap / 808 Hybrid</option>
+          <option>Hyperpop / Glitch Electronic</option>
+          <option>Dark Cinematic / Suspense</option>
+          <option>Children Story Track</option>
+        </select>
+        <button onclick="document.getElementById('lyricOutputContainer').classList.remove('hidden')" class="w-full py-3 rounded-xl bg-green-500 text-black font-black text-xs uppercase tracking-wider shadow-lg">
+          ⚡ Forge Lyrics & Tags
+        </button>
+      </div>
+      <div id="lyricOutputContainer" class="bg-gray-950 border border-gray-700 rounded-2xl p-5 shadow-xl hidden">
+        <textarea readonly class="w-full h-44 p-3 rounded-xl bg-black border border-gray-800 text-xs text-green-300 font-mono focus:outline-none">[Verse 1]&#13;&#10;Neon glowing in the midnight rain...</textarea>
+      </div>
+    </section>
+
+    <!-- TAB 4: TELEPROMPTER (RESTORED) -->
+    <section id="tabPrompter" class="space-y-4 hidden">
+      <div class="bg-gray-950 border border-purple-500/50 rounded-2xl p-5 shadow-xl">
+        <h2 class="text-lg font-black text-white tracking-widest uppercase mb-3 text-purple-400">Dynamic Prompter</h2>
+        <div class="mb-4">
+          <label class="text-[11px] font-bold text-gray-300 block mb-2">Pacing Speed (WPM)</label>
+          <input type="range" min="80" max="220" value="130" class="w-full accent-purple-500" />
+        </div>
+        <div class="h-44 overflow-y-auto p-4 rounded-xl bg-black border border-gray-800 text-sm font-medium text-gray-200 leading-relaxed terms-scroll">
+          <p>Welcome to the recording stage. Read this script smoothly and pace your voiceover delivery. Keep your head up, speak into the mic, and deliver your lines.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: STORE / STRIPE PASSES (RESTORED) -->
+    <section id="tabStore" class="space-y-4 hidden">
+      <div class="bg-gray-950 border border-pink-500/50 rounded-2xl p-5 shadow-xl">
+        <h2 class="text-lg font-black text-white tracking-widest uppercase mb-2 neon-pink-text">Store & Upgrades</h2>
+        <p class="text-xs text-gray-400 mb-5">Export uncompressed .WAV masters, avatar kits, and isolated stems.</p>
+
+        <div class="space-y-3">
+          <div class="p-4 rounded-xl bg-black border border-purple-500/50 flex justify-between items-center">
+            <div>
+              <div class="text-xs font-bold text-white">Single Export Pass</div>
+              <div class="text-[10px] text-gray-400 mt-1">1 Full .WAV Master or Avatar Kit</div>
+            </div>
+            <a href="https://buy.stripe.com/" target="_blank" class="px-4 py-2 rounded-lg bg-purple-600 text-xs font-black text-white shadow-lg">$0.99</a>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black border border-green-500/50 flex justify-between items-center">
+            <div>
+              <div class="text-xs font-bold text-white">Creator Stem Bundle</div>
+              <div class="text-[10px] text-gray-400 mt-1">Isolated Stems + ZIP Package</div>
+            </div>
+            <a href="https://buy.stripe.com/" target="_blank" class="px-4 py-2 rounded-lg bg-green-600 text-xs font-black text-white shadow-lg">$2.99</a>
+          </div>
+
+          <div class="p-4 rounded-xl bg-black border border-pink-500/50 flex justify-between items-center">
+            <div>
+              <div class="text-xs font-bold text-white">Pro Studio Unlimited</div>
+              <div class="text-[10px] text-gray-400 mt-1">Unlimited Generations</div>
+            </div>
+            <a href="https://buy.stripe.com/" target="_blank" class="px-4 py-2 rounded-lg bg-pink-600 text-xs font-black text-white shadow-lg">$9.99/mo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- BOTTOM NAVIGATION DOCK -->
-  <nav class="fixed bottom-0 inset-x-0 bg-black/95 border-t border-purple-900/50 p-3 flex justify-around items-center z-30 backdrop-blur-md">
+  <!-- BOTTOM NAVIGATION DOCK (ALL 5 TABS RESTORED) -->
+  <nav class="fixed bottom-0 inset-x-0 bg-black/95 border-t border-purple-900/50 p-2 flex justify-around items-center z-30 backdrop-blur-md">
     <button onclick="switchTab('avatarStudio')" id="navTabAvatarStudio" class="flex flex-col items-center text-green-400 text-[10px] font-bold uppercase gap-1 tracking-wider">
       <i class="fa-solid fa-wand-magic-sparkles text-lg"></i><span>Avatars</span>
     </button>
     <button onclick="switchTab('studio')" id="navTabStudio" class="flex flex-col items-center text-gray-500 text-[10px] font-bold uppercase gap-1 tracking-wider">
       <i class="fa-solid fa-microphone text-lg"></i><span>Arena</span>
+    </button>
+    <button onclick="switchTab('music')" id="navTabMusic" class="flex flex-col items-center text-gray-500 text-[10px] font-bold uppercase gap-1 tracking-wider">
+      <i class="fa-solid fa-music text-lg"></i><span>Forge</span>
+    </button>
+    <button onclick="switchTab('prompter')" id="navTabPrompter" class="flex flex-col items-center text-gray-500 text-[10px] font-bold uppercase gap-1 tracking-wider">
+      <i class="fa-solid fa-scroll text-lg"></i><span>Prompt</span>
+    </button>
+    <button onclick="switchTab('store')" id="navTabStore" class="flex flex-col items-center text-gray-500 text-[10px] font-bold uppercase gap-1 tracking-wider">
+      <i class="fa-solid fa-crown text-lg"></i><span>Store</span>
     </button>
   </nav>
 
@@ -300,6 +401,7 @@
     let voiceActive = true;
     let selectedAvatarUrl = '';
     let voiceCloneUploaded = false;
+    let currentHostessText = "Hey! How did you hear about us? Here are the things we can do together. I'm right here with you from start to finish. Let's go.";
 
     function toggleAudioMode() {
       voiceActive = !voiceActive;
@@ -395,6 +497,7 @@
       }
       document.getElementById('stepProfile').classList.add('hidden');
       document.getElementById('stepWelcome').classList.remove('hidden');
+      playHostessVoice();
     }
 
     function launchTab(tabId) {
@@ -402,20 +505,27 @@
       switchTab(tabId);
     }
 
+    // UPDATED: Now loops through ALL 5 Tabs seamlessly
     function switchTab(tabId) {
-      const tabs = ['avatarStudio', 'studio'];
+      const tabs = ['avatarStudio', 'studio', 'music', 'prompter', 'store'];
       tabs.forEach(t => {
         const sec = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         const btn = document.getElementById('navTab' + t.charAt(0).toUpperCase() + t.slice(1));
         if (sec) sec.classList.add('hidden');
         if (btn) {
-          btn.classList.remove('text-green-400');
+          btn.classList.remove('text-green-400', 'text-purple-400', 'text-pink-500');
           btn.classList.add('text-gray-500');
         }
       });
       document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.remove('hidden');
-      document.getElementById('navTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.add('text-green-400');
-      document.getElementById('navTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.remove('text-gray-500');
+      
+      const activeBtn = document.getElementById('navTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+      activeBtn.classList.remove('text-gray-500');
+      
+      // Color code the active tab
+      if(tabId === 'avatarStudio' || tabId === 'music') activeBtn.classList.add('text-green-400');
+      else if(tabId === 'store' || tabId === 'prompter') activeBtn.classList.add('text-pink-500');
+      else activeBtn.classList.add('text-purple-400');
     }
 
     function randomizeCreatorAvatar() {
@@ -461,6 +571,41 @@
         <strong>Voice Engine:</strong> ${voiceType} <br/>
         <strong>Algorithm Prompt:</strong> "${prompt}"
       `;
+    }
+
+    // Uses Web Speech API for testing purposes until you connect ElevenLabs/OpenAI backend
+    function synthesizeEngineAudio(text, gender, archetype, pitch, speed) {
+      if (!voiceActive) return;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        const voices = window.speechSynthesis.getVoices();
+
+        let targetVoice = null;
+        if (gender.includes('female')) {
+          targetVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Google UK English Female'));
+        } else if (gender.includes('male')) {
+          targetVoice = voices.find(v => v.name.includes('Male') || v.name.includes('Daniel') || v.name.includes('Google UK English Male'));
+        }
+
+        if (targetVoice) utterance.voice = targetVoice;
+        utterance.pitch = pitch;
+        utterance.rate = speed;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function playHostessVoice() {
+      synthesizeEngineAudio(currentHostessText, 'female-smooth', 'hypnotic-host', 1.05, 0.92);
+    }
+
+    function previewAvatarVoice() {
+      const sample = document.getElementById('voiceTestSample').value;
+      const gender = document.getElementById('paramGender').value;
+      const archetype = document.getElementById('paramArchetype').value;
+      const pitch = parseFloat(document.getElementById('pitchVal').innerText);
+      const speed = parseFloat(document.getElementById('speedVal').innerText);
+      synthesizeEngineAudio(sample, gender, archetype, pitch, speed);
     }
   </script>
 </body>
